@@ -263,7 +263,7 @@ class Eliminator:
             if not found1:
                 assumption1 = _Line(disjunct1, "AS", ())
                 subproof1 = _Proof(proof.seq + [assumption1], goal)
-                p1 = Prover(subproof1, prover.seen.copy(), prover.deadline)
+                p1 = Prover(subproof1, prover.seen, prover.deadline)
                 if not p1.prove(complete):
                     continue
                 subproof1.seq = subproof1.seq[len(proof.seq):]
@@ -302,7 +302,6 @@ class Eliminator:
             if not (obj.is_line() and isinstance(obj.formula, Not)):
                 continue
             branch = _Proof(proof.seq, obj.formula.inner)
-            # FIX: prover.seen should be copied (inefficient)
             p = Prover(branch, prover.seen, prover.deadline)
             if not p.prove(complete):
                 continue
@@ -326,7 +325,6 @@ class Eliminator:
 
             if is_valid(proof.assumptions, obj.formula.left):
                 branch = _Proof(proof.seq, obj.formula.left)
-                # FIX: prover.seen should be copied (slightly inefficient)
                 p = Prover(branch, prover.seen, prover.deadline)
                 if p.prove(complete):
                     branch.pop_reiteration()
@@ -411,13 +409,13 @@ class Introducer:
 
         for conjunct1, conjunct2 in [(left, right), (right, left)]:
             branch1 = _Proof(proof.seq, conjunct1)
-            p1 = Prover(branch1, prover.seen.copy(), prover.deadline)
+            p1 = Prover(branch1, prover.seen, prover.deadline)
             if not p1.prove(complete):
                 continue
             conjunct1_id = branch1.pop_reiteration()
 
             branch2 = _Proof(branch1.seq, conjunct2)
-            p2 = Prover(branch2, prover.seen.copy(), prover.deadline)
+            p2 = Prover(branch2, prover.seen, prover.deadline)
             if not p2.prove(complete):
                 continue
             conjunct2_id = branch2.pop_reiteration()
@@ -446,7 +444,6 @@ class Introducer:
         for disjunct in (left, right):
             if is_valid(proof.assumptions, disjunct):
                 branch = _Proof(proof.seq, disjunct)
-                # FIX: prover.seen should be copied (inefficient)
                 p = Prover(branch, prover.seen, prover.deadline)
                 if not p.prove(complete):
                     continue
@@ -492,7 +489,7 @@ class Introducer:
         if not found1:
             assumption1 = _Line(left, "AS", ())
             subproof1 = _Proof(proof.seq + [assumption1], right)
-            p1 = Prover(subproof1, prover.seen.copy(), prover.deadline)
+            p1 = Prover(subproof1, prover.seen, prover.deadline)
             if not p1.prove(complete):
                 return False
             subproof1.seq = subproof1.seq[len(proof.seq):]
@@ -505,7 +502,7 @@ class Introducer:
         if not found2:
             assumption2 = _Line(right, "AS", ())
             subproof2 = _Proof(seq + [assumption2], left)
-            p2 = Prover(subproof2, prover.seen.copy(), prover.deadline)
+            p2 = Prover(subproof2, prover.seen, prover.deadline)
             if not p2.prove(complete):
                 return False
             subproof2.seq = subproof2.seq[len(seq):]
@@ -696,7 +693,6 @@ def prove(premises, conclusion, timeout=3):
         cm_str = "\n".join(f"{k} : {v}" for k, v in sorted(cm.items()))
         raise ProverError(f"Invalid argument. Countermodel:\n\n{cm_str}")
 
-    _ProofObject.count = 0
     seq = [_Line(p, "PR", ()) for p in premises]
     _proof = _Proof(seq, conclusion)
     p = Prover(_proof, deadline=time.monotonic() + timeout)
