@@ -1,7 +1,7 @@
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 __author__ = "Daniyal Akif"
 __email__ = "daniyalakif@gmail.com"
-__license__ = "MIT"
+__license__ = "Apache-2.0"
 __description__ = "Natural deduction proof generator & checker"
 __url__ = "https://github.com/daniyal1249/nd-prover"
 
