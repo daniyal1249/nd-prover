@@ -15,25 +15,27 @@
 from dataclasses import dataclass, field
 
 
-@dataclass
 class Metavar:
-    domain_pred: object = None
-    id: int = field(init=False)
-    value: object = field(default=None, init=False)
-
     count = 0
 
-    def __post_init__(self):
+    def __init__(self, domain=None):
         Metavar.count += 1
         self.id = Metavar.count
+        self.domain = domain
+        self.value = None
+
+    def __repr__(self):
+        return (
+            f"Metavar(id={self.id!r}, "
+            f"domain={self.domain!r}, "
+            f"value={self.value!r})"
+        )
 
     def __str__(self):
         return f"?m{self.id}"
 
     def __eq__(self, value):
-        # Check safety
-        p = self.domain_pred
-        if p and not p(value):
+        if self.domain and value not in self.domain:
             return False
         if self.value is None:
             self.value = value
@@ -194,7 +196,7 @@ def is_tfl_formula(formula):
 
 def is_fol_formula(formula):
     match formula:
-        case Pred() | Bot() | Eq():
+        case Bot() | Pred() | Eq():
             return True
         case Not(a) | Forall(_, a) | Exists(_, a):
             return is_fol_formula(a)
@@ -224,6 +226,8 @@ def is_ml_formula(formula):
 
 def atomic_terms(formula, free):
     match formula:
+        case Bot():
+            return set()
         case Not(a) | Box(a) | Dia(a):
             return atomic_terms(a, free)
         case And(a, b) | Or(a, b) | Imp(a, b) | Iff(a, b) | Eq(a, b):
@@ -238,8 +242,6 @@ def atomic_terms(formula, free):
             return set().union(*(atomic_terms(t, free) for t in args))
         case Forall(v, a) | Exists(v, a):
             return atomic_terms(a, free) - ({v} if free else set())
-        case _:
-            return set()
 
 
 def constants(formula):

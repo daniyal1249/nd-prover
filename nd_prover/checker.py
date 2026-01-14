@@ -260,7 +260,7 @@ class FOL(TFL):
         if not (a.is_line() and isinstance(a := a.formula, Eq) and b.is_line()):
             raise InferenceError("Invalid application of the rule =E.")
         terms = {a.left, a.right}
-        def gen(): return Metavar(lambda obj: obj in terms)
+        def gen(): return Metavar(terms)
         return [sub_term(b.formula, t, gen) for t in terms]
 
     @Rules.add("∀I")
@@ -285,7 +285,7 @@ class FOL(TFL):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Forall)):
             raise InferenceError("Invalid application of the rule ∀E.")
-        m = Metavar()  # restrict to constants
+        m = Metavar()  # FIX: consider restricting to constants
         return [sub_term(a.inner, a.var, lambda: m)]
 
     @Rules.add("∃I")
@@ -298,7 +298,7 @@ class FOL(TFL):
 
         schemas = [Exists(var, a.formula)]
         for c in constants(a.formula):
-            def gen(): return Metavar(lambda obj: obj in {c, var})
+            def gen(): return Metavar({c, var})
             inner = sub_term(a.formula, c, gen, ignore)
             schemas.append(Exists(var, inner))
         return schemas
@@ -309,7 +309,7 @@ class FOL(TFL):
         if not (a.is_line() and isinstance(a := a.formula, Exists) 
                 and b.is_subproof() and b.conclusion):
             raise InferenceError("Invalid application of the rule ∃E.")
-        m = Metavar()  # restrict to constants
+        m = Metavar()  # FIX: consider restricting to constants
         schema = sub_term(a.inner, a.var, lambda: m)
         if b.assumption != schema:
             raise InferenceError("Invalid application of the rule ∃E.")
