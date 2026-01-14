@@ -32,9 +32,6 @@ class _ProofObject:
     def is_line(self):
         return isinstance(self, _Line)
 
-    def is_subproof(self):
-        return isinstance(self, _Proof)
-
 
 @dataclass
 class _Line(_ProofObject):
@@ -423,7 +420,7 @@ class Introducer:
 
         for conjunct1, conjunct2 in [(left, right), (right, left)]:
             branch1 = _Proof(proof.seq, conjunct1)
-            p1 = Prover(branch1, prover.seen, prover.deadline)
+            p1 = Prover(branch1, prover.seen.copy(), prover.deadline)
             if not p1.prove(complete):
                 continue
             conjunct1_id = branch1.pop_reiteration()
@@ -626,7 +623,7 @@ class Processor:
             seq, n = [], len(proof.seq)
             for idx, obj in enumerate(proof.seq):
 
-                if obj.is_subproof():
+                if not obj.is_line():
                     Processor.remove_uncited(obj, id_to_citers)
                     seq.append(obj)
                     continue
@@ -646,7 +643,7 @@ class Processor:
         seq, n = [], len(proof.seq)
         for idx, obj in enumerate(proof.seq):
 
-            if obj.is_subproof():
+            if not obj.is_line():
                 Processor.replace_reiterations(obj, id_to_obj, id_to_citers, replace)
                 seq.append(obj)
                 continue
