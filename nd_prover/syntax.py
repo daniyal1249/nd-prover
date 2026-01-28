@@ -377,6 +377,8 @@ def atomic_terms(formula, free):
             return set().union(*(atomic_terms(t, free) for t in args))
         case Forall(v, a) | Exists(v, a):
             return atomic_terms(a, free) - ({v} if free else set())
+        case _:
+            return set()
 
 
 def constants(formula):
@@ -392,7 +394,7 @@ def free_vars(formula):
 def sub_term(formula, term, gen, ignore=lambda v: False):
     match formula:
         case Bot():
-            return Bot()
+            return formula
         case Not(a) | Box(a) | Dia(a):
             a = sub_term(a, term, gen, ignore)
             return type(formula)(a)
@@ -414,3 +416,5 @@ def sub_term(formula, term, gen, ignore=lambda v: False):
             if not (v == term or ignore(v)):
                 a = sub_term(a, term, gen, ignore)
             return type(formula)(v, a)
+        case _:
+            return formula

@@ -76,14 +76,14 @@ class TFL:
     def X(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a.formula, Bot)):
-            raise InferenceError("Invalid application of the rule X.")
+            raise InferenceError()
         return [Metavar()]
     
     @Rules.add("¬I")
     def NotI(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_subproof() and isinstance(a.conclusion, Bot)):
-            raise InferenceError("Invalid application of the rule ¬I.")
+            raise InferenceError()
         return [Not(a.assumption)]
     
     @Rules.add("¬E")
@@ -91,28 +91,28 @@ class TFL:
         a, b = verify_arity(premises, 2)
         if not (a.is_line() and isinstance(a := a.formula, Not) 
                 and b.is_line() and b.formula == a.inner):
-            raise InferenceError("Invalid application of the rule ¬E.")
+            raise InferenceError()
         return [Bot()]
     
     @Rules.add("∧I")
     def AndI(premises, **kwargs):
         a, b = verify_arity(premises, 2)
         if not (a.is_line() and b.is_line()):
-            raise InferenceError("Invalid application of the rule ∧I.")
+            raise InferenceError()
         return [And(a.formula, b.formula)]
     
     @Rules.add("∧E")
     def AndE(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, And)):
-            raise InferenceError("Invalid application of the rule ∧E.")
+            raise InferenceError()
         return [a.left, a.right]
     
     @Rules.add("∨I")
     def OrI(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not a.is_line():
-            raise InferenceError("Invalid application of the rule ∨I.")
+            raise InferenceError()
         m1, m2 = Metavar(), Metavar()
         return [Or(a.formula, m1), Or(m2, a.formula)]
 
@@ -121,19 +121,19 @@ class TFL:
         a, b, c = verify_arity(premises, 3)
         if not (a.is_line() and isinstance(a := a.formula, Or) 
                 and b.is_subproof() and c.is_subproof()):
-            raise InferenceError("Invalid application of the rule ∨E.")
+            raise InferenceError()
         
         ba, bc = b.assumption, b.conclusion
         ca, cc = c.assumption, c.conclusion
         if not ((a.left, a.right) in [(ba, ca), (ca, ba)] and bc == cc and bc):
-            raise InferenceError("Invalid application of the rule ∨E.")
+            raise InferenceError()
         return [bc]
     
     @Rules.add("→I")
     def ImpI(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_subproof() and a.conclusion):
-            raise InferenceError("Invalid application of the rule →I.")
+            raise InferenceError()
         return [Imp(a.assumption, a.conclusion)]
     
     @Rules.add("→E")
@@ -141,38 +141,38 @@ class TFL:
         a, b = verify_arity(premises, 2)
         if not (a.is_line() and isinstance(a := a.formula, Imp) 
                 and b.is_line() and b.formula == a.left):
-            raise InferenceError("Invalid application of the rule →E.")
+            raise InferenceError()
         return [a.right]
     
     @Rules.add("↔I")
     def IffI(premises, **kwargs):
         a, b = verify_arity(premises, 2)
         if not (a.is_subproof() and b.is_subproof()):
-            raise InferenceError("Invalid application of the rule ↔I.")
+            raise InferenceError()
         
         aa, ac = a.assumption, a.conclusion
         ba, bc = b.assumption, b.conclusion
         if not (aa == bc and ba == ac):
-            raise InferenceError("Invalid application of the rule ↔I.")
+            raise InferenceError()
         return [Iff(aa, ac), Iff(ba, bc)]
     
     @Rules.add("↔E")
     def IffE(premises, **kwargs):
         a, b = verify_arity(premises, 2)
         if not (a.is_line() and isinstance(a := a.formula, Iff) and b.is_line()):
-            raise InferenceError("Invalid application of the rule ↔E.")
+            raise InferenceError()
         
         if b.formula == a.left:
             return [a.right]
         if b.formula == a.right:
             return [a.left]
-        raise InferenceError("Invalid application of the rule ↔E.")
+        raise InferenceError()
     
     @Rules.add("R")
     def R(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not a.is_line():
-            raise InferenceError("Invalid application of the rule R.")
+            raise InferenceError()
         return [a.formula]
     
     @Rules.add("IP")
@@ -180,7 +180,7 @@ class TFL:
         a = verify_arity(premises, 1)
         if not (a.is_subproof() and isinstance(a.assumption, Not) 
                 and isinstance(a.conclusion, Bot)):
-            raise InferenceError("Invalid application of the rule IP.")
+            raise InferenceError()
         return [a.assumption.inner]
     
     @Rules.add("DS")
@@ -188,13 +188,13 @@ class TFL:
         a, b = verify_arity(premises, 2)
         if not (a.is_line() and isinstance(a := a.formula, Or) 
                 and b.is_line() and isinstance(b := b.formula, Not)):
-            raise InferenceError("Invalid application of the rule DS.")
+            raise InferenceError()
         
         if b.inner == a.left:
             return [a.right]
         if b.inner == a.right:
             return [a.left]
-        raise InferenceError("Invalid application of the rule DS.")
+        raise InferenceError()
 
     @Rules.add("MT")
     def MT(premises, **kwargs):
@@ -202,7 +202,7 @@ class TFL:
         if not (a.is_line() and isinstance(a := a.formula, Imp) 
                 and b.is_line() and isinstance(b := b.formula, Not) 
                 and b.inner == a.right):
-            raise InferenceError("Invalid application of the rule MT.")
+            raise InferenceError()
         return [Not(a.left)]
 
     @Rules.add("DNE")
@@ -210,28 +210,28 @@ class TFL:
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Not) 
                 and isinstance(a.inner, Not)):
-            raise InferenceError("Invalid application of the rule DNE.")
+            raise InferenceError()
         return [a.inner.inner]
 
     @Rules.add("LEM")
     def LEM(premises, **kwargs):
         a, b = verify_arity(premises, 2)
         if not (a.is_subproof() and b.is_subproof()):
-            raise InferenceError("Invalid application of the rule LEM.")
+            raise InferenceError()
         
         aa, ac = a.assumption, a.conclusion
         ba, bc = b.assumption, b.conclusion
         if not (((isinstance(aa, Not) and aa.inner == ba) 
                  or (isinstance(ba, Not) and ba.inner == aa)) 
                 and ac == bc and ac):
-            raise InferenceError("Invalid application of the rule LEM.")
+            raise InferenceError()
         return [ac]
 
     @Rules.add("DeM")
     def DeM(premises, **kwargs):
         c = verify_arity(premises, 1)
         if not c.is_line():
-            raise InferenceError("Invalid application of the rule DeM.")
+            raise InferenceError()
 
         match c.formula:
             case Not(Or(a, b)):
@@ -243,7 +243,7 @@ class TFL:
             case Or(Not(a), Not(b)):
                 return [Not(And(a, b))]
         
-        raise InferenceError("Invalid application of the rule DeM.")
+        raise InferenceError()
 
 
 class FOL(TFL):
@@ -258,7 +258,7 @@ class FOL(TFL):
     def EqE(premises, **kwargs):
         a, b = verify_arity(premises, 2)
         if not (a.is_line() and isinstance(a := a.formula, Eq) and b.is_line()):
-            raise InferenceError("Invalid application of the rule =E.")
+            raise InferenceError()
         terms = {a.left, a.right}
         def gen(): return Metavar(terms)
         return [sub_term(b.formula, t, gen) for t in terms]
@@ -267,24 +267,23 @@ class FOL(TFL):
     def ForallI(premises, conclusion, scope, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(conclusion, Forall)):
-            raise InferenceError("Invalid application of the rule ∀I.")
+            raise InferenceError()
         var = conclusion.var
         def ignore(v): return v == var
         a_constants = assumption_constants(scope[0])
 
         schemas = [Forall(var, a.formula)]
         for c in constants(a.formula):
-            if c in a_constants:
-                continue
-            inner = sub_term(a.formula, c, lambda: var, ignore)
-            schemas.append(Forall(var, inner))
+            if c not in a_constants:
+                inner = sub_term(a.formula, c, lambda: var, ignore)
+                schemas.append(Forall(var, inner))
         return schemas
     
     @Rules.add("∀E")
     def ForallE(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Forall)):
-            raise InferenceError("Invalid application of the rule ∀E.")
+            raise InferenceError()
         m = Metavar()  # FIX: consider restricting to constants
         return [sub_term(a.inner, a.var, lambda: m)]
 
@@ -292,7 +291,7 @@ class FOL(TFL):
     def ExistsI(premises, conclusion, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(conclusion, Exists)):
-            raise InferenceError("Invalid application of the rule ∃I.")
+            raise InferenceError()
         var = conclusion.var
         def ignore(v): return v == var
 
@@ -308,23 +307,23 @@ class FOL(TFL):
         a, b = verify_arity(premises, 2)
         if not (a.is_line() and isinstance(a := a.formula, Exists) 
                 and b.is_subproof() and b.conclusion):
-            raise InferenceError("Invalid application of the rule ∃E.")
+            raise InferenceError()
         m = Metavar()  # FIX: consider restricting to constants
         schema = sub_term(a.inner, a.var, lambda: m)
         if b.assumption != schema:
-            raise InferenceError("Invalid application of the rule ∃E.")
+            raise InferenceError()
         
         a_constants = assumption_constants(scope[0] + scope[1])
         a_constants.update(constants(a), constants(b.conclusion))
         if m.value in a_constants:
-            raise InferenceError("Invalid application of the rule ∃E.")
+            raise InferenceError()
         return [b.conclusion]
 
     @Rules.add("CQ")
     def CQ(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not a.is_line():
-            raise InferenceError("Invalid application of the rule CQ.")
+            raise InferenceError()
 
         match a.formula:
             case Forall(v, Not(b)):
@@ -336,7 +335,7 @@ class FOL(TFL):
             case Not(Forall(v, b)):
                 return [Exists(v, Not(b))]
         
-        raise InferenceError("Invalid application of the rule CQ.")
+        raise InferenceError()
 
 
 class MLK(TFL):
@@ -346,25 +345,25 @@ class MLK(TFL):
         a = verify_arity(premises, 1)
         if not (a.is_subproof() and isinstance(a.assumption, BoxMarker) 
                 and a.conclusion):
-            raise InferenceError("Invalid application of the rule ☐I.")
+            raise InferenceError()
         return [Box(a.conclusion)]
     
     @Rules.add("☐E", strict=True)
     def BoxE(premises, scope, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Box)):
-            raise InferenceError("Invalid application of the rule ☐E.")
+            raise InferenceError()
         
         lines = [obj.formula for obj in scope[1] if obj.is_line()]
         if lines.count(BoxMarker()) != 1:
-            raise InferenceError("Invalid application of the rule ☐E.")
+            raise InferenceError()
         return [a.inner]
 
     @Rules.add("Def◇")
     def DefDia(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not a.is_line():
-            raise InferenceError("Invalid application of the rule Def◇.")
+            raise InferenceError()
 
         match a.formula:
             case Not(Box(Not(b))):
@@ -372,13 +371,13 @@ class MLK(TFL):
             case Dia(b):
                 return [Not(Box(Not(b)))]
         
-        raise InferenceError("Invalid application of the rule Def◇.")
+        raise InferenceError()
 
     @Rules.add("MC")
     def MC(premises, **kwargs):
         a = verify_arity(premises, 1)
         if not a.is_line():
-            raise InferenceError("Invalid application of the rule MC.")
+            raise InferenceError()
 
         match a.formula:
             case Not(Box(b)):
@@ -390,7 +389,7 @@ class MLK(TFL):
             case Box(Not(b)):
                 return [Not(Dia(b))]
         
-        raise InferenceError("Invalid application of the rule MC.")
+        raise InferenceError()
 
 
 class MLT(MLK):
@@ -399,11 +398,11 @@ class MLT(MLK):
     def RT(premises, scope, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Box)):
-            raise InferenceError("Invalid application of the rule RT.")
+            raise InferenceError()
         
         lines = [obj.formula for obj in scope[1] if obj.is_line()]
         if lines.count(BoxMarker()) != 0:
-            raise InferenceError("Invalid application of the rule RT.")
+            raise InferenceError()
         return [a.inner]
 
 
@@ -413,11 +412,11 @@ class MLS4(MLT):
     def R4(premises, scope, **kwargs):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Box)):
-            raise InferenceError("Invalid application of the rule R4.")
+            raise InferenceError()
         
         lines = [obj.formula for obj in scope[1] if obj.is_line()]
         if lines.count(BoxMarker()) != 1:
-            raise InferenceError("Invalid application of the rule R4.")
+            raise InferenceError()
         return [a]
 
 
@@ -428,11 +427,11 @@ class MLS5(MLS4):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Not) 
                 and isinstance(a.inner, Box)):
-            raise InferenceError("Invalid application of the rule R5.")
+            raise InferenceError()
         
         lines = [obj.formula for obj in scope[1] if obj.is_line()]
         if lines.count(BoxMarker()) != 1:
-            raise InferenceError("Invalid application of the rule R5.")
+            raise InferenceError()
         return [a]
 
 
@@ -443,7 +442,7 @@ class FOMLK(FOL, MLK):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Forall) 
                 and isinstance(a.inner, Box)):
-            raise InferenceError("Invalid application of the rule BF.")
+            raise InferenceError()
         return [Box(Forall(a.var, a.inner.inner))]
 
     @Rules.add("CBF")
@@ -451,7 +450,7 @@ class FOMLK(FOL, MLK):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Box) 
                 and isinstance(a.inner, Forall)):
-            raise InferenceError("Invalid application of the rule CBF.")
+            raise InferenceError()
         return [Forall(a.inner.var, Box(a.inner.inner))]
 
 
@@ -475,9 +474,6 @@ class ProofObject:
     def is_subproof(self):
         return isinstance(self, Proof)
 
-    def is_strict_subproof(self):
-        return self.is_subproof() and isinstance(self.assumption, BoxMarker)
-
 
 @dataclass
 class Line(ProofObject):
@@ -490,6 +486,7 @@ class Line(ProofObject):
 class Proof(ProofObject):
     seq: list[ProofObject]
     context: list[ProofObject]
+    strict_context: list[ProofObject]
 
     @property
     def idx(self):
@@ -557,19 +554,21 @@ class Proof(ProofObject):
                 continue
             try:
                 citations = obj.justification.citations
-                strict = self.is_strict_subproof() and rule not in Rules.strict
+                strict = not (self.strict_context is None or rule in Rules.strict)
                 premises = self.retrieve_citations(citations, obj.idx, strict)
-                scope = self.partition_scope(citations, obj.idx, strict)
+                scope = self.partition_scope(citations, obj.idx)
                 schemas = rule(premises, conclusion=obj.formula, scope=scope)
 
                 if not self.match_schemas(obj.formula, schemas):
-                    raise InferenceError("Line not justified.")
-            
+                    raise InferenceError()
+
             except InferenceError as e:
-                errors_list.append(f"Line {obj.idx}: {e}")
+                if not (error := str(e)):
+                    error = f"Invalid application of the rule {rule.name}."
+                errors_list.append(f"Line {obj.idx}: {error}")
         return errors_list
 
-    def retrieve_citations(self, citations, idx, strict=False):
+    def retrieve_citations(self, citations, idx, strict):
         scope = self.scope(idx, strict)
         idx_to_obj = {obj.idx: obj for obj in scope}
         premises = []
@@ -577,15 +576,15 @@ class Proof(ProofObject):
         for c in citations:
             obj = idx_to_obj.get(c)
             if obj is None:
-                raise InferenceError(f"Citation {c} not in scope.")
+                raise InferenceError(f"Citation {c} is not in scope.")
             premises.append(obj)
         return premises
 
-    def partition_scope(self, citations, idx, strict=False):
+    def partition_scope(self, citations, idx):
         citations = set(citations)
         partitions, current = [], []
 
-        for obj in self.scope(idx, strict):
+        for obj in self.scope(idx):
             current.append(obj)
             if obj.idx in citations:
                 partitions.append(current)
@@ -603,7 +602,9 @@ class Proof(ProofObject):
             if obj.idx == idx:
                 break
             seq.append(obj)
-        return seq if strict else self.context + seq
+        if strict:
+            return self.strict_context + seq
+        return self.context + seq
 
     def _add_line_current(self, formula, justification):
         idx = self.idx[1] + 1 if self.idx else len(self.context) + 1
@@ -614,7 +615,14 @@ class Proof(ProofObject):
         idx = self.idx[1] + 1 if self.idx else len(self.context) + 1
         j = Justification(Rules.AS, ())
         line = Line(idx, assumption, j)
-        subproof = Proof([line], self.context + self.seq)
+
+        strict_context = None
+        if isinstance(assumption, BoxMarker):
+            strict_context = []
+        elif self.strict_context is not None:
+            strict_context = self.strict_context + self.seq
+
+        subproof = Proof([line], self.context + self.seq, strict_context)
         self.seq.append(subproof)
 
     def _collect_lines(self, depth=0):
@@ -651,10 +659,10 @@ class Problem:
             j = Justification(Rules.PR, ())
             context.append(Line(idx, p, j))
             idx += 1
-        
+
         self.premises = premises
         self.conclusion = conclusion
-        self.proof = Proof([], context)
+        self.proof = Proof([], context, None)
 
     def __str__(self):
         lines = self.proof._collect_lines()

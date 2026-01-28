@@ -683,7 +683,7 @@ class Processor:
             id_to_idx[obj.id] = (idx, new_idx - 1)
             idx = new_idx
 
-        return Proof(seq, context)
+        return Proof(seq, context, None)
 
 
 def find_subproof(seq, assumption, conclusion):
