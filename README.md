@@ -6,7 +6,7 @@ Supports propositional, first-order, and modal logics (K, T, S4, S5).
 
 ![ND-Prover Demo](prover.gif)
 
-Try it out at [ndprover.org](https://ndprover.org).
+Try ND-Prover online at [ndprover.org](https://ndprover.org).
 
 ## Installation
 
