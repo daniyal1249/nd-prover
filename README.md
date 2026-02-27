@@ -4,9 +4,9 @@ A Fitch-style natural deduction proof generator and checker, implemented in Pyth
 
 Supports propositional, first-order, and modal logics (K, T, S4, S5).
 
-
 ![ND-Prover Demo](prover.gif)
 
+Try ND-Prover online at ndprover.org.
 
 ## Installation
 
