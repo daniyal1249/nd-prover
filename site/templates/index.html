@@ -1,5 +1,12 @@
 {% extends "_layout.html" %}
 
+{% block meta_description %}
+  <meta
+    name="description"
+    content="ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
+  />
+{% endblock %}
+
 {% block content %}
   <div class="main-grid">
     <!-- LEFT COLUMN: Create problem + Proof (independent vertical stack) -->

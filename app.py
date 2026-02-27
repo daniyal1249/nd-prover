@@ -28,6 +28,19 @@ def add_cache_control(response):
     return response
 
 
+@app.get("/robots.txt")
+def robots_txt():
+    """Robots.txt for search engines."""
+    lines = [
+        "User-agent: *",
+        "Allow: /",
+        "Sitemap: https://ndprover.org/sitemap.xml",
+        "",
+    ]
+    body = "\n".join(lines)
+    return body, 200, {"Content-Type": "text/plain"}
+
+
 def _json_error(message: str, *, status: str = "error", code: int = 400):
     """Return a standardized JSON error response."""
     return jsonify({"ok": False, "status": status, "message": message}), code
@@ -59,7 +72,7 @@ def _serialize_proof(proof):
         text: str,
         justText: str,
         isAssumption: bool,
-        isPremise: bool
+        isPremise: bool,
     }
     """
     lines = []
@@ -78,7 +91,7 @@ def _serialize_proof(proof):
                 'text': formula_str,
                 'justText': just_str,
                 'isAssumption': is_assumption,
-                'isPremise': is_premise_line
+                'isPremise': is_premise_line,
             })
         else:
             # Process assumption line (first line of subproof) at indent + 1
@@ -93,7 +106,7 @@ def _serialize_proof(proof):
                     'text': formula_str,
                     'justText': just_str,
                     'isAssumption': True,
-                    'isPremise': False
+                    'isPremise': False,
                 })
                 
                 # Process remaining lines in subproof at the same indent level
@@ -300,8 +313,31 @@ def generate_proof():
         "ok": True,
         "status": "complete",
         "message": "Proof complete! 🎉",
-        "lines": proof_lines
+        "lines": proof_lines,
     })
+
+
+@app.get("/sitemap.xml")
+def sitemap_xml():
+    """XML sitemap exposing the main site URLs."""
+    base_url = "https://ndprover.org"
+    paths = [
+        "/",
+        "/rules",
+        "/exercises/tfl",
+        "/exercises/fol",
+        "/exercises/ml",
+    ]
+    url_items = "\n".join(
+        f"  <url><loc>{base_url}{path}</loc></url>" for path in paths
+    )
+    xml = (
+        '<?xml version="1.0" encoding="UTF-8"?>\n'
+        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
+        f"{url_items}\n"
+        "</urlset>\n"
+    )
+    return xml, 200, {"Content-Type": "application/xml"}
 
 
 if __name__ == "__main__":

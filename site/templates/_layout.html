@@ -5,6 +5,46 @@
   <title>{% block title %}Natural Deduction Proof Generator & Checker{% endblock %}</title>
   <!-- maximum-scale=1 -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  {% block meta_description %}
+  <meta
+    name="description"
+    content="ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
+  />
+  {% endblock %}
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Natural Deduction Proof Generator & Checker" />
+  <meta
+    property="og:description"
+    content="ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
+  />
+  <meta property="og:url" content="https://ndprover.org{{ request.path }}" />
+
+  <!-- Twitter Cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Natural Deduction Proof Generator & Checker" />
+  <meta
+    name="twitter:description"
+    content="ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
+  />
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://ndprover.org{{ request.path }}" />
+
+  <!-- Structured data (JSON-LD) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "ND-Prover",
+    "url": "https://ndprover.org/",
+    "applicationCategory": "EducationalApplication",
+    "description": "ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
+  }
+  </script>
+
   <!-- <link rel="icon" type="image/svg+xml" href="/static/img/nd.svg" /> -->
 
   <!-- Noto Sans (site-wide font) -->
@@ -53,7 +93,7 @@
         href="https://github.com/OpenLogicProject/fitch-checker"
         target="_blank"
         rel="noreferrer">Open Logic Project</a>
-      proof checker. More information can be found in the
+      proof checker. For the source code and further details, see the
       <a
         href="https://github.com/daniyal1249/nd-prover"
         target="_blank"
