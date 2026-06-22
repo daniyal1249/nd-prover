@@ -53,7 +53,7 @@ class _Proof(_ProofObject):
     goal: Formula
 
     def __post_init__(self):
-        self.seq = self.seq[:]
+        self.seq = self.seq[:]  # FIX: check if correct
         super().__init__()
 
     @property
@@ -478,7 +478,7 @@ class Introducer:
         if not found:
             assumption = _Line(left, "AS", ())
             subproof = _Proof(proof.seq + [assumption], right)
-            p = Prover(subproof, prover.seen, prover.deadline)
+            p = Prover(subproof, prover.seen.copy(), prover.deadline)
             if not p.prove(complete):
                 return False
             subproof.seq = subproof.seq[len(proof.seq):]
@@ -624,8 +624,9 @@ class Processor:
             for idx, obj in enumerate(proof.seq):
 
                 if not obj.is_line():
-                    Processor.remove_uncited(obj, id_to_citers)
-                    seq.append(obj)
+                    if id_to_citers[obj.id]:
+                        Processor.remove_uncited(obj, id_to_citers)
+                        seq.append(obj)
                     continue
                 if obj.is_assumption or idx == n - 1:
                     seq.append(obj)
