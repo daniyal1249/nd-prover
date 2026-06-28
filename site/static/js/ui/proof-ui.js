@@ -23,12 +23,7 @@ export function updateGenerateButtonVisibility(state) {
   if (!btnGenerate) {
     return;
   }
-
-  const logic = (state.proofProblem && state.proofProblem.logic)
-    ? state.proofProblem.logic
-    : (state.problemDraft ? state.problemDraft.logic : 'TFL');
-  const isTFL = logic === 'TFL';
-  if (isTFL) {
+  if (state.proofProblem) {
     btnGenerate.classList.remove('hidden');
   } else {
     btnGenerate.classList.add('hidden');
@@ -165,92 +160,103 @@ export function initProofUI(state, renderProof) {
   const btnGenerate = document.getElementById('generate-proof');
 
   if (btnGenerate && resultsBox) {
+    let isGenerating = false;
+
     btnGenerate.addEventListener('click', async () => {
-      // Reveal the results section if hidden
-      if (resultsSection && resultsSection.classList.contains('hidden')) {
-        resultsSection.classList.remove('hidden');
+      if (isGenerating) {
+        return;
       }
-
-      resultsBox.classList.add('results--show');
-
-      const payload = {
-        logic: state.proofProblem
-          ? state.proofProblem.logic
-          : (state.problemDraft ? state.problemDraft.logic : 'TFL'),
-        premisesText: state.proofProblem
-          ? state.proofProblem.premisesText
-          : (state.problemDraft ? state.problemDraft.premisesText : ''),
-        conclusionText: state.proofProblem
-          ? state.proofProblem.conclusionText
-          : (state.problemDraft ? state.problemDraft.conclusionText : '')
-      };
-
-      resultsBox.textContent = 'Generating proof...';
+      isGenerating = true;
 
       try {
-        // Create an AbortController for timeout handling (10 seconds)
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 10000);
+        // Reveal the results section if hidden
+        if (resultsSection && resultsSection.classList.contains('hidden')) {
+          resultsSection.classList.remove('hidden');
+        }
 
-        let response;
+        resultsBox.classList.add('results--show');
+
+        const payload = {
+          logic: state.proofProblem
+            ? state.proofProblem.logic
+            : (state.problemDraft ? state.problemDraft.logic : 'TFL'),
+          premisesText: state.proofProblem
+            ? state.proofProblem.premisesText
+            : (state.problemDraft ? state.problemDraft.premisesText : ''),
+          conclusionText: state.proofProblem
+            ? state.proofProblem.conclusionText
+            : (state.problemDraft ? state.problemDraft.conclusionText : '')
+        };
+
+        resultsBox.textContent = 'Generating proof...';
+
         try {
-          response = await fetch('/api/generate-proof', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-            signal: controller.signal
-          });
-          clearTimeout(timeoutId);
-        } catch (fetchError) {
-          clearTimeout(timeoutId);
-          if (fetchError.name === 'AbortError') {
-            // Timeout occurred
+          // Create an AbortController for timeout handling (12 seconds)
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 12000);
+
+          let response;
+          try {
+            response = await fetch('/api/generate-proof', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+              signal: controller.signal
+            });
+            clearTimeout(timeoutId);
+          } catch (fetchError) {
+            clearTimeout(timeoutId);
+            if (fetchError.name === 'AbortError') {
+              // Timeout occurred
+              if (resultsSection) {
+                resultsSection.classList.remove('results-pane--success');
+                resultsSection.classList.add('results-pane--error');
+              }
+              resultsBox.textContent = 'Proof generation timed out.';
+              return;
+            }
+            throw fetchError; // Re-throw other errors
+          }
+
+          const data = await response.json();
+          const message = data.message || '';
+
+          if (!response.ok || !data.ok) {
             if (resultsSection) {
               resultsSection.classList.remove('results-pane--success');
               resultsSection.classList.add('results-pane--error');
             }
-            resultsBox.textContent = 'Proof generation timed out.';
+            resultsBox.textContent = message;
             return;
           }
-          throw fetchError; // Re-throw other errors
-        }
 
-        const data = await response.json();
-        const message = data.message || '';
-
-        if (!response.ok || !data.ok) {
+          // Success - deserialize and display the proof
+          if (data.lines && Array.isArray(data.lines)) {
+            deserializeProofLines(state, data.lines);
+            renderProof();
+            scheduleUrlUpdate();
+            
+            if (resultsSection) {
+              resultsSection.classList.remove('results-pane--error');
+              resultsSection.classList.add('results-pane--success');
+            }
+            resultsBox.textContent = message;
+          } else {
+            if (resultsSection) {
+              resultsSection.classList.remove('results-pane--success');
+              resultsSection.classList.add('results-pane--error');
+            }
+            resultsBox.textContent = 'Invalid response from server.';
+          }
+        } catch (error) {
           if (resultsSection) {
             resultsSection.classList.remove('results-pane--success');
             resultsSection.classList.add('results-pane--error');
           }
-          resultsBox.textContent = message;
-          return;
+          resultsBox.textContent = 'An error occurred while generating the proof.';
         }
-
-        // Success - deserialize and display the proof
-        if (data.lines && Array.isArray(data.lines)) {
-          deserializeProofLines(state, data.lines);
-          renderProof();
-          scheduleUrlUpdate();
-          
-          if (resultsSection) {
-            resultsSection.classList.remove('results-pane--error');
-            resultsSection.classList.add('results-pane--success');
-          }
-          resultsBox.textContent = message;
-        } else {
-          if (resultsSection) {
-            resultsSection.classList.remove('results-pane--success');
-            resultsSection.classList.add('results-pane--error');
-          }
-          resultsBox.textContent = 'Invalid response from server.';
-        }
-      } catch (error) {
-        if (resultsSection) {
-          resultsSection.classList.remove('results-pane--success');
-          resultsSection.classList.add('results-pane--error');
-        }
-        resultsBox.textContent = 'An error occurred while generating the proof.';
+      } finally {
+        isGenerating = false;
       }
     });
   }
