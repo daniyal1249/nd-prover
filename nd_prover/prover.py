@@ -670,7 +670,7 @@ class Prover:
 
     def prove(self, complete):
         if self.deadline is not None and time.monotonic() >= self.deadline:
-            raise TimeoutError()
+            raise TimeoutError("Proof generation timed out.")
         if not self._enter_state():
             return False
 
@@ -824,7 +824,7 @@ def prove(logic, premises, conclusion, timeout):
 
     seq = [_Line(p, "PR", ()) for p in premises]
     _proof = _Proof(seq, conclusion)
-    p = Prover(logic, _proof, deadline=time.monotonic() + timeout)
+    p = Prover(logic, _proof, deadline=time.monotonic() + timeout[0])
 
     try:
         proved = p.prove(complete=True)
@@ -833,7 +833,7 @@ def prove(logic, premises, conclusion, timeout):
 
     if not proved:
         _proof = _Proof(seq, conclusion)
-        p = Prover(logic, _proof)
+        p = Prover(logic, _proof, deadline=time.monotonic() + timeout[1])
         if not p.prove(complete=False):
             if cm is False:
                 raise ProverError("Argument is valid, but no proof was found.")
