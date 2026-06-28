@@ -458,11 +458,11 @@ class FOMLT(FOMLK, MLT):
     pass
 
 
-class FOMLS4(FOMLK, MLS4):
+class FOMLS4(FOMLT, MLS4):
     pass
 
 
-class FOMLS5(FOMLK, MLS5):
+class FOMLS5(FOMLS4, MLS5):
     pass
 
 
