@@ -8,7 +8,25 @@ Supports propositional, first-order, and modal logics (K, T, S4, S5).
 
 Try ND-Prover online at [ndprover.org](https://ndprover.org).
 
-## Installation
+## Development Roadmap
+
+- TFL — Propositional logic proof generator
+    - [x] Public alpha
+    - [x] Stable release
+
+- ML — Modal logic proof generator
+    - [x] Public alpha
+    - [ ] Stable release
+
+- FOL — First-order logic proof generator
+    - [ ] Public alpha
+    - [ ] Stable release
+
+- FOML — First-order modal logic proof generator
+    - [ ] Public alpha
+    - [ ] Stable release
+
+## Package Installation
 
 ND-Prover can be installed using pip:
 
@@ -22,8 +40,7 @@ and running the following in the cloned repo:
 
     pip install .
 
-
-## Example Usage
+## Package Example Usage
 
 ```
 $ nd-prover
