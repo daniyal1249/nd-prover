@@ -173,13 +173,7 @@ function updateGenerateButtonVisibilityFromState(state) {
   if (!btnGenerate) {
     return;
   }
-
-  const proofActive = isProofPaneActive();
-  const logic = proofActive && state.proofProblem && state.proofProblem.logic
-    ? state.proofProblem.logic
-    : (state.problemDraft ? state.problemDraft.logic : 'TFL');
-  const isTFL = logic === 'TFL';
-  if (isTFL) {
+  if (isProofPaneActive()) {
     btnGenerate.classList.remove('hidden');
   } else {
     btnGenerate.classList.add('hidden');
