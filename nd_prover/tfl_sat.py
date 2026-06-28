@@ -50,6 +50,10 @@ def evaluate(formula, model):
 
 
 def countermodel(premises, conclusion):
+    if not (all(is_tfl_formula(p) for p in premises) 
+            and is_tfl_formula(conclusion)):
+        return None
+
     all_vars = set()
     for premise in premises:
         all_vars |= prop_vars(premise)
@@ -68,8 +72,9 @@ def countermodel(premises, conclusion):
             if not evaluate(conclusion, model):
                 return model
 
-    return None
+    return False
 
 
 def is_valid(premises, conclusion):
-    return countermodel(premises, conclusion) is None
+    cm = countermodel(premises, conclusion)
+    return None if cm is None else cm is False
