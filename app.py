@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import multiprocessing as mp
+
 from flask import Flask, jsonify, render_template, request
 
 from nd_prover import *
@@ -61,6 +63,65 @@ def _resolve_logic(logic_name):
         message = f'Logic not recognized: "{logic_name}".'
         return None, message
     return logic, None
+
+
+def _generation_note(logic):
+    if logic in (MLK, MLT, MLS4, MLS5):
+        return "\n\n🚧 Note: ML proof generation is still under development."
+    if issubclass(logic, FOL):
+        return "\n\n🚧 Note: Proof generation for FOL and FOML is not yet implemented."
+    return ""
+
+
+def _generation_timeouts(logic):
+    """Return cooperative and hard timeouts for proof generation."""
+    timeout = 3 if logic is TFL else 5
+    hard_timeout = 10
+    return timeout, hard_timeout
+
+
+def _prove_worker(logic, premises, conclusion, timeout, queue):
+    try:
+        problem = prove(logic, premises, conclusion, timeout)
+        proof_lines = _serialize_proof(problem.proof)
+        queue.put(("ok", proof_lines))
+    except Exception as e:
+        queue.put(("error", e))
+
+
+def _terminate_process(process):
+    """Forcefully stop a proof-generation child process."""
+    process.terminate()
+    process.join(timeout=1)
+    if process.is_alive():
+        process.kill()
+        process.join()
+
+
+def _prove_with_hard_timeout(logic, premises, conclusion):
+    """Run proof generation in a child process with a hard timeout."""
+    timeout, hard_timeout = _generation_timeouts(logic)
+    ctx = mp.get_context("spawn")
+    queue = ctx.Queue()
+    process = ctx.Process(
+        target=_prove_worker,
+        args=(logic, premises, conclusion, timeout, queue),
+    )
+    process.start()
+    process.join(hard_timeout)
+
+    if process.is_alive():
+        _terminate_process(process)
+        raise TimeoutError("Proof generation timed out.")
+
+    if queue.empty():
+        raise ProverError("Proof generation failed.")
+
+    status, payload = queue.get()
+    if status == "ok":
+        return payload
+
+    raise payload
 
 
 def _serialize_proof(proof):
@@ -293,8 +354,6 @@ def generate_proof():
 
     if logic is None:
         return _json_error(error_message)
-    if logic_name != "TFL":
-        return _json_error("Proof generation is only supported for TFL.")
 
     try:
         premises = parse_and_verify_premises(premises_text, logic)
@@ -303,16 +362,16 @@ def generate_proof():
         return _json_error(str(e))
 
     try:
-        problem = prove(premises, conclusion)
+        proof_lines = _prove_with_hard_timeout(logic, premises, conclusion)
     except Exception as e:
-        return _json_error(str(e))
+        return _json_error(str(e) + _generation_note(logic))
 
-    proof_lines = _serialize_proof(problem.proof)
+    message = "Proof complete! 🎉" + _generation_note(logic)
 
     return jsonify({
         "ok": True,
         "status": "complete",
-        "message": "Proof complete! 🎉",
+        "message": message,
         "lines": proof_lines,
     })
 
