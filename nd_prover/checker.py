@@ -99,7 +99,8 @@ class TFL:
         a, b = verify_arity(premises, 2)
         if not (a.is_line() and b.is_line()):
             raise InferenceError()
-        return [And(a.formula, b.formula)]
+        a, b = a.formula, b.formula
+        return [And(a, b), And(b, a)]
     
     @Rules.add("∧E")
     def AndE(premises, **kwargs):
@@ -260,7 +261,7 @@ class FOL(TFL):
         if not (a.is_line() and isinstance(a := a.formula, Eq) and b.is_line()):
             raise InferenceError()
         terms = {a.left, a.right}
-        def gen(): return Metavar(terms)
+        def gen(): return Metavar(lambda obj: obj in terms)
         return [sub_term(b.formula, t, gen) for t in terms]
 
     @Rules.add("∀I")
@@ -284,7 +285,7 @@ class FOL(TFL):
         a = verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Forall)):
             raise InferenceError()
-        m = Metavar()  # FIX: consider restricting to constants
+        m = Metavar(is_ground_term)
         return [sub_term(a.inner, a.var, lambda: m)]
 
     @Rules.add("∃I")
@@ -296,9 +297,9 @@ class FOL(TFL):
         def ignore(v): return v == var
 
         schemas = [Exists(var, a.formula)]
-        for c in constants(a.formula):
-            def gen(): return Metavar({c, var})
-            inner = sub_term(a.formula, c, gen, ignore)
+        for t in ground_terms(a.formula):
+            def gen(): return Metavar(lambda obj: obj in {t, var})
+            inner = sub_term(a.formula, t, gen, ignore)
             schemas.append(Exists(var, inner))
         return schemas
     
@@ -308,7 +309,7 @@ class FOL(TFL):
         if not (a.is_line() and isinstance(a := a.formula, Exists) 
                 and b.is_subproof() and b.conclusion):
             raise InferenceError()
-        m = Metavar()  # FIX: consider restricting to constants
+        m = Metavar(is_constant)
         schema = sub_term(a.inner, a.var, lambda: m)
         if b.assumption != schema:
             raise InferenceError()
@@ -701,17 +702,20 @@ class Problem:
         return self.proof.errors()
 
     def verify_formula(self, formula):
-        if self.logic is TFL and is_tfl_formula(formula):
+        logic = self.logic
+        if logic is TFL and is_tfl_formula(formula):
             return
-        if self.logic is FOL and is_fol_formula(formula):
-            return   
-        if self.logic in (MLK, MLT, MLS4, MLS5) and is_ml_formula(formula):
+        if logic is FOL and is_fol_formula(formula):
+            if not free_vars(formula):
+                return
+            raise InferenceError(f'"{formula}" is not a closed formula.')
+        if logic in (MLK, MLT, MLS4, MLS5) and is_ml_formula(formula):
             return
-        if self.logic in (FOMLK, FOMLT, FOMLS4, FOMLS5):
-            return
-        raise InferenceError(
-            f'"{formula}" is not a {self.logic.__name__} formula.'
-        )
+        if logic in (FOMLK, FOMLT, FOMLS4, FOMLS5):
+            if not free_vars(formula):
+                return
+            raise InferenceError(f'"{formula}" is not a closed formula.')
+        raise InferenceError(f'"{formula}" is not a {logic.__name__} formula.')
 
     def verify_assumption(self, assumption):
         if issubclass(self.logic, MLK) and isinstance(assumption, BoxMarker):
@@ -719,10 +723,9 @@ class Problem:
         self.verify_formula(assumption)
 
     def verify_rule(self, rule):
-        if not hasattr(self.logic, rule.func.__name__):
-            raise InferenceError(
-                f"{rule} is not a valid {self.logic.__name__} rule."
-            )
+        logic = self.logic
+        if not hasattr(logic, rule.func.__name__):
+            raise InferenceError(f"{rule} is not a valid {logic.__name__} rule.")
 
     def conclusion_reached(self):
         return self.proof.conclusion == self.conclusion
