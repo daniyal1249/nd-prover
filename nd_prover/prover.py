@@ -286,7 +286,8 @@ class Eliminator:
             if not (obj.is_line() and isinstance(obj.formula, Forall)):
                 continue
 
-            for t in proof.ground_terms or (Func("a", ()),):
+            ground_terms = sorted(proof.ground_terms, key=str)
+            for t in ground_terms or (Func("a", ()),):
                 inner = sub_term(obj.formula.inner, obj.formula.var, lambda: t)
                 if inner not in proof.formulas:
                     line = _Line(inner, "∀E", (obj.id,))
@@ -434,7 +435,7 @@ class Eliminator:
             if not found:
                 assumption = _Line(inner, "AS", ())
                 subproof = _Proof(proof.seq + [assumption], goal)
-                p = prover.new(subproof)  # FIX: copy?
+                p = prover.new(subproof)
                 if not p.prove(complete):
                     continue
                 subproof.seq = subproof.seq[len(proof.seq):]
@@ -688,7 +689,7 @@ class Introducer:
         c = fresh_constant(proof.ground_terms)
         inner = sub_term(proof.goal.inner, proof.goal.var, lambda: c)
         branch = _Proof(proof.seq, inner)
-        p = prover.new(branch)  # FIX: copy?
+        p = prover.new(branch)
         if not p.prove(complete):
             return False
 
@@ -703,10 +704,11 @@ class Introducer:
         proof = prover.proof
         branches = []
 
-        for t in proof.ground_terms or (Func("a", ()),):
+        ground_terms = sorted(proof.ground_terms, key=str)
+        for t in ground_terms or (Func("a", ()),):
             inner = sub_term(proof.goal.inner, proof.goal.var, lambda: t)
             branch = _Proof(proof.seq, inner)
-            p = prover.new(branch)  # FIX: copy?
+            p = prover.new(branch)
             if not p.prove(complete):
                 continue
 
