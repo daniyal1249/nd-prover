@@ -34,11 +34,15 @@ def parse_and_verify_formula(f, logic):
     if logic is TFL and is_tfl_formula(f):
         return f
     if logic is FOL and is_fol_formula(f):
-        return f   
+        if not free_vars(f):
+            return f
+        raise ParsingError(f'"{f}" is not a closed formula.')
     if logic in (MLK, MLT, MLS4, MLS5) and is_ml_formula(f):
         return f
     if logic in (FOMLK, FOMLT, FOMLS4, FOMLS5):
-        return f
+        if not free_vars(f):
+            return f
+        raise ParsingError(f'"{f}" is not a closed formula.')
     raise ParsingError(f'"{f}" is not a well-formed {logic.__name__} formula.')
 
 
