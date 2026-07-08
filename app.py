@@ -64,10 +64,10 @@ def _resolve_logic(logic_name):
 
 
 def _generation_note(logic):
-    if logic in (MLK, MLT, MLS4, MLS5):
-        return "\n\n🚧 Note: ML proof generation is still under development."
-    if issubclass(logic, FOL):
-        return "\n\n🚧 Note: Proof generation for FOL and FOML is not yet implemented."
+    if logic is FOL:
+        return "\n\n🚧 Note: FOL proof generation is still under development."
+    if issubclass(logic, MLK):
+        return "\n\n🚧 Note: ML and FOML proof generation is still under development."
     return ""
 
 

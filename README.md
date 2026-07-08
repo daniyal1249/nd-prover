@@ -19,11 +19,11 @@ Try ND-Prover online at [ndprover.org](https://ndprover.org).
     - [ ] Stable release
 
 - FOL — First-order logic proof generator
-    - [ ] Public alpha
+    - [x] Public alpha
     - [ ] Stable release
 
 - FOML — First-order modal logic proof generator
-    - [ ] Public alpha
+    - [x] Public alpha
     - [ ] Stable release
 
 ## Package Installation

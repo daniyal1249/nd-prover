@@ -24,13 +24,13 @@ from .parser import (
 )
 from .prover import (
     ProverError, _ProofObject, _Line, _Proof, Eliminator, Introducer, 
-    Prover, Processor, find_subproof, prove
+    Prover, Processor, find_subproof, fresh_constant, prove
 )
 from .syntax import (
     Metavar, Formula, Bot, Not, And, Or, Imp, Iff, Term, Func, Var, Pred, 
     Eq, Forall, Exists, Box, Dia, BoxMarker, is_tfl_formula, 
-    is_fol_formula, is_fol_sentence, is_ml_formula, atomic_terms, 
-    constants, free_vars, sub_term
+    is_fol_formula, is_ml_formula, is_constant, is_ground_term, terms, 
+    constants, ground_terms, free_vars, sub_term
 )
 from .tfl_sat import prop_vars, evaluate, countermodel, is_valid
 
