@@ -56,8 +56,8 @@ def countermodel(premises, conclusion):
 
     all_vars = set()
     for premise in premises:
-        all_vars |= prop_vars(premise)
-    all_vars |= prop_vars(conclusion)
+        all_vars.update(prop_vars(premise))
+    all_vars.update(prop_vars(conclusion))
 
     sorted_vars = sorted(all_vars)
     n = len(sorted_vars)
