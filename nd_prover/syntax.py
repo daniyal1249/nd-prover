@@ -18,16 +18,16 @@ from dataclasses import dataclass, field
 class Metavar:
     count = 0
 
-    def __init__(self, domain=None):
+    def __init__(self, domain_pred=None):
         Metavar.count += 1
         self.id = Metavar.count
-        self.domain = domain
+        self.domain_pred = domain_pred
         self.value = None
 
     def __repr__(self):
         return (
             f"Metavar(id={self.id!r}, "
-            f"domain={self.domain!r}, "
+            f"domain_pred={self.domain_pred!r}, "
             f"value={self.value!r})"
         )
 
@@ -35,21 +35,13 @@ class Metavar:
         return f"?m{self.id}"
 
     def __eq__(self, other):
-        if self.domain and other not in self.domain:
+        p = self.domain_pred
+        if p and not p(other):
             return False
         if self.value is None:
             self.value = other
             return True
         return self.value == other
-
-    def _unify(self, other, metavars):
-        if self.domain and other not in self.domain:
-            return False
-        if self.value is None:
-            self.value = other
-            metavars.append(self)
-            return True
-        return self.value._unify(other, metavars)
 
 
 class Formula:
@@ -60,15 +52,6 @@ class Formula:
             return s[1:-1]
         return s
 
-    def unify(self, other, metavars):
-        _metavars = []
-        if self._unify(other, _metavars):
-            metavars.extend(_metavars)
-            return True
-        for metavar in _metavars:
-            metavar.value = None
-        return False
-
 # TFL
 @dataclass(frozen=True)
 class Bot(Formula):
@@ -76,25 +59,12 @@ class Bot(Formula):
     def _str(self):
         return "⊥"
 
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return isinstance(other, Bot)
-
 @dataclass(frozen=True)
 class Not(Formula):
     inner: Formula
 
     def _str(self):
         return f"¬{self.inner._str()}"
-
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Not) 
-            and self.inner._unify(other.inner, metavars)
-        )
 
 @dataclass(frozen=True)
 class And(Formula):
@@ -104,15 +74,6 @@ class And(Formula):
     def _str(self):
         return f"({self.left._str()} ∧ {self.right._str()})"
 
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, And) 
-            and self.left._unify(other.left, metavars) 
-            and self.right._unify(other.right, metavars)
-        )
-
 @dataclass(frozen=True)
 class Or(Formula):
     left: Formula
@@ -120,15 +81,6 @@ class Or(Formula):
 
     def _str(self):
         return f"({self.left._str()} ∨ {self.right._str()})"
-
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Or) 
-            and self.left._unify(other.left, metavars) 
-            and self.right._unify(other.right, metavars)
-        )
 
 @dataclass(frozen=True)
 class Imp(Formula):
@@ -138,15 +90,6 @@ class Imp(Formula):
     def _str(self):
         return f"({self.left._str()} → {self.right._str()})"
 
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Imp) 
-            and self.left._unify(other.left, metavars) 
-            and self.right._unify(other.right, metavars)
-        )
-
 @dataclass(frozen=True)
 class Iff(Formula):
     left: Formula
@@ -154,15 +97,6 @@ class Iff(Formula):
 
     def _str(self):
         return f"({self.left._str()} ↔ {self.right._str()})"
-
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Iff) 
-            and self.left._unify(other.left, metavars) 
-            and self.right._unify(other.right, metavars)
-        )
 
 # FOL
 class Term:
@@ -182,16 +116,6 @@ class Func(Term):
             return self.name
         return f"{self.name}({', '.join(str(t) for t in self.args)})"
 
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        if not (isinstance(other, Func) and self.name == other.name 
-                and len(self.args) == len(other.args)):
-            return False
-        return all(
-            t1._unify(t2, metavars) for t1, t2 in zip(self.args, other.args)
-        )
-
 @dataclass(frozen=True)
 class Var(Term):
     name: str
@@ -200,11 +124,6 @@ class Var(Term):
 
     def _str(self):
         return self.name
-
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return isinstance(other, Var) and self.name == other.name
 
 @dataclass(frozen=True)
 class Pred(Formula):
@@ -216,16 +135,6 @@ class Pred(Formula):
             return self.name
         return f"{self.name}({', '.join(str(t) for t in self.args)})"
 
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        if not (isinstance(other, Pred) and self.name == other.name 
-                and len(self.args) == len(other.args)):
-            return False
-        return all(
-            t1._unify(t2, metavars) for t1, t2 in zip(self.args, other.args)
-        )
-
 @dataclass(frozen=True)
 class Eq(Formula):
     left: Term
@@ -233,15 +142,6 @@ class Eq(Formula):
 
     def _str(self):
         return f"{self.left} = {self.right}"
-
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Eq) 
-            and self.left._unify(other.left, metavars) 
-            and self.right._unify(other.right, metavars)
-        )
 
 @dataclass(frozen=True)
 class Forall(Formula):
@@ -251,15 +151,6 @@ class Forall(Formula):
     def _str(self):
         return f"∀{self.var} {self.inner._str()}"
 
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Forall) 
-            and self.var._unify(other.var, metavars) 
-            and self.inner._unify(other.inner, metavars)
-        )
-
 @dataclass(frozen=True)
 class Exists(Formula):
     var: Var
@@ -267,15 +158,6 @@ class Exists(Formula):
 
     def _str(self):
         return f"∃{self.var} {self.inner._str()}"
-
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Exists) 
-            and self.var._unify(other.var, metavars) 
-            and self.inner._unify(other.inner, metavars)
-        )
 
 # ML
 @dataclass(frozen=True)
@@ -285,28 +167,12 @@ class Box(Formula):
     def _str(self):
         return f"☐{self.inner._str()}"
 
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Box) 
-            and self.inner._unify(other.inner, metavars)
-        )
-
 @dataclass(frozen=True)
 class Dia(Formula):
     inner: Formula
 
     def _str(self):
         return f"◇{self.inner._str()}"
-
-    def _unify(self, other, metavars):
-        if isinstance(other, Metavar):
-            return other._unify(self, metavars)
-        return (
-            isinstance(other, Dia) 
-            and self.inner._unify(other.inner, metavars)
-        )
 
 @dataclass(frozen=True)
 class BoxMarker:
@@ -341,10 +207,6 @@ def is_fol_formula(formula):
             return False
 
 
-def is_fol_sentence(formula):
-    return is_fol_formula(formula) and not free_vars(formula)
-
-
 def is_ml_formula(formula):
     match formula:
         case Pred(_, args):
@@ -359,36 +221,44 @@ def is_ml_formula(formula):
             return False
 
 
-def atomic_terms(formula, free):
+def is_constant(term):
+    return isinstance(term, Func) and not term.args
+
+
+def is_ground_term(term):
+    return isinstance(term, Func) and all(is_ground_term(t) for t in term.args)
+
+
+def terms(formula, free=True):
     match formula:
         case Bot():
             return set()
         case Not(a) | Box(a) | Dia(a):
-            return atomic_terms(a, free)
+            return terms(a, free)
         case And(a, b) | Or(a, b) | Imp(a, b) | Iff(a, b) | Eq(a, b):
-            return atomic_terms(a, free) | atomic_terms(b, free)
+            return terms(a, free) | terms(b, free)
         case Func(_, args) as f:
-            if not args:
-                return {f}
-            return set().union(*(atomic_terms(t, free) for t in args))
+            return {f}.union(*(terms(t, free) for t in args))
         case Var() as v:
             return {v}
         case Pred(_, args):
-            return set().union(*(atomic_terms(t, free) for t in args))
+            return set().union(*(terms(t, free) for t in args))
         case Forall(v, a) | Exists(v, a):
-            return atomic_terms(a, free) - ({v} if free else set())
+            return terms(a, free) - ({v} if free else set())
         case _:
             return set()
 
 
 def constants(formula):
-    all_terms = atomic_terms(formula, free=False)
-    return {t for t in all_terms if isinstance(t, Func)}
+    return {t for t in terms(formula) if is_constant(t)}
+
+
+def ground_terms(formula):
+    return {t for t in terms(formula) if is_ground_term(t)}
 
 
 def free_vars(formula):
-    free_terms = atomic_terms(formula, free=True)
-    return {t for t in free_terms if isinstance(t, Var)}
+    return {t for t in terms(formula) if isinstance(t, Var)}
 
 
 def sub_term(formula, term, gen, ignore=lambda v: False):
