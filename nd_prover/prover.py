@@ -704,16 +704,26 @@ class Introducer:
         proof = prover.proof
         branches = []
 
+        exists, m = proof.goal, Metavar(is_ground_term)
+        schema = sub_term(exists.inner, exists.var, lambda: m)
+
+        for obj in proof.seq:
+            if obj.is_line() and obj.formula == schema:
+                line = _Line(exists, "∃I", (obj.id,))
+                proof.add(line)
+                return True
+            m.value = None
+
         ground_terms = sorted(proof.ground_terms, key=str)
         for t in ground_terms or (Func("a", ()),):
-            inner = sub_term(proof.goal.inner, proof.goal.var, lambda: t)
+            inner = sub_term(exists.inner, exists.var, lambda: t)
             branch = _Proof(proof.seq, inner)
             p = prover.new(branch)
             if not p.prove(complete):
                 continue
 
             inner_id = branch.pop_reiteration()
-            line = _Line(proof.goal, "∃I", (inner_id,))
+            line = _Line(exists, "∃I", (inner_id,))
             branch.add(line)
             branches.append(branch)
             # if not complete:  # FIX: break?
