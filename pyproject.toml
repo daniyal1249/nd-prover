@@ -15,11 +15,14 @@ keywords = [
     "python",
     "math",
     "logic",
-    "proof checker",
-    "natural deduction",
+    "theorem proving",
+    "prover",
     "fitch",
+    "natural deduction",
+    "modal logic",
+    "theorem prover",
     "fitch proofs",
-    "modal logic"
+    "proof checker"
 ]
 
 classifiers = [
