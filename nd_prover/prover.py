@@ -144,7 +144,7 @@ class _Proof(_ProofObject):
     def commit_best_branch(self, branches):
         if not branches:
             return False
-        def key(p): return (p.ip_count, p.line_count)
+        def key(p): return (p.line_count, p.ip_count)
         # FIX: consider copying seq
         self.seq = min(branches, key=key).seq
         return True
@@ -836,7 +836,7 @@ class Prover:
     def enter_state(self):
         proof = self.proof
         state = (frozenset(proof.formulas), proof.goal)
-        cost = (proof.ip_count, proof.line_count)
+        cost = (proof.line_count, proof.ip_count)
 
         old_cost = self.seen.get(state)
         if old_cost is None or cost < old_cost:

@@ -301,7 +301,6 @@ def generate_proof():
 
     if logic is None:
         return _json_error(error_message)
-    timeout = (3, 7) if logic is TFL else (5, 5)
 
     try:
         premises = parse_and_verify_premises(premises_text, logic)
@@ -310,7 +309,7 @@ def generate_proof():
         return _json_error(str(e))
 
     try:
-        problem = prove(logic, premises, conclusion, timeout)
+        problem = prove(logic, premises, conclusion, (5, 5))
     except Exception as e:
         return _json_error(str(e) + _generation_note(logic))
 
