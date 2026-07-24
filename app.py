@@ -309,7 +309,7 @@ def generate_proof():
         return _json_error(str(e))
 
     try:
-        problem = prove(logic, premises, conclusion, (5, 5))
+        problem = prove(logic, premises, conclusion, timeout=(1000, 5, 4))
     except Exception as e:
         return _json_error(str(e) + _generation_note(logic))
 
