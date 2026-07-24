@@ -4,13 +4,14 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nd-prover"
-version = "2.1.0"
+version = "3.0.0"
 description = "Natural deduction proof generator & checker"
 authors = [{ name = "Daniyal Akif", email = "daniyalakif@gmail.com" }]
 readme = "README.md"
 license = "Apache-2.0"
 license-files = ["LICENSE"]
 requires-python = ">=3.10"
+dependencies = ["cvc5==1.3.4"]
 keywords = [
     "python",
     "math",
@@ -24,7 +25,6 @@ keywords = [
     "fitch proofs",
     "proof checker"
 ]
-
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Science/Research",
