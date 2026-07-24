@@ -14,8 +14,7 @@
 
 import time
 
-from .checker import *
-from .tfl_sat import *
+from .sat import *
 
 
 class ProverError(Exception):
@@ -71,11 +70,13 @@ class _Proof(_ProofObject):
             for obj in self.seq 
             if obj.is_line()
         }
+        self.formulas.discard(BoxMarker())
         self.assumptions = {
             obj.formula 
             for obj in self.seq 
             if obj.is_line() and obj.is_assumption
         }
+        self.assumptions.discard(BoxMarker())
         self.ground_terms = ground_terms(self.goal).union(
             *(ground_terms(f) for f in self.assumptions)
         )
@@ -99,7 +100,7 @@ class _Proof(_ProofObject):
                 self.formulas.add(f)
                 if obj.is_assumption:
                     self.assumptions.add(f)
-                self.ground_terms.update(ground_terms(f))
+                    self.ground_terms.update(ground_terms(f))
 
                 self.line_count += 1
                 if obj.rule == "IP":
@@ -453,7 +454,8 @@ class Eliminator:
     @staticmethod
     def NotE_force(prover, complete):
         proof = prover.proof
-        if is_valid(proof.assumptions, Bot()) is False:
+        valid = is_valid(prover.logic, proof.assumptions, Bot())
+        if valid is False:
             return False
 
         branches = []
@@ -482,7 +484,8 @@ class Eliminator:
             if obj.formula.right in proof.formulas:
                 continue
 
-            if is_valid(proof.assumptions, obj.formula.left) is not False:
+            valid = is_valid(prover.logic, proof.assumptions, obj.formula.left)
+            if valid is not False:
                 branch = _Proof(proof.seq, obj.formula.left)
                 p = prover.new(branch)
                 if p.prove(complete):
@@ -502,7 +505,8 @@ class Eliminator:
                 continue
             if obj.formula.left in formulas or obj.formula.right in formulas:
                 continue
-            if is_valid(proof.assumptions, obj.formula.left) is False:
+            valid = is_valid(prover.logic, proof.assumptions, obj.formula.left)
+            if valid is False:
                 continue
 
             branches = []
@@ -612,7 +616,8 @@ class Introducer:
                 return True
 
         for disjunct in (left, right):
-            if is_valid(proof.assumptions, disjunct) is not False:
+            valid = is_valid(prover.logic, proof.assumptions, disjunct)
+            if valid is not False:
                 branch = _Proof(proof.seq, disjunct)
                 p = prover.new(branch)
                 if not p.prove(complete):
@@ -774,7 +779,8 @@ class Introducer:
         if not found:
             if Not(proof.goal) in proof.formulas:  # FIX: check validity?
                 return False
-            if is_valid([proof.goal], Bot()) is True:
+            valid = is_valid(prover.logic, [proof.goal], Bot())
+            if valid is True:
                 return False
 
             assumption = _Line(Not(proof.goal), "AS", ())
@@ -945,14 +951,13 @@ def fresh_constant(terms):
 
 
 def prove(logic, premises, conclusion, timeout):
-    cm = countermodel(premises, conclusion)
-    if isinstance(cm, dict):
-        cm_str = "\n".join(f"{k} : {v}" for k, v in sorted(cm.items()))
-        raise ProverError(f"Invalid argument. Countermodel:\n\n{cm_str}")
+    cm = countermodel(logic, premises, conclusion, small=True, timeout=timeout[0])
+    if cm:
+        raise ProverError(f"Invalid argument. Countermodel:\n\n{cm}")
 
     seq = [_Line(p, "PR", ()) for p in premises]
     _proof = _Proof(seq, conclusion)
-    p = Prover(logic, _proof, deadline=time.monotonic() + timeout[0])
+    p = Prover(logic, _proof, deadline=time.monotonic() + timeout[1])
 
     try:
         proved = p.prove(complete=True)
@@ -961,21 +966,21 @@ def prove(logic, premises, conclusion, timeout):
 
     if not proved:
         _proof = _Proof(seq, conclusion)
-        p = Prover(logic, _proof, deadline=time.monotonic() + timeout[1])
+        p = Prover(logic, _proof, deadline=time.monotonic() + timeout[2])
 
         try:
             proved = p.prove(complete=False)
         except TimeoutError:
-            raise ProverError("Proof generation timed out.")
+            if cm is False:
+                raise ProverError("Argument is valid, but proof generation timed out.")
+            raise ProverError("Argument validity unknown. Proof generation timed out.")
         except Exception:
             proved = False
 
         if not proved:
             if cm is False:
                 raise ProverError("Argument is valid, but no proof was found.")
-            raise ProverError(
-                "Argument may or may not be valid, but no proof was found."
-                )
+            raise ProverError("Argument validity unknown. No proof was found.")
 
     problem = Problem(logic, premises, conclusion)
     proof = Processor.process(_proof)
