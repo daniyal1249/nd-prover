@@ -1,4 +1,4 @@
-__version__ = "2.1.0"
+__version__ = "3.0.0"
 __author__ = "Daniyal Akif"
 __email__ = "daniyalakif@gmail.com"
 __license__ = "Apache-2.0"
@@ -32,7 +32,10 @@ from .syntax import (
     is_fol_formula, is_ml_formula, is_constant, is_ground_term, terms, 
     constants, ground_terms, free_vars, sub_term
 )
-from .tfl_sat import prop_vars, evaluate, countermodel, is_valid
+from .sat import (
+    Countermodel, _Translator, prop_vars, evaluate, tfl_countermodel, 
+    countermodel, is_valid
+)
 
 
 __all__ = [name for name in globals() if not name.startswith("__")]
