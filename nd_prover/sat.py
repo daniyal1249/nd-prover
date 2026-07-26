@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from itertools import product
+import time
 
 import cvc5.pythonic as smt
 
@@ -94,16 +95,22 @@ class _Translator:
         self.transitive = issubclass(logic, MLS4)
         self.s5 = issubclass(logic, MLS5)
 
+        self.deadline = None
+        if timeout is not None:
+            self.deadline = time.monotonic() + timeout / 1000
+
         self.ctx = smt.Context()
-        self.solver = smt.SolverFor("UF", ctx=self.ctx)
+        minimize_accessibility = small and self.modal and not self.s5
+        solver_logic = "UFLIA" if minimize_accessibility else "UF"
+        self.solver = smt.SolverFor(solver_logic, ctx=self.ctx)
         self.solver.setOption("produce-models", "true")
 
-        if timeout is not None:
-            self.solver.setOption("tlimit-per", str(timeout))
         if self.first_order or self.modal:
             self.solver.setOption("finite-model-find", "true")
             # "full" enforces minimal uninterpreted-sort models
             self.solver.setOption("uf-ss", "full" if small else "no-minimal")
+        if minimize_accessibility:
+            self.solver.setOption("incremental", "true")
 
         self.bool_sort = smt.BoolSort(ctx=self.ctx)
         self.individual_sort = None
@@ -221,6 +228,70 @@ class _Translator:
 
         return constraints
 
+    def check(self):
+        if self.deadline is not None:
+            remaining = self.deadline - time.monotonic()
+            if remaining <= 0:
+                return None
+            self.solver.setOption(
+                "tlimit-per", str(max(1, int(remaining * 1000)))
+            )
+        return self.solver.check()
+
+    def minimize_accessibility(self):
+        best = self.extract()
+        best_size = len(best.accessibility)
+
+        world_count = len(self._sort_values(self.world_sort))
+
+        domain_count = 0
+        if self.first_order:
+            domain_count = len(self._sort_values(self.individual_sort))
+
+        worlds = self._fix_sort_size(self.world_sort, "w", world_count)
+        if self.first_order:
+            self._fix_sort_size(self.individual_sort, "d", domain_count)
+        self.solver.add(self.root == worlds[0])
+
+        result = self.check()
+        if result != smt.sat:
+            return best
+
+        model = self.solver.model()
+        candidate = self.extract()
+        if len(candidate.accessibility) < best_size:
+            best = candidate
+            best_size = len(candidate.accessibility)
+
+        edges = [self.access(w, v) for w in worlds for v in worlds]
+        edge_count = smt.Sum([smt.If(e, 1, 0) for e in edges])
+
+        lower = world_count if self.reflexive else 0
+        upper = sum(self._true(model, e) for e in edges)
+
+        while lower < upper:
+            middle = (lower + upper) // 2
+            self.solver.push()
+            self.solver.add(edge_count <= middle)
+            result = self.check()
+
+            if result == smt.sat:
+                model = self.solver.model()
+                candidate = self.extract()
+                if len(candidate.accessibility) < best_size:
+                    best = candidate
+                    best_size = len(candidate.accessibility)
+                upper = sum(self._true(model, e) for e in edges)
+            elif result == smt.unsat:
+                lower = middle + 1
+            else:
+                self.solver.pop()
+                return best
+
+            self.solver.pop()
+
+        return best
+
     def extract(self):
         model = self.solver.model()
 
@@ -319,6 +390,17 @@ class _Translator:
             pred = smt.Function(name, *signature, self.bool_sort)
         self.preds[key] = pred
         return pred
+
+    def _fix_sort_size(self, sort, name, size):
+        values = [smt.Const(f"__{name}_{i}", sort) for i in range(size)]
+        if size > 1:
+            self.solver.add(smt.Distinct(*values))
+
+        value = self._fresh(f"{name}_value", sort)
+        choices = [value == v for v in values]
+        coverage = choices[0] if size == 1 else smt.Or(choices)
+        self.solver.add(smt.ForAll([value], coverage))
+        return values
 
     def _bound_var(self, var):
         return self._fresh(var.name, self.individual_sort)
@@ -448,8 +530,10 @@ def countermodel(logic, premises, conclusion, small, timeout):
     formulas.extend(translator.frame_constraints())
     translator.solver.add(*formulas)
 
-    result = translator.solver.check()
+    result = translator.check()
     if result == smt.sat:
+        if small and translator.modal and not translator.s5:
+            return translator.minimize_accessibility()
         return translator.extract()
     if result == smt.unsat:
         return False
