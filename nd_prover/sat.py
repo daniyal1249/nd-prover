@@ -21,12 +21,6 @@ from .checker import *
 
 
 @dataclass
-class ValidityResult:
-    status: str
-    countermodel: Countermodel | None = None
-
-
-@dataclass
 class Countermodel:
     worlds: list = None
     root_world: str = None
@@ -90,6 +84,12 @@ class Countermodel:
             else:
                 tuples.append(f"({','.join(values)})")
         return "{ " + ", ".join(tuples) + " }"
+
+
+@dataclass
+class ValidityResult:
+    status: str
+    countermodel: Countermodel = None
 
 
 class _Translator:

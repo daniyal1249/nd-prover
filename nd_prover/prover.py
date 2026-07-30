@@ -22,7 +22,7 @@ class ProverError(Exception):
 @dataclass
 class ProofSearchResult:
     status: str
-    problem: Problem | None = None
+    problem: Problem = None
 
 
 class _ProofObject:
