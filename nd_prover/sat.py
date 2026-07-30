@@ -21,6 +21,12 @@ from .checker import *
 
 
 @dataclass
+class ValidityResult:
+    status: str
+    countermodel: Countermodel | None = None
+
+
+@dataclass
 class Countermodel:
     worlds: list = None
     root_world: str = None
@@ -492,7 +498,7 @@ def evaluate(formula, model):
             return False
 
 
-def tfl_countermodel(premises, conclusion, max_vars):
+def check_validity_tfl(premises, conclusion, max_vars):
     all_vars = set()
     for premise in premises:
         all_vars.update(prop_vars(premise))
@@ -500,7 +506,7 @@ def tfl_countermodel(premises, conclusion, max_vars):
 
     n = len(all_vars)
     if n > max_vars:
-        return None
+        return ValidityResult("unknown")
     sorted_vars = sorted(all_vars)
 
     for i in range(2 ** n):
@@ -511,16 +517,17 @@ def tfl_countermodel(premises, conclusion, max_vars):
 
         if all(evaluate(p, model) for p in premises):
             if not evaluate(conclusion, model):
-                return Countermodel(preds=model)
+                cm = Countermodel(preds=model)
+                return ValidityResult("invalid", cm)
 
-    return False
+    return ValidityResult("valid")
 
 
-def countermodel(logic, premises, conclusion, small, timeout):
+def check_validity(logic, premises, conclusion, small=False, timeout=10):
     if all(is_tfl_formula(p) for p in premises) and is_tfl_formula(conclusion):
-        cm = tfl_countermodel(premises, conclusion, 15)
-        if cm is not None:
-            return cm
+        result = check_validity_tfl(premises, conclusion, 15)
+        if result.status != "unknown":
+            return result
 
     translator = _Translator(logic, small, timeout)
     world = translator.root if translator.modal else None
@@ -533,13 +540,11 @@ def countermodel(logic, premises, conclusion, small, timeout):
     result = translator.check()
     if result == smt.sat:
         if small and translator.modal and not translator.s5:
-            return translator.minimize_accessibility()
-        return translator.extract()
+            cm = translator.minimize_accessibility()
+        else:
+            cm = translator.extract()
+        return ValidityResult("invalid", cm)
+
     if result == smt.unsat:
-        return False
-    return None
-
-
-def is_valid(logic, premises, conclusion, timeout=10):
-    cm = countermodel(logic, premises, conclusion, False, timeout)
-    return None if cm is None else cm is False
+        return ValidityResult("valid")
+    return ValidityResult("unknown")
