@@ -23,8 +23,9 @@ from .parser import (
     parse_justification, parse_line
 )
 from .prover import (
-    ProverError, _ProofObject, _Line, _Proof, Eliminator, Introducer, 
-    Prover, Processor, find_subproof, fresh_constant, prove
+    ProverError, ProofSearchResult, _ProofObject, _Line, _Proof, 
+    Eliminator, Introducer, Prover, Processor, find_subproof, 
+    fresh_constant, prove
 )
 from .syntax import (
     Metavar, Formula, Bot, Not, And, Or, Imp, Iff, Term, Func, Var, Pred, 
@@ -33,8 +34,8 @@ from .syntax import (
     constants, ground_terms, free_vars, sub_term
 )
 from .sat import (
-    Countermodel, _Translator, prop_vars, evaluate, tfl_countermodel, 
-    countermodel, is_valid
+    ValidityResult, Countermodel, _Translator, prop_vars, evaluate, 
+    check_validity_tfl, check_validity
 )
 
 
