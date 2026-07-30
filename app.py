@@ -63,6 +63,23 @@ def _resolve_logic(logic_name):
     return logic, None
 
 
+def _parse_generation_problem(data):
+    """Parse a proof-generation payload into logic, premises, and conclusion."""
+    logic_name, premises_text, conclusion_text = _extract_problem_fields(data)
+    logic, error_message = _resolve_logic(logic_name)
+
+    if logic is None:
+        return None, _json_error(error_message)
+
+    try:
+        premises = parse_and_verify_premises(premises_text, logic)
+        conclusion = parse_and_verify_formula(conclusion_text, logic)
+    except ParsingError as e:
+        return None, _json_error(str(e))
+
+    return (logic, premises, conclusion), None
+
+
 def _generation_note(logic):
     if logic is FOL:
         return "\n\n🚧 Note: FOL proof generation is still under development."
@@ -132,6 +149,17 @@ def _serialize_proof(proof):
         traverse(obj, 0, is_premise=False)
     
     return lines
+
+
+def _generated_proof_payload(logic, problem):
+    """Build the shared JSON payload for a successfully generated proof."""
+    return {
+        "ok": True,
+        "status": "complete",
+        "outcome": "success",
+        "message": "Proof complete! 🎉" + _generation_note(logic),
+        "lines": _serialize_proof(problem.proof),
+    }
 
 
 @app.get("/")
@@ -293,34 +321,125 @@ def validate_problem():
     return jsonify({"ok": True, "status": "ok", "message": ""})
 
 
-@app.post("/api/generate-proof")
-def generate_proof():
+@app.post("/api/generate-proof/validity")
+def generate_proof_validity():
     data = request.get_json(silent=True) or {}
-    logic_name, premises_text, conclusion_text = _extract_problem_fields(data)
-    logic, error_message = _resolve_logic(logic_name)
+    problem_fields, error_response = _parse_generation_problem(data)
 
-    if logic is None:
-        return _json_error(error_message)
+    if error_response is not None:
+        return error_response
 
+    logic, premises, conclusion = problem_fields
     try:
-        premises = parse_and_verify_premises(premises_text, logic)
-        conclusion = parse_and_verify_formula(conclusion_text, logic)
-    except ParsingError as e:
-        return _json_error(str(e))
-
-    try:
-        problem = prove(logic, premises, conclusion, timeout=(1000, 5, 4))
+        result = check_validity(
+            logic, premises, conclusion, small=True, timeout=1000
+        )
     except Exception as e:
         return _json_error(str(e) + _generation_note(logic))
 
-    proof_lines = _serialize_proof(problem.proof)
-    message = "Proof complete! 🎉" + _generation_note(logic)
+    if result.status == "invalid":
+        message = (
+            f"Invalid argument. Countermodel:\n\n{result.countermodel}"
+            + _generation_note(logic)
+        )
+    elif result.status == "valid":
+        message = (
+            "Argument is valid. "
+            "Attempting an exhaustive proof search..."
+        )
+    else:
+        message = (
+            "Argument validity unknown. "
+            "Attempting an exhaustive proof search..."
+        )
 
     return jsonify({
         "ok": True,
-        "status": "complete",
+        "stage": "validity",
+        "outcome": result.status,
         "message": message,
-        "lines": proof_lines,
+    })
+
+
+@app.post("/api/generate-proof/exhaustive")
+def generate_proof_exhaustive():
+    data = request.get_json(silent=True) or {}
+    problem_fields, error_response = _parse_generation_problem(data)
+
+    if error_response is not None:
+        return error_response
+
+    logic, premises, conclusion = problem_fields
+    try:
+        result = prove(
+            logic, premises, conclusion, exhaustive=True, timeout=5000
+        )
+    except Exception as e:
+        return _json_error(str(e) + _generation_note(logic))
+
+    if result.status == "success":
+        payload = _generated_proof_payload(logic, result.problem)
+        payload["stage"] = "exhaustive"
+        return jsonify(payload)
+
+    if result.status == "failure":
+        message = (
+            "Exhaustive search failed. "
+            "Attempting a fast proof search..."
+        )
+    else:
+        message = (
+            "Exhaustive search timed out. "
+            "Attempting a fast proof search..."
+        )
+
+    return jsonify({
+        "ok": True,
+        "stage": "exhaustive",
+        "outcome": result.status,
+        "message": message,
+    })
+
+
+@app.post("/api/generate-proof/fast")
+def generate_proof_fast():
+    data = request.get_json(silent=True) or {}
+    validity_outcome = data.get("validityOutcome")
+    if validity_outcome not in {"valid", "unknown"}:
+        return _json_error("Invalid validity outcome.")
+
+    problem_fields, error_response = _parse_generation_problem(data)
+    if error_response is not None:
+        return error_response
+
+    logic, premises, conclusion = problem_fields
+    try:
+        result = prove(
+            logic, premises, conclusion, exhaustive=False, timeout=4000
+        )
+    except Exception as e:
+        return _json_error(str(e) + _generation_note(logic))
+
+    if result.status == "success":
+        payload = _generated_proof_payload(logic, result.problem)
+        payload["stage"] = "fast"
+        return jsonify(payload)
+
+    if result.status == "failure":
+        if validity_outcome == "valid":
+            message = "Argument is valid, but no proof was found."
+        else:
+            message = "Argument validity unknown. No proof was found."
+    elif validity_outcome == "valid":
+        message = "Argument is valid, but proof generation timed out."
+    else:
+        message = "Argument validity unknown. Proof generation timed out."
+
+    return jsonify({
+        "ok": True,
+        "stage": "fast",
+        "outcome": result.status,
+        "message": message + _generation_note(logic),
     })
 
 
