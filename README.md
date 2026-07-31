@@ -2,7 +2,7 @@
 
 A Fitch-style natural deduction proof generator and checker, implemented in Python.
 
-Supports propositional logic and the modal logics K, T, S4, and S5, as well as their first-order extensions, FOL and FOML. Includes countermodel generation for invalid arguments.
+Supports propositional logic and the modal logics K, T, S4, and S5, as well as their first-order counterparts, FOL and FOML. Includes countermodel generation for invalid arguments.
 
 ![ND-Prover Demo](prover.gif)
 
