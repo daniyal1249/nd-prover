@@ -23,7 +23,8 @@ keywords = [
     "modal logic",
     "theorem prover",
     "fitch proofs",
-    "proof checker"
+    "proof checker",
+    "cvc5"
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
