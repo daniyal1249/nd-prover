@@ -280,15 +280,13 @@ def check_proof():
         message = "No errors yet, but the proof is incomplete!"
         status = "incomplete"
 
-    return jsonify(
-        {
-            "ok": True,
-            "status": status,
-            "isComplete": is_complete,
-            "message": message,
-            "proofString": str(problem),
-        }
-    )
+    return jsonify({
+        "ok": True,
+        "status": status,
+        "isComplete": is_complete,
+        "message": message,
+        "proofString": str(problem),
+    })
 
 
 @app.post("/api/validate-problem")
@@ -318,7 +316,11 @@ def validate_problem():
     except Exception as e:
         return _json_error(str(e))
 
-    return jsonify({"ok": True, "status": "ok", "message": ""})
+    return jsonify({
+        "ok": True,
+        "status": "ok",
+        "message": "",
+    })
 
 
 @app.post("/api/generate-proof/validity")

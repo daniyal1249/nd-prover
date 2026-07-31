@@ -34,7 +34,7 @@ from .syntax import (
     constants, ground_terms, free_vars, sub_term
 )
 from .sat import (
-    Countermodel, ValidityResult, _Translator, prop_vars, evaluate, 
+    Countermodel, ValidityResult, Translator, prop_vars, evaluate, 
     check_validity_tfl, check_validity
 )
 

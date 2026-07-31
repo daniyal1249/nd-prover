@@ -92,7 +92,7 @@ class ValidityResult:
     countermodel: Countermodel = None
 
 
-class _Translator:
+class Translator:
 
     def __init__(self, logic, small, timeout):
         self.first_order = issubclass(logic, FOL)
@@ -529,7 +529,7 @@ def check_validity(logic, premises, conclusion, small=False, timeout=50):
         if result.status != "unknown":
             return result
 
-    translator = _Translator(logic, small, timeout)
+    translator = Translator(logic, small, timeout)
     world = translator.root if translator.modal else None
 
     formulas = [translator.translate(p, world) for p in premises]
