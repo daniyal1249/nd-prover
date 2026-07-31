@@ -864,11 +864,14 @@ class Prover:
 class Processor:
 
     @staticmethod
-    def process(proof):
+    def process(proof, target, premise_count):
         Processor.remove_uncited(proof, proof.id_to_citers())
         id_to_obj, id_to_citers = proof.id_to_obj(), proof.id_to_citers()
         Processor.replace_reiterations(proof, id_to_obj, id_to_citers, {})
-        return Processor.translate(proof, 1, [], {})
+
+        premises = proof.seq[:premise_count]
+        id_to_idx = {line.id: idx for idx, line in enumerate(premises, 1)}
+        Processor.translate(proof.seq[premise_count:], target, id_to_idx)
 
     @staticmethod
     def remove_uncited(proof, id_to_citers):
@@ -901,13 +904,17 @@ class Processor:
                 Processor.replace_reiterations(obj, id_to_obj, id_to_citers, replace)
                 seq.append(obj)
                 continue
+
             line = replace.get(obj.id)
             if line is not None:
-                seq.append(line.copy())
+                replacement = line.copy()
+                replacement.id = obj.id
+                seq.append(replacement)
                 continue
             if obj.is_assumption or idx == n - 1:
                 seq.append(obj)
                 continue
+
             citers = id_to_citers[obj.id]
             if not all(id_to_obj[c].rule == "R" for c in citers):
                 seq.append(obj)
@@ -918,26 +925,36 @@ class Processor:
         proof.seq = seq
 
     @staticmethod
-    def translate(proof, start_idx, context, id_to_idx):
-        seq, idx = [], start_idx
-        for obj in proof.seq:
+    def translate(seq, target, id_to_idx):
+        active_subproof = False
 
+        for obj in seq:
             if obj.is_line():
                 rule = Rules.rules.get(obj.rule) or getattr(Rules, obj.rule)
                 citations = tuple(id_to_idx[c] for c in obj.citations)
                 j = Justification(rule, citations)
-                seq.append(Line(idx, obj.formula, j))
-                id_to_idx[obj.id] = idx
-                idx += 1
+
+                if active_subproof:
+                    target.end_subproof(obj.formula, j)
+                    active_subproof = False
+                else:
+                    target.add_line(obj.formula, j)
+
+                id_to_idx[obj.id] = target.idx[1]
                 continue
 
-            subproof = Processor.translate(obj, idx, context + seq, id_to_idx)
-            seq.append(subproof)
-            new_idx = idx + obj.line_count
-            id_to_idx[obj.id] = (idx, new_idx - 1)
-            idx = new_idx
+            assumption = obj.seq[0]
 
-        return Proof(seq, context, None)
+            if active_subproof:
+                target.end_and_begin_subproof(assumption.formula)
+            else:
+                target.begin_subproof(assumption.formula)
+
+            start_idx = target.idx[1]
+            id_to_idx[assumption.id] = start_idx
+            Processor.translate(obj.seq[1:], target, id_to_idx)
+            id_to_idx[obj.id] = (start_idx, target.idx[1])
+            active_subproof = True
 
 
 def find_subproof(seq, assumption, conclusion):
@@ -962,9 +979,9 @@ def fresh_constant(terms):
 
 def prove(logic, premises, conclusion, exhaustive, timeout):
     seq = [_Line(p, "PR", ()) for p in premises]
-    _proof = _Proof(seq, conclusion)
+    proof = _Proof(seq, conclusion)
     deadline = time.monotonic() + timeout / 1000
-    p = Prover(logic, _proof, deadline=deadline)
+    p = Prover(logic, proof, deadline=deadline)
 
     try:
         proved = p.prove(exhaustive)
@@ -977,8 +994,7 @@ def prove(logic, premises, conclusion, exhaustive, timeout):
         return ProofSearchResult("failure")
 
     problem = Problem(logic, premises, conclusion)
-    proof = Processor.process(_proof)
-    proof.seq = proof.seq[len(seq):]
-    proof.context = problem.proof.context
-    problem.proof = proof
+    Processor.process(proof, problem.proof, len(premises))
+    if problem.errors() or not problem.conclusion_reached():
+        return ProofSearchResult("failure")
     return ProofSearchResult("success", problem)
