@@ -523,7 +523,7 @@ def check_validity_tfl(premises, conclusion, max_vars):
     return ValidityResult("valid")
 
 
-def check_validity(logic, premises, conclusion, small=False, timeout=10):
+def check_validity(logic, premises, conclusion, small=False, timeout=50):
     if all(is_tfl_formula(p) for p in premises) and is_tfl_formula(conclusion):
         result = check_validity_tfl(premises, conclusion, 15)
         if result.status != "unknown":
