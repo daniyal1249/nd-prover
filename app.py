@@ -416,7 +416,7 @@ def generate_proof_validity():
         return error_msg
 
     try:
-        result = _check_problem_validity(problem, 1000)
+        result = _check_problem_validity(problem, 3000)
     except Exception as e:
         return _json_error(str(e) + _generation_note(problem.logic))
 
@@ -479,7 +479,7 @@ def generate_proof_fast():
         return error_msg
 
     try:
-        result = _search_for_proof(problem, False, 4000)
+        result = _search_for_proof(problem, False, 5000)
     except Exception as e:
         return _json_error(str(e) + _generation_note(problem.logic))
 

@@ -25,9 +25,9 @@ import {
 } from './validity-ui.js';
 
 const GENERATION_REQUEST_TIMEOUTS = {
-  validity: 3000,
+  validity: 5000,
   exhaustive: 7000,
-  fast: 6000,
+  fast: 7000,
 };
 
 const GENERATION_ERROR_MESSAGE =
@@ -426,7 +426,7 @@ export function initProofUI(state, renderProof) {
         resultsBox,
         VALIDITY_PROGRESS_MESSAGE,
         RESULT_SOURCES.generation,
-        '9s'
+        '10s'
       );
 
       try {
