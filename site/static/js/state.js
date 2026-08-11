@@ -15,10 +15,14 @@
  * @property {string} problemDraft.logic - Selected logic system label (TFL, FOL, etc.)
  * @property {string} problemDraft.premisesText - Symbolized premises text
  * @property {string} problemDraft.conclusionText - Symbolized conclusion text
+ * @property {string|null} problemDraft.domainSemantics - Domain semantics
+ * @property {string|null} problemDraft.equalitySemantics - Equality semantics
  * @property {Object|null} proofProblem - Committed problem configuration for the proof editor
  * @property {string} proofProblem.logic - Selected logic system label (TFL, FOL, etc.)
  * @property {string} proofProblem.premisesText - Symbolized premises text
  * @property {string} proofProblem.conclusionText - Symbolized conclusion text
+ * @property {string|null} proofProblem.domainSemantics - Domain semantics
+ * @property {string|null} proofProblem.equalitySemantics - Equality semantics
  */
 export const state = {
   lines: [],
@@ -26,7 +30,9 @@ export const state = {
   problemDraft: {
     logic: 'TFL',
     premisesText: '',
-    conclusionText: ''
+    conclusionText: '',
+    domainSemantics: null,
+    equalitySemantics: null
   },
   proofProblem: null
 };

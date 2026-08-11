@@ -346,6 +346,22 @@ function createJustificationCell(line, idx, lineId, state) {
 }
 
 /**
+ * Runs an action while preserving the page's current scroll position.
+ *
+ * @param {Function} action - Action to run
+ */
+function runPreservingScroll(action) {
+  const scrollX = window.scrollX;
+  const scrollY = window.scrollY;
+
+  action();
+
+  requestAnimationFrame(() => {
+    window.scrollTo(scrollX, scrollY);
+  });
+}
+
+/**
  * Creates action buttons for a proof line.
  * 
  * @param {Object} line - Line object
@@ -398,7 +414,7 @@ function createActionButtons(
     // e.preventDefault();
     // e.stopPropagation();
     // btnAdd.blur();
-    addLineAfterSame(idx);
+    runPreservingScroll(() => addLineAfterSame(idx));
   });
 
   // Begin subproof button
@@ -412,7 +428,7 @@ function createActionButtons(
     // e.preventDefault();
     // e.stopPropagation();
     // btnSub.blur();
-    beginSubproofBelow(idx);
+    runPreservingScroll(() => beginSubproofBelow(idx));
   });
 
   // End subproof button
@@ -426,7 +442,7 @@ function createActionButtons(
     // e.preventDefault();
     // e.stopPropagation();
     // btnEnd.blur();
-    endSubproofAt(idx);
+    runPreservingScroll(() => endSubproofAt(idx));
   });
 
   // End and begin another button
@@ -440,7 +456,7 @@ function createActionButtons(
     // e.preventDefault();
     // e.stopPropagation();
     // btnEndBegin.blur();
-    endAndBeginAnotherAt(idx);
+    runPreservingScroll(() => endAndBeginAnotherAt(idx));
   });
 
   // Determine whether this line can "end" its subproof

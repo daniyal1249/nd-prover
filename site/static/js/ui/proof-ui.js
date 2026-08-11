@@ -11,6 +11,18 @@ import { focusLineAt } from '../proof/focus-management.js';
 import { serializeProofState } from '../utils/serialization.js';
 import { processFormula, processJustification } from '../utils/input-processing.js';
 import { scheduleUrlUpdate } from '../utils/url-state.js';
+import {
+  RESULT_SOURCES,
+  setResultsMessage,
+  startResultsProgress,
+  stopResultsProgress
+} from './results-ui.js';
+import {
+  VALIDITY_PROGRESS_MESSAGE,
+  ValidityRequestError,
+  buildProblemPayload,
+  requestValidity
+} from './validity-ui.js';
 
 const GENERATION_REQUEST_TIMEOUTS = {
   validity: 3000,
@@ -77,33 +89,6 @@ function deserializeProofLines(state, proofLines) {
 }
 
 /**
- * Updates the result text and visual state.
- *
- * @param {HTMLElement|null} resultsSection - Results pane element
- * @param {HTMLElement} resultsBox - Results text element
- * @param {string} message - Message to display
- * @param {'progress'|'success'|'error'} status - Visual status
- */
-function setResultsMessage(resultsSection, resultsBox, message, status = 'progress') {
-  resultsBox.textContent = message;
-
-  if (!resultsSection) {
-    return;
-  }
-
-  resultsSection.classList.remove(
-    'results-pane--success',
-    'results-pane--error'
-  );
-
-  if (status === 'success') {
-    resultsSection.classList.add('results-pane--success');
-  } else if (status === 'error') {
-    resultsSection.classList.add('results-pane--error');
-  }
-}
-
-/**
  * Waits for the specified number of milliseconds.
  *
  * @param {number} milliseconds - Delay duration
@@ -111,22 +96,6 @@ function setResultsMessage(resultsSection, resultsBox, message, status = 'progre
  */
 function delay(milliseconds) {
   return new Promise(resolve => setTimeout(resolve, milliseconds));
-}
-
-/**
- * Creates the payload used by proof-generation requests.
- *
- * @param {Object} state - Application state object
- * @returns {Object} Problem payload
- */
-function getGenerationPayload(state) {
-  const problem = state.proofProblem || state.problemDraft || {};
-
-  return {
-    logic: problem.logic || 'TFL',
-    premisesText: problem.premisesText || '',
-    conclusionText: problem.conclusionText || '',
-  };
 }
 
 /**
@@ -224,7 +193,8 @@ function showGeneratedProof(
     resultsSection,
     resultsBox,
     data.message,
-    'success'
+    'success',
+    RESULT_SOURCES.generation
   );
 }
 
@@ -242,23 +212,23 @@ async function generateProof(
   resultsSection,
   resultsBox
 ) {
-  const payload = getGenerationPayload(state);
+  const payload = buildProblemPayload(
+    state.proofProblem || state.problemDraft || {}
+  );
 
   setResultsMessage(
     resultsSection,
     resultsBox,
-    'Checking argument validity...'
+    VALIDITY_PROGRESS_MESSAGE,
+    'progress',
+    RESULT_SOURCES.generation
   );
 
-  const validityData = await requestGenerationStage(
+  const validityData = await requestValidity(
     '/api/generate-proof/validity',
     payload,
-    GENERATION_REQUEST_TIMEOUTS.validity
-  );
-
-  validateGenerationResponse(
-    validityData,
-    ['invalid', 'valid', 'unknown']
+    GENERATION_REQUEST_TIMEOUTS.validity,
+    GENERATION_ERROR_MESSAGE
   );
 
   if (validityData.outcome === 'invalid') {
@@ -266,7 +236,8 @@ async function generateProof(
       resultsSection,
       resultsBox,
       validityData.message,
-      'error'
+      'error',
+      RESULT_SOURCES.generation
     );
     return;
   }
@@ -274,7 +245,9 @@ async function generateProof(
   setResultsMessage(
     resultsSection,
     resultsBox,
-    validityData.message
+    validityData.message,
+    'progress',
+    RESULT_SOURCES.generation
   );
 
   const exhaustiveData = await requestGenerationStage(
@@ -302,7 +275,9 @@ async function generateProof(
   setResultsMessage(
     resultsSection,
     resultsBox,
-    exhaustiveData.message
+    exhaustiveData.message,
+    'progress',
+    RESULT_SOURCES.generation
   );
 
   const [fastData] = await Promise.all([
@@ -337,7 +312,8 @@ async function generateProof(
     resultsSection,
     resultsBox,
     fastData.message,
-    'error'
+    'error',
+    RESULT_SOURCES.generation
   );
 }
 
@@ -381,15 +357,15 @@ export function initProofUI(state, renderProof) {
 
   if (btnCheckProof && resultsBox) {
     btnCheckProof.addEventListener('click', async () => {
-      // Reveal the results section if hidden (mirror proof-pane behavior)
-      if (resultsSection && resultsSection.classList.contains('hidden')) {
-        resultsSection.classList.remove('hidden');
-      }
-
-      resultsBox.classList.add('results--show');
       const payload = serializeProofState(state);
 
-      resultsBox.textContent = 'Checking proof...';
+      setResultsMessage(
+        resultsSection,
+        resultsBox,
+        'Checking proof...',
+        'progress',
+        RESULT_SOURCES.proofCheck
+      );
 
       try {
         const response = await fetch('/api/check-proof', {
@@ -402,33 +378,31 @@ export function initProofUI(state, renderProof) {
         const message = data.message || '';
 
         if (!response.ok || !data.ok) {
-          if (resultsSection) {
-            resultsSection.classList.remove('results-pane--success');
-            resultsSection.classList.add('results-pane--error');
-          }
-          resultsBox.textContent = message;
+          setResultsMessage(
+            resultsSection,
+            resultsBox,
+            message,
+            'error',
+            RESULT_SOURCES.proofCheck
+          );
           return;
         }
 
-        if (data.isComplete) {
-          if (resultsSection) {
-            resultsSection.classList.remove('results-pane--error');
-            resultsSection.classList.add('results-pane--success');
-          }
-          resultsBox.textContent = message;
-        } else {
-          if (resultsSection) {
-            resultsSection.classList.remove('results-pane--success');
-            resultsSection.classList.add('results-pane--error');
-          }
-          resultsBox.textContent = message;
-        }
+        setResultsMessage(
+          resultsSection,
+          resultsBox,
+          message,
+          data.isComplete ? 'success' : 'error',
+          RESULT_SOURCES.proofCheck
+        );
       } catch (error) {
-        if (resultsSection) {
-          resultsSection.classList.remove('results-pane--success');
-          resultsSection.classList.add('results-pane--error');
-        }
-        resultsBox.textContent = 'An error occurred while checking the proof.';
+        setResultsMessage(
+          resultsSection,
+          resultsBox,
+          'An error occurred while checking the proof.',
+          'error',
+          RESULT_SOURCES.proofCheck
+        );
       }
     });
   }
@@ -447,21 +421,15 @@ export function initProofUI(state, renderProof) {
       isGenerating = true;
       btnGenerate.disabled = true;
 
-      if (resultsSection) {
-        resultsSection.setAttribute('aria-busy', 'true');
-      }
+      startResultsProgress(
+        resultsSection,
+        resultsBox,
+        VALIDITY_PROGRESS_MESSAGE,
+        RESULT_SOURCES.generation,
+        '9s'
+      );
 
       try {
-        // Reveal the results section if hidden
-        if (resultsSection && resultsSection.classList.contains('hidden')) {
-          resultsSection.classList.remove('hidden');
-        }
-
-        resultsBox.classList.add(
-          'results--show',
-          'results--generating'
-        );
-
         await generateProof(
           state,
           renderProof,
@@ -469,25 +437,24 @@ export function initProofUI(state, renderProof) {
           resultsBox
         );
       } catch (error) {
-        const message = error instanceof GenerationError
-          ? error.message
-          : GENERATION_ERROR_MESSAGE;
+        const message =
+          error instanceof GenerationError ||
+          error instanceof ValidityRequestError
+            ? error.message
+            : GENERATION_ERROR_MESSAGE;
 
         setResultsMessage(
           resultsSection,
           resultsBox,
           message,
-          'error'
+          'error',
+          RESULT_SOURCES.generation
         );
       } finally {
-        resultsBox.classList.remove('results--generating');
+        stopResultsProgress(resultsSection, resultsBox);
 
         isGenerating = false;
         btnGenerate.disabled = false;
-
-        if (resultsSection) {
-          resultsSection.setAttribute('aria-busy', 'false');
-        }
       }
     });
   }

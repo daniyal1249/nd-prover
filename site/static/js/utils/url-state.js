@@ -10,7 +10,11 @@
  * Payload is a URL-safe, base64url-encoded JSON string.
  */
 
-import { splitLogicValue } from './logic-mapping.js';
+import {
+  resolveSemanticOptions,
+  splitLogicValue,
+  supportsProofEditor
+} from './logic-mapping.js';
 import { processFormula, processJustification } from './input-processing.js';
 import { renderProblemSummary } from '../ui/problem-summary.js';
 
@@ -67,7 +71,9 @@ function buildSnapshotFromState(state) {
   const draft = state.problemDraft || {
     logic: 'TFL',
     premisesText: '',
-    conclusionText: ''
+    conclusionText: '',
+    domainSemantics: null,
+    equalitySemantics: null
   };
   const proofProblem = state.proofProblem || null;
 
@@ -100,7 +106,9 @@ function buildSnapshotFromState(state) {
     ? (proofProblem || {
       logic: String(draft.logic || 'TFL'),
       premisesText: String(draft.premisesText || ''),
-      conclusionText: String(draft.conclusionText || '')
+      conclusionText: String(draft.conclusionText || ''),
+      domainSemantics: draft.domainSemantics ?? null,
+      equalitySemantics: draft.equalitySemantics ?? null
     })
     : null;
 
@@ -108,7 +116,9 @@ function buildSnapshotFromState(state) {
     draft: {
       logic: String(draft.logic || 'TFL'),
       premisesText: String(draft.premisesText || ''),
-      conclusionText: String(draft.conclusionText || '')
+      conclusionText: String(draft.conclusionText || ''),
+      domainSemantics: draft.domainSemantics ?? null,
+      equalitySemantics: draft.equalitySemantics ?? null
     },
     proof: {
       active: proofActive,
@@ -125,6 +135,8 @@ function applySnapshotToState(snapshot, state) {
   state.problemDraft.logic = String(d.logic || 'TFL');
   state.problemDraft.premisesText = String(d.premisesText || '');
   state.problemDraft.conclusionText = String(d.conclusionText || '');
+  state.problemDraft.domainSemantics = d.domainSemantics ?? null;
+  state.problemDraft.equalitySemantics = d.equalitySemantics ?? null;
 
   const {
     active: proofActive,
@@ -183,8 +195,15 @@ function updateGenerateButtonVisibilityFromState(state) {
 function syncUiFromState(state) {
   const logicSelect = document.getElementById('logic');
   const firstOrderCheckbox = document.getElementById('first-order');
+  const intuitionisticCheckbox = document.getElementById('intuitionistic');
+  const semanticsContainer = document.getElementById('semantics-container');
+  const domainSemanticsField = document.getElementById('domain-semantics-field');
+  const equalitySemanticsField = document.getElementById('equality-semantics-field');
+  const domainSemanticsSelect = document.getElementById('domain-semantics');
+  const equalitySemanticsSelect = document.getElementById('equality-semantics');
   const premisesBox = document.getElementById('premises');
   const conclusionBox = document.getElementById('conclusion');
+  const createBtn = document.getElementById('create-problem');
 
   if (premisesBox) {
     premisesBox.value = state.problemDraft.premisesText || '';
@@ -193,13 +212,54 @@ function syncUiFromState(state) {
     conclusionBox.value = state.problemDraft.conclusionText || '';
   }
 
-  const { baseLogic, isFirstOrder } = splitLogicValue(state.problemDraft.logic);
+  const {
+    baseLogic,
+    isFirstOrder,
+    isIntuitionistic
+  } = splitLogicValue(state.problemDraft.logic);
   if (logicSelect) {
     logicSelect.value = baseLogic;
   }
   if (firstOrderCheckbox) {
     firstOrderCheckbox.checked = isFirstOrder;
   }
+  if (intuitionisticCheckbox) {
+    intuitionisticCheckbox.checked = isIntuitionistic;
+  }
+
+  if (domainSemanticsSelect) {
+    domainSemanticsSelect.value =
+      state.problemDraft.domainSemantics === 'constant'
+        ? 'constant'
+        : 'expanding';
+  }
+  if (equalitySemanticsSelect) {
+    equalitySemanticsSelect.value =
+      state.problemDraft.equalitySemantics === 'identity'
+        ? 'identity'
+        : 'equivalence';
+  }
+
+  const semantics = resolveSemanticOptions(
+    baseLogic,
+    isFirstOrder,
+    isIntuitionistic,
+    domainSemanticsSelect?.value || 'expanding',
+    equalitySemanticsSelect?.value || 'equivalence'
+  );
+  state.problemDraft.domainSemantics = semantics.domainSemantics;
+  state.problemDraft.equalitySemantics = semantics.equalitySemantics;
+
+  domainSemanticsField?.classList.toggle('hidden', !semantics.showDomain);
+  equalitySemanticsField?.classList.toggle('hidden', !semantics.showEquality);
+  semanticsContainer?.classList.toggle(
+    'hidden',
+    !semantics.showDomain && !semantics.showEquality
+  );
+  createBtn?.classList.toggle(
+    'hidden',
+    !supportsProofEditor(baseLogic, isIntuitionistic)
+  );
 
   const summaryEl = document.getElementById('problem-summary');
   const proofActive = isProofPaneActive();

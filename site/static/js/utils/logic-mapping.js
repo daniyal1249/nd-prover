@@ -1,55 +1,145 @@
 /**
  * Logic mapping helpers
  *
- * Keeps base-logic + "first-order" checkbox mapping consistent across the UI
- * and any persistence layers (e.g., URL state).
+ * Keeps the base-logic and checkbox mappings consistent across the UI and
+ * persistence layers.
  */
+
+const LOGIC_MAP = {
+  TFL: {
+    classical: { propositional: 'TFL', firstOrder: 'FOL' },
+    intuitionistic: { propositional: 'IPL', firstOrder: 'IFOL' }
+  },
+  MLK: {
+    classical: { propositional: 'MLK', firstOrder: 'FOMLK' },
+    intuitionistic: { propositional: 'IMLK', firstOrder: 'IFOMLK' }
+  },
+  MLT: {
+    classical: { propositional: 'MLT', firstOrder: 'FOMLT' },
+    intuitionistic: { propositional: 'IMLT', firstOrder: 'IFOMLT' }
+  },
+  MLS4: {
+    classical: { propositional: 'MLS4', firstOrder: 'FOMLS4' },
+    intuitionistic: { propositional: 'IMLS4', firstOrder: 'IFOMLS4' }
+  },
+  MLS5: {
+    classical: { propositional: 'MLS5', firstOrder: 'FOMLS5' },
+    intuitionistic: { propositional: 'IMLS5', firstOrder: 'IFOMLS5' }
+  }
+};
+
+const INVERSE_LOGIC_MAP = Object.entries(LOGIC_MAP).reduce(
+  (inverse, [baseLogic, systems]) => {
+    for (const [kind, orders] of Object.entries(systems)) {
+      for (const [order, logicLabel] of Object.entries(orders)) {
+        inverse[logicLabel] = {
+          baseLogic,
+          isFirstOrder: order === 'firstOrder',
+          isIntuitionistic: kind === 'intuitionistic'
+        };
+      }
+    }
+    return inverse;
+  },
+  {}
+);
 
 /**
- * Maps a base logic to its first-order version if the checkbox is checked.
+ * Maps the base logic and checkbox settings to a concrete logic class label.
  *
  * @param {string} baseLogic - Base logic value (TFL, MLK, MLT, MLS4, MLS5)
- * @param {boolean} isFirstOrder - Whether first-order checkbox is checked
- * @returns {string} Logic label to store in state.problemDraft.logic 
- *   (or the committed proof problem)
+ * @param {boolean} isFirstOrder - Whether first-order logic is selected
+ * @param {boolean} isIntuitionistic - Whether intuitionistic logic is selected
+ * @returns {string} Concrete logic label
  */
-export function getLogicValue(baseLogic, isFirstOrder) {
-  if (!isFirstOrder) {
-    return baseLogic;
-  }
-
-  const firstOrderMap = {
-    'TFL': 'FOL',
-    'MLK': 'FOMLK',
-    'MLT': 'FOMLT',
-    'MLS4': 'FOMLS4',
-    'MLS5': 'FOMLS5'
-  };
-
-  return firstOrderMap[baseLogic] || baseLogic;
+export function getLogicValue(
+  baseLogic,
+  isFirstOrder,
+  isIntuitionistic = false
+) {
+  const systems = LOGIC_MAP[baseLogic] || LOGIC_MAP.TFL;
+  const kind = isIntuitionistic ? 'intuitionistic' : 'classical';
+  const order = isFirstOrder ? 'firstOrder' : 'propositional';
+  return systems[kind][order];
 }
 
 /**
- * Inverse of getLogicValue(): determines which base logic and checkbox setting
- * should be shown in the UI for a stored logic label.
+ * Determines the controls needed to display a stored concrete logic label.
  *
- * @param {string} logicLabel - Stored logic label (e.g., TFL, FOL, FOMLK)
- * @returns {{ baseLogic: string, isFirstOrder: boolean }}
+ * @param {string} logicLabel - Stored logic label
+ * @returns {{
+ *   baseLogic: string,
+ *   isFirstOrder: boolean,
+ *   isIntuitionistic: boolean
+ * }}
  */
 export function splitLogicValue(logicLabel) {
-  const label = String(logicLabel || '');
-
-  const inverse = {
-    'FOL': { baseLogic: 'TFL', isFirstOrder: true },
-    'FOMLK': { baseLogic: 'MLK', isFirstOrder: true },
-    'FOMLT': { baseLogic: 'MLT', isFirstOrder: true },
-    'FOMLS4': { baseLogic: 'MLS4', isFirstOrder: true },
-    'FOMLS5': { baseLogic: 'MLS5', isFirstOrder: true }
+  return INVERSE_LOGIC_MAP[String(logicLabel || '')] || {
+    baseLogic: 'TFL',
+    isFirstOrder: false,
+    isIntuitionistic: false
   };
+}
 
-  if (inverse[label]) {
-    return inverse[label];
+/**
+ * Resolves selector visibility and the semantic values represented by the
+ * current logic configuration.
+ *
+ * @param {string} baseLogic - Selected base logic
+ * @param {boolean} isFirstOrder - Whether first-order logic is selected
+ * @param {boolean} isIntuitionistic - Whether intuitionistic logic is selected
+ * @param {string} domainChoice - Current domain-selector value
+ * @param {string} equalityChoice - Current equality-selector value
+ * @returns {{
+ *   showDomain: boolean,
+ *   showEquality: boolean,
+ *   domainSemantics: string|null,
+ *   equalitySemantics: string|null
+ * }}
+ */
+export function resolveSemanticOptions(
+  baseLogic,
+  isFirstOrder,
+  isIntuitionistic,
+  domainChoice = 'expanding',
+  equalityChoice = 'equivalence'
+) {
+  const classicalModalFirstOrder =
+    isFirstOrder && !isIntuitionistic && baseLogic !== 'TFL';
+  const intuitionisticFirstOrder = isFirstOrder && isIntuitionistic;
+
+  const showDomain =
+    intuitionisticFirstOrder ||
+    (classicalModalFirstOrder && baseLogic !== 'MLS5');
+  const showEquality = intuitionisticFirstOrder;
+
+  let domainSemantics = null;
+  if (isFirstOrder && isIntuitionistic) {
+    domainSemantics = domainChoice;
+  } else if (classicalModalFirstOrder) {
+    domainSemantics = baseLogic === 'MLS5' ? 'constant' : domainChoice;
   }
 
-  return { baseLogic: label || 'TFL', isFirstOrder: false };
+  let equalitySemantics = null;
+  if (isFirstOrder) {
+    equalitySemantics = isIntuitionistic ? equalityChoice : 'identity';
+  }
+
+  return {
+    showDomain,
+    showEquality,
+    domainSemantics,
+    equalitySemantics
+  };
+}
+
+/**
+ * Determines whether the selected logic supports the proof editor.
+ *
+ * @param {string} baseLogic - Selected base logic
+ * @param {boolean} isIntuitionistic - Whether intuitionistic logic is selected
+ * @returns {boolean} Whether CREATE PROBLEM should be available
+ */
+export function supportsProofEditor(baseLogic, isIntuitionistic) {
+  return !isIntuitionistic || baseLogic === 'TFL';
 }
