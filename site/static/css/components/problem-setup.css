@@ -14,7 +14,9 @@
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-lg);
   display: grid;
-  grid-template-columns: var(--problem-setup-label-width) minmax(0, 1fr);
+  grid-template-columns:
+    var(--problem-setup-label-width)
+    minmax(0, 1fr);
   gap: var(--spacing-sm) var(--spacing-md);
   align-items: center;
   min-width: 0; /* Allow shrinking below content size on mobile */
@@ -26,11 +28,21 @@
 }
 
 /* === Form Inputs === */
-/* Logic container with select and checkbox */
+/* Logic controls and semantic selectors share this reference width */
+.logic-settings {
+  --logic-control-width: var(--logic-select-width);
+  min-width: 0;
+}
+
+/* Base-logic selector with wrapping logic-option controls to its right */
 .logic-container {
-  display: flex;
+  display: grid;
+  grid-template-columns:
+    minmax(0, var(--logic-control-width))
+    minmax(0, 1fr);
   align-items: center;
   gap: var(--spacing-md);
+  min-width: 0;
 }
 
 /* Logic select (width 50% of its field column) */
@@ -41,18 +53,27 @@ select.logic {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius-md);
   background: var(--background);
-  width: var(--logic-select-width);
+  width: 100%;
+  min-width: 0;
 }
 
-/* First-order checkbox container */
-.first-order-container {
+/* First-order and intuitionistic checkboxes */
+.logic-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0 var(--spacing-sm);
+  min-width: 0;
+}
+
+.logic-option {
   display: flex;
   align-items: center;
-  gap: var(--spacing-xs);
+  gap: var(--spacing-xxs);
+  white-space: nowrap;
 }
 
-/* First-order checkbox */
-#first-order {
+.logic-option input {
   width: 1.25em;
   height: 1.25em;
   cursor: pointer;
@@ -60,12 +81,52 @@ select.logic {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* First-order label */
-.first-order-container label {
+.logic-option label {
   font-size: var(--font-size-md);
   color: var(--text-color-secondary);
   cursor: pointer;
   margin: 0;
+}
+
+.semantics-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-lg);
+  width: max-content;
+  min-width: min(var(--logic-control-width), 100%);
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: var(--spacing-sm) 0;
+}
+
+.semantics-field {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+  flex: 0 1 auto;
+  min-width: 0;
+}
+
+.semantics-field label {
+  flex: 0 0 auto;
+  margin: 0;
+  font-size: var(--font-size-md);
+  white-space: nowrap;
+}
+
+select.semantics-select {
+  flex: 0 1 7rem;
+  width: 7rem;
+  min-width: 0;
+  max-width: 7rem;
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  font-family: var(--sans);
+  font-size: var(--font-size-md);
+  color: var(--ink);
+  background: var(--background);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-md);
 }
 
 /* Single-line inputs for Premises/Conclusion */

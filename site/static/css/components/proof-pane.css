@@ -57,7 +57,7 @@
   font-size: var(--font-size-lg);
   line-height: 1.6;
   display: none;
-  white-space: pre-line;
+  white-space: pre-wrap;
 }
 
 .results--show {
@@ -97,8 +97,16 @@
   );
 
   animation:
-    generation-progress 9s linear forwards,
-    generation-pulse 800ms ease-in-out 9s infinite alternate;
+    generation-progress
+      var(--generation-duration, 9s)
+      linear
+      forwards,
+    generation-pulse
+      800ms
+      ease-in-out
+      var(--generation-duration, 9s)
+      infinite
+      alternate;
 }
 
 @keyframes generation-progress {

@@ -6,7 +6,7 @@
  */
 
 /* === Mobile Breakpoint === */
-@media (max-width: 991px) {
+@media (width < 992px) {
   
   /* === General Layout & Structure === */
   body {
@@ -87,13 +87,23 @@
     font-size: var(--font-size-sm);
   }
 
-  select.logic {
-    width: 60%;
+  select.semantics-select {
+    font-size: var(--font-size-sm);
   }
 
-  .first-order-container label {
+  .logic-settings {
+    --logic-control-width: 60%;
+  }
+
+  .logic-option label,
+  .semantics-field label {
     margin-top: 0;
     font-size: var(--font-size-sm);
+  }
+
+  .semantics-container {
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
   }
 
   /* Proof Pane & Results */
@@ -116,11 +126,6 @@
     transform-origin: top left;
     width: calc(100% / var(--proof-mobile-scale));
     max-width: calc(100% / var(--proof-mobile-scale));
-  }
-
-  /* Toolbar */
-  .toolbar {
-    gap: var(--spacing-xs);
   }
 
   /* Editor Actions */
@@ -176,7 +181,7 @@
 }
 
 /* === Tablet Breakpoint === */
-@media (min-width: 992px) and (max-width: 1199px) {
+@media (992px <= width < 1280px) {
   body {
     padding-left: 5%;
     padding-right: 5%;
