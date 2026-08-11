@@ -1,0 +1,4 @@
+$\begin{nd}
+  \have[m]{m}{\enot(\metav{a} = \metav{b})}
+  \have[\ ]{n}{\ebox\enot(\metav{a} = \metav{b})} \by{ND}{m}
+\end{nd}$

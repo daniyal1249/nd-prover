@@ -1,0 +1,4 @@
+$\begin{nd}
+  \have[m]{m}{\metav{a} = \metav{b}}
+  \have[\ ]{n}{\ebox(\metav{a} = \metav{b})} \by{NI}{m}
+\end{nd}$
