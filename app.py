@@ -166,13 +166,10 @@ def _generation_note(logic):
     return ""
 
 
-def _validity_message(result, *, continue_generation=False, logic=None):
+def _validity_message(result, continue_generation=False):
     """Build the user-facing message for a validity result."""
     if result.status == "invalid":
-        msg = f"Invalid argument. Countermodel:\n\n{result.countermodel}"
-        if continue_generation and logic is not None:
-            msg += _generation_note(logic)
-        return msg
+        return f"Invalid argument. Countermodel:\n\n{result.countermodel}"
 
     if result.status == "valid":
         if not continue_generation:
@@ -423,11 +420,7 @@ def generate_proof_validity():
     except Exception as e:
         return _json_error(str(e) + _generation_note(problem.logic))
 
-    msg = _validity_message(
-        result,
-        continue_generation=True,
-        logic=problem.logic
-    )
+    msg = _validity_message(result, continue_generation=True)
 
     return jsonify({
         "ok": True,
