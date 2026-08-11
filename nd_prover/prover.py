@@ -43,7 +43,8 @@ class _Line(_ProofObject):
     citations: tuple
 
     def __post_init__(self):
-        self.is_assumption = self.rule in ("PR", "AS")
+        self.is_assumption = self.rule in {"PR", "AS"}
+        self.is_eff_assumption = self.rule in {"PR", "AS", "☐E", "R4", "R5"}
         super().__init__()
 
     def copy(self):
@@ -75,14 +76,14 @@ class _Proof(_ProofObject):
             if obj.is_line()
         }
         self.formulas.discard(BoxMarker())
-        self.assumptions = {
+        self.eff_assumptions = {
             obj.formula 
             for obj in self.seq 
-            if obj.is_line() and obj.is_assumption
+            if obj.is_line() and obj.is_eff_assumption
         }
-        self.assumptions.discard(BoxMarker())
-        self.ground_terms = ground_terms(self.goal).union(
-            *(ground_terms(f) for f in self.assumptions)
+        self.eff_assumptions.discard(BoxMarker())
+        self.used_constants = constants(self.goal).union(
+            *(constants(f) for f in self.eff_assumptions)
         )
         self.line_count = sum(
             1 if obj.is_line() else obj.line_count 
@@ -102,9 +103,9 @@ class _Proof(_ProofObject):
             if obj.is_line():
                 f = obj.formula
                 self.formulas.add(f)
-                if obj.is_assumption:
-                    self.assumptions.add(f)
-                    self.ground_terms.update(ground_terms(f))
+                if obj.is_eff_assumption:
+                    self.eff_assumptions.add(f)
+                    self.used_constants.update(constants(f))
 
                 self.line_count += 1
                 if obj.rule == "IP":
@@ -159,7 +160,6 @@ class Eliminator:
 
     @staticmethod
     def elim(prover):
-        logic = prover.logic
         while True:
             if Eliminator.R(prover):
                 return True
@@ -173,22 +173,28 @@ class Eliminator:
                 continue
             if Eliminator.IffE(prover):
                 continue
-            if issubclass(logic, FOL) and Eliminator.ForallE(prover):
+
+            if prover.first_order and Eliminator.ForallE(prover):
                 continue
-            if issubclass(logic, MLK) and Eliminator.DefDia(prover):
+            if prover.modal and Eliminator.DefDia(prover):
                 continue
-            if issubclass(logic, MLT) and Eliminator.RT(prover):
+            if prover.reflexive and Eliminator.RT(prover):
                 continue
+
+            if prover.first_order and prover.modal:
+                if prover.domain_semantics == "constant":
+                    if Eliminator.BF(prover):
+                        continue
+
             return False
 
     @staticmethod
     def strict_elim(prover, subproof):
-        logic = prover.logic
-        if issubclass(logic, MLK):
+        if prover.modal:
             Eliminator.BoxE(prover, subproof)
-        if issubclass(logic, MLS4):
+        if prover.transitive:
             Eliminator.R4(prover, subproof)
-        if issubclass(logic, MLS5):
+        if prover.s5:
             Eliminator.R5(prover, subproof)
 
     @staticmethod
@@ -219,11 +225,11 @@ class Eliminator:
     def NotE(prover):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Not)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Not)):
                 continue
 
             for obj2 in proof.seq:
-                if obj2.is_line() and obj2.formula == obj.formula.inner:
+                if obj2.is_line() and obj2.formula == f.inner:
                     line = _Line(Bot(), "¬E", (obj.id, obj2.id))
                     proof.add(line)
                     return True
@@ -233,10 +239,10 @@ class Eliminator:
     def AndE(prover):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, And)):
+            if not (obj.is_line() and isinstance(f := obj.formula, And)):
                 continue
 
-            for conjunct in (obj.formula.left, obj.formula.right):
+            for conjunct in (f.left, f.right):
                 if conjunct not in proof.formulas:
                     line = _Line(conjunct, "∧E", (obj.id,))
                     proof.add(line)
@@ -247,14 +253,14 @@ class Eliminator:
     def ImpE(prover):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Imp)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Imp)):
                 continue
-            if obj.formula.right in proof.formulas:
+            if f.right in proof.formulas:
                 continue
 
             for obj2 in proof.seq:
-                if obj2.is_line() and obj2.formula == obj.formula.left:
-                    line = _Line(obj.formula.right, "→E", (obj.id, obj2.id))
+                if obj2.is_line() and obj2.formula == f.left:
+                    line = _Line(f.right, "→E", (obj.id, obj2.id))
                     proof.add(line)
                     return True
         return False
@@ -263,23 +269,23 @@ class Eliminator:
     def IffE(prover):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Iff)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Iff)):
                 continue
 
-            have_left = obj.formula.left in proof.formulas
-            have_right = obj.formula.right in proof.formulas
+            have_left = f.left in proof.formulas
+            have_right = f.right in proof.formulas
 
             if have_left and not have_right:
                 for obj2 in proof.seq:
-                    if obj2.is_line() and obj2.formula == obj.formula.left:
-                        line = _Line(obj.formula.right, "↔E", (obj.id, obj2.id))
+                    if obj2.is_line() and obj2.formula == f.left:
+                        line = _Line(f.right, "↔E", (obj.id, obj2.id))
                         proof.add(line)
                         return True
 
             if have_right and not have_left:
                 for obj2 in proof.seq:
-                    if obj2.is_line() and obj2.formula == obj.formula.right:
-                        line = _Line(obj.formula.left, "↔E", (obj.id, obj2.id))
+                    if obj2.is_line() and obj2.formula == f.right:
+                        line = _Line(f.left, "↔E", (obj.id, obj2.id))
                         proof.add(line)
                         return True
         return False
@@ -288,12 +294,11 @@ class Eliminator:
     def ForallE(prover):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Forall)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Forall)):
                 continue
 
-            ground_terms = sorted(proof.ground_terms, key=str)
-            for t in ground_terms or (Func("a", ()),):
-                inner = sub_term(obj.formula.inner, obj.formula.var, lambda: t)
+            for term in _ground_terms(proof):
+                inner = sub_term(f.inner, f.var, lambda: term)
                 if inner not in proof.formulas:
                     line = _Line(inner, "∀E", (obj.id,))
                     proof.add(line)
@@ -304,10 +309,10 @@ class Eliminator:
     def DefDia(prover):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Dia)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Dia)):
                 continue
 
-            expanded = Not(Box(Not(obj.formula.inner)))
+            expanded = Not(Box(Not(f.inner)))
             if expanded not in proof.formulas:
                 line = _Line(expanded, "Def◇", (obj.id,))
                 proof.add(line)
@@ -318,11 +323,26 @@ class Eliminator:
     def RT(prover):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Box)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Box)):
                 continue
 
-            if obj.formula.inner not in proof.formulas:
-                line = _Line(obj.formula.inner, "RT", (obj.id,))
+            if f.inner not in proof.formulas:
+                line = _Line(f.inner, "RT", (obj.id,))
+                proof.add(line)
+                return True
+        return False
+
+    @staticmethod
+    def BF(prover):
+        proof = prover.proof
+        for obj in proof.seq:
+            if not (obj.is_line() and isinstance(f := obj.formula, Forall) 
+                    and isinstance(f.inner, Box)):
+                continue
+
+            box_forall = Box(Forall(f.var, f.inner.inner))
+            if box_forall not in proof.formulas:
+                line = _Line(box_forall, "BF", (obj.id,))
                 proof.add(line)
                 return True
         return False
@@ -331,71 +351,68 @@ class Eliminator:
     def BoxE(prover, subproof):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Box)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Box)):
                 continue
 
-            if obj.formula.inner not in subproof.formulas:
-                line = _Line(obj.formula.inner, "☐E", (obj.id,))
+            if f.inner not in subproof.formulas:
+                line = _Line(f.inner, "☐E", (obj.id,))
                 subproof.add(line)
 
     @staticmethod
     def R4(prover, subproof):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Box)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Box)):
                 continue
 
-            if obj.formula not in subproof.formulas:
-                line = _Line(obj.formula, "R4", (obj.id,))
+            if f not in subproof.formulas:
+                line = _Line(f, "R4", (obj.id,))
                 subproof.add(line)
 
     @staticmethod
     def R5(prover, subproof):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Not) 
-                    and isinstance(obj.formula.inner, Box)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Not) 
+                    and isinstance(f.inner, Box)):
                 continue
 
-            if obj.formula not in subproof.formulas:
-                line = _Line(obj.formula, "R5", (obj.id,))
+            if f not in subproof.formulas:
+                line = _Line(f, "R5", (obj.id,))
                 subproof.add(line)
 
     @staticmethod
-    def OrE(prover, exhaustive):
+    def OrE(prover):
         proof = prover.proof
         goal = proof.goal
         branches = []
 
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Or)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Or)):
                 continue
-            disjunct1, disjunct2 = obj.formula.left, obj.formula.right
-            if disjunct1 in proof.formulas or disjunct2 in proof.formulas:
+            if f.left in proof.formulas or f.right in proof.formulas:
                 continue
 
             objs = []
-            subproof1 = find_subproof(proof.seq, disjunct1, goal)
-            found1 = subproof1 is not None
+            subproof1 = _find_subproof(proof.seq, f.left, goal)
 
-            if not found1:
-                assumption1 = _Line(disjunct1, "AS", ())
+            if subproof1 is None:
+                assumption1 = _Line(f.left, "AS", ())
                 subproof1 = _Proof(proof.seq + [assumption1], goal)
                 p1 = prover.new(subproof1)
-                if not p1.prove(exhaustive):
+                if not p1.prove():
                     continue
                 subproof1.seq = subproof1.seq[len(proof.seq):]
                 objs.append(subproof1)
 
             seq = proof.seq + objs
-            subproof2 = find_subproof(seq, disjunct2, goal)
-            found2 = subproof2 is not None
+            subproof2 = _find_subproof(seq, f.right, goal)
 
-            if not found2:
-                assumption2 = _Line(disjunct2, "AS", ())
+            if subproof2 is None:
+                assumption2 = _Line(f.right, "AS", ())
                 subproof2 = _Proof(seq + [assumption2], goal)
                 p2 = prover.new(subproof2, copy_seen=True)
-                if not p2.prove(exhaustive):
+                if not p2.prove():
                     continue
                 subproof2.seq = subproof2.seq[len(seq):]
                 objs.append(subproof2)
@@ -404,26 +421,26 @@ class Eliminator:
             objs.append(line)
             branch = _Proof(proof.seq + objs, goal)
             branches.append(branch)
-            if not exhaustive:
+            if not prover.exhaustive:
                 break
 
         return proof.commit_best_branch(branches)
 
     @staticmethod
-    def ExistsE(prover, exhaustive):
+    def ExistsE(prover):
         proof = prover.proof
         goal = proof.goal
         branches = []
 
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Exists)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Exists)):
                 continue
-            exists, m = obj.formula, Metavar(is_ground_term)
-            schema = sub_term(exists.inner, exists.var, lambda: m)
+            m = Metavar(is_ground_term)
+            schema = sub_term(f.inner, f.var, lambda: m)
 
             matched = False
-            for f in proof.formulas:
-                if f == schema:
+            for formula in proof.formulas:
+                if formula == schema:
                     matched = True
                     break
                 m.value = None
@@ -431,17 +448,16 @@ class Eliminator:
             if matched:
                 continue
 
-            c = fresh_constant(proof.ground_terms)
-            inner = sub_term(exists.inner, exists.var, lambda: c)
-            subproof = find_subproof(proof.seq, inner, goal)
-            found = subproof is not None
+            c = _fresh_constant(proof)
+            inner = sub_term(f.inner, f.var, lambda: c)
+            subproof = _find_subproof(proof.seq, inner, goal)
 
             objs = []
-            if not found:
+            if subproof is None:
                 assumption = _Line(inner, "AS", ())
                 subproof = _Proof(proof.seq + [assumption], goal)
                 p = prover.new(subproof)
-                if not p.prove(exhaustive):
+                if not p.prove():
                     continue
                 subproof.seq = subproof.seq[len(proof.seq):]
                 objs.append(subproof)
@@ -450,52 +466,56 @@ class Eliminator:
             objs.append(line)
             branch = _Proof(proof.seq + objs, goal)
             branches.append(branch)
-            # if not exhaustive:  # FIX: break?
+            # if not prover.exhaustive:  # FIX: break?
             break
 
         return proof.commit_best_branch(branches)
 
     @staticmethod
-    def NotE_force(prover, exhaustive):
+    def NotE_force(prover):
         proof = prover.proof
-        result = check_validity(prover.logic, proof.assumptions, Bot())
+        ds, es = prover.domain_semantics, prover.equality_semantics
+        result = check_validity(
+            prover.logic, proof.eff_assumptions, Bot(), ds, es
+        )
         if result.status == "invalid":
             return False
 
         branches = []
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Not)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Not)):
                 continue
-            branch = _Proof(proof.seq, obj.formula.inner)
+            branch = _Proof(proof.seq, f.inner)
             p = prover.new(branch)
-            if not p.prove(exhaustive):
+            if not p.prove():
                 continue
 
             branch.pop_reiteration()
             if branch.seq != proof.seq:
                 branches.append(branch)
-                if not exhaustive:
+                if not prover.exhaustive:
                     break
 
         return proof.commit_best_branch(branches)
 
     @staticmethod
-    def ImpE_force(prover, exhaustive):
+    def ImpE_force(prover):
         proof = prover.proof
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Imp)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Imp)):
                 continue
-            if obj.formula.right in proof.formulas:
+            if f.right in proof.formulas:
                 continue
 
+            ds, es = prover.domain_semantics, prover.equality_semantics
             result = check_validity(
-                prover.logic, proof.assumptions, obj.formula.left
+                prover.logic, proof.eff_assumptions, f.left, ds, es
             )
 
             if result.status != "invalid":
-                branch = _Proof(proof.seq, obj.formula.left)
+                branch = _Proof(proof.seq, f.left)
                 p = prover.new(branch)
-                if p.prove(exhaustive):
+                if p.prove():
                     branch.pop_reiteration()
                     if branch.seq != proof.seq:
                         proof.seq = branch.seq
@@ -503,34 +523,33 @@ class Eliminator:
         return False
 
     @staticmethod
-    def IffE_force(prover, exhaustive):
+    def IffE_force(prover):
         proof = prover.proof
-        formulas = proof.formulas
-
         for obj in proof.seq:
-            if not (obj.is_line() and isinstance(obj.formula, Iff)):
+            if not (obj.is_line() and isinstance(f := obj.formula, Iff)):
                 continue
-            if obj.formula.left in formulas or obj.formula.right in formulas:
+            if f.left in proof.formulas or f.right in proof.formulas:
                 continue
 
+            ds, es = prover.domain_semantics, prover.equality_semantics
             result = check_validity(
-                prover.logic, proof.assumptions, obj.formula.left
+                prover.logic, proof.eff_assumptions, f.left, ds, es
             )
             if result.status == "invalid":
                 continue
 
             branches = []
-            for formula in (obj.formula.left, obj.formula.right):
+            for formula in (f.left, f.right):
                 branch = _Proof(proof.seq, formula)
                 p = prover.new(branch, copy_seen=True)
-                if not p.prove(exhaustive):
+                if not p.prove():
                     continue
 
                 branch.pop_reiteration()
                 if branch.seq != proof.seq:
                     branches.append(branch)
                     # FIX: consider always breaking
-                    if not exhaustive:
+                    if not prover.exhaustive:
                         break
 
             if proof.commit_best_branch(branches):
@@ -541,42 +560,50 @@ class Eliminator:
 class Introducer:
 
     @staticmethod
-    def intro(prover, exhaustive):
+    def intro(prover):
         match prover.proof.goal:
             case Not():
-                return Introducer.NotI(prover, exhaustive)
+                return Introducer.NotI(prover)
             case And():
-                return Introducer.AndI(prover, exhaustive)
+                return Introducer.AndI(prover)
             case Or():
-                return Introducer.OrI(prover, exhaustive)
+                return Introducer.OrI(prover)
             case Imp():
-                return Introducer.ImpI(prover, exhaustive)
+                return Introducer.ImpI(prover)
             case Iff():
-                return Introducer.IffI(prover, exhaustive)
+                return Introducer.IffI(prover)
             case Forall():
-                return Introducer.ForallI(prover, exhaustive)
+                return Introducer.ForallI(prover)
             case Exists():
-                return Introducer.ExistsI(prover, exhaustive)
+                return Introducer.ExistsI(prover)
             case Box():
-                return Introducer.BoxI(prover, exhaustive)
+                return Introducer.BoxI(prover)
             case Dia():
-                return Introducer.DefDia(prover, exhaustive)
+                return Introducer.DefDia(prover)
         return False
 
     @staticmethod
-    def NotI(prover, exhaustive):
+    def NotI(prover):
         proof = prover.proof
-        subproof = find_subproof(proof.seq, proof.goal.inner, Bot())
+        inner = proof.goal.inner
+        subproof = _find_subproof(proof.seq, inner, Bot())
         found = subproof is not None
 
         if not found:
-            if proof.goal.inner in proof.formulas:  # FIX: check validity?
+            if inner in proof.formulas:
                 return False
 
-            assumption = _Line(proof.goal.inner, "AS", ())
+            # ds, es = prover.domain_semantics, prover.equality_semantics
+            # result = check_validity(
+            #     prover.logic, proof.eff_assumptions, inner, ds, es
+            # )
+            # if result.status == "valid":
+            #     return False
+
+            assumption = _Line(inner, "AS", ())
             subproof = _Proof(proof.seq + [assumption], Bot())
-            p = prover.new(subproof)
-            if not p.prove(exhaustive):
+            p = prover.new(subproof, ip=False)
+            if not p.prove():
                 return False
             subproof.seq = subproof.seq[len(proof.seq):]
 
@@ -586,7 +613,7 @@ class Introducer:
         return True
 
     @staticmethod
-    def AndI(prover, exhaustive):
+    def AndI(prover):
         proof = prover.proof
         left, right = proof.goal.left, proof.goal.right
         branches = []
@@ -594,26 +621,26 @@ class Introducer:
         for conjunct1, conjunct2 in [(left, right), (right, left)]:
             branch1 = _Proof(proof.seq, conjunct1)
             p1 = prover.new(branch1, copy_seen=True)
-            if not p1.prove(exhaustive):
+            if not p1.prove():
                 continue
             conjunct1_id = branch1.pop_reiteration()
 
             branch2 = _Proof(branch1.seq, conjunct2)
             p2 = prover.new(branch2)
-            if not p2.prove(exhaustive):
+            if not p2.prove():
                 continue
             conjunct2_id = branch2.pop_reiteration()
 
             line = _Line(proof.goal, "∧I", (conjunct1_id, conjunct2_id))
             branch2.add(line)
             branches.append(branch2)
-            if not exhaustive:
+            if not prover.exhaustive:
                 break
 
         return proof.commit_best_branch(branches)
 
     @staticmethod
-    def OrI(prover, exhaustive):
+    def OrI(prover):
         proof = prover.proof
         left, right = proof.goal.left, proof.goal.right
         branches = []
@@ -626,34 +653,38 @@ class Introducer:
                 return True
 
         for disjunct in (left, right):
-            result = check_validity(prover.logic, proof.assumptions, disjunct)
+            ds, es = prover.domain_semantics, prover.equality_semantics
+            result = check_validity(
+                prover.logic, proof.eff_assumptions, disjunct, ds, es
+            )
+
             if result.status != "invalid":
                 branch = _Proof(proof.seq, disjunct)
                 p = prover.new(branch)
-                if not p.prove(exhaustive):
+                if not p.prove():
                     continue
 
                 disjunct_id = branch.pop_reiteration()
                 line = _Line(proof.goal, "∨I", (disjunct_id,))
                 branch.add(line)
                 branches.append(branch)
-                if not exhaustive:
+                if not prover.exhaustive:
                     break
 
         return proof.commit_best_branch(branches)
 
     @staticmethod
-    def ImpI(prover, exhaustive):
+    def ImpI(prover):
         proof = prover.proof
         left, right = proof.goal.left, proof.goal.right
-        subproof = find_subproof(proof.seq, left, right)
+        subproof = _find_subproof(proof.seq, left, right)
         found = subproof is not None
 
         if not found:
             assumption = _Line(left, "AS", ())
             subproof = _Proof(proof.seq + [assumption], right)
             p = prover.new(subproof, copy_seen=True)
-            if not p.prove(exhaustive):
+            if not p.prove():
                 return False
             subproof.seq = subproof.seq[len(proof.seq):]
 
@@ -663,32 +694,30 @@ class Introducer:
         return True
 
     @staticmethod
-    def IffI(prover, exhaustive):
+    def IffI(prover):
         proof = prover.proof
         left, right = proof.goal.left, proof.goal.right
 
         objs = []
-        subproof1 = find_subproof(proof.seq, left, right)
-        found1 = subproof1 is not None
+        subproof1 = _find_subproof(proof.seq, left, right)
 
-        if not found1:
+        if subproof1 is None:
             assumption1 = _Line(left, "AS", ())
             subproof1 = _Proof(proof.seq + [assumption1], right)
             p1 = prover.new(subproof1)
-            if not p1.prove(exhaustive):
+            if not p1.prove():
                 return False
             subproof1.seq = subproof1.seq[len(proof.seq):]
             objs.append(subproof1)
 
         seq = proof.seq + objs
-        subproof2 = find_subproof(seq, right, left)
-        found2 = subproof2 is not None
+        subproof2 = _find_subproof(seq, right, left)
 
-        if not found2:
+        if subproof2 is None:
             assumption2 = _Line(right, "AS", ())
             subproof2 = _Proof(seq + [assumption2], left)
             p2 = prover.new(subproof2)
-            if not p2.prove(exhaustive):
+            if not p2.prove():
                 return False
             subproof2.seq = subproof2.seq[len(seq):]
             objs.append(subproof2)
@@ -699,13 +728,13 @@ class Introducer:
         return True
 
     @staticmethod
-    def ForallI(prover, exhaustive):
+    def ForallI(prover):
         proof = prover.proof
-        c = fresh_constant(proof.ground_terms)
+        c = _fresh_constant(proof)
         inner = sub_term(proof.goal.inner, proof.goal.var, lambda: c)
         branch = _Proof(proof.seq, inner)
         p = prover.new(branch)
-        if not p.prove(exhaustive):
+        if not p.prove():
             return False
 
         inner_id = branch.pop_reiteration()
@@ -715,7 +744,7 @@ class Introducer:
         return True
 
     @staticmethod
-    def ExistsI(prover, exhaustive):
+    def ExistsI(prover):
         proof = prover.proof
         branches = []
 
@@ -729,35 +758,35 @@ class Introducer:
                 return True
             m.value = None
 
-        ground_terms = sorted(proof.ground_terms, key=str)
-        for t in ground_terms or (Func("a", ()),):
-            inner = sub_term(exists.inner, exists.var, lambda: t)
+        for term in _ground_terms(proof):
+            inner = sub_term(exists.inner, exists.var, lambda: term)
             branch = _Proof(proof.seq, inner)
             p = prover.new(branch)
-            if not p.prove(exhaustive):
+            if not p.prove():
                 continue
 
             inner_id = branch.pop_reiteration()
             line = _Line(exists, "∃I", (inner_id,))
             branch.add(line)
             branches.append(branch)
-            # if not exhaustive:  # FIX: break?
+            # if not prover.exhaustive:  # FIX: break?
             break
 
         return proof.commit_best_branch(branches)
 
     @staticmethod
-    def BoxI(prover, exhaustive):
+    def BoxI(prover):
         proof = prover.proof
-        subproof = find_subproof(proof.seq, BoxMarker(), proof.goal.inner)
+        subproof = _find_subproof(proof.seq, BoxMarker(), proof.goal.inner)
         found = subproof is not None
 
         if not found:
             assumption = _Line(BoxMarker(), "AS", ())
             subproof = _Proof([assumption], proof.goal.inner)
+            subproof.used_constants.update(proof.used_constants)
             Eliminator.strict_elim(prover, subproof)
-            p = prover.new(subproof)  # FIX: copy?
-            if not p.prove(exhaustive):
+            p = prover.new(subproof, ip=True)  # FIX: copy?
+            if not p.prove():
                 return False
 
         line = _Line(proof.goal, "☐I", (subproof.id,))
@@ -766,12 +795,12 @@ class Introducer:
         return True
 
     @staticmethod
-    def DefDia(prover, exhaustive):
+    def DefDia(prover):
         proof = prover.proof
         expanded = Not(Box(Not(proof.goal.inner)))
         branch = _Proof(proof.seq, expanded)
-        p = prover.new(branch, copy_seen=True)
-        if not p.prove(exhaustive):
+        p = prover.new(branch, ip=False, copy_seen=True)
+        if not p.prove():
             return False
 
         expanded_id = branch.pop_reiteration()
@@ -781,22 +810,27 @@ class Introducer:
         return True
 
     @staticmethod
-    def IP(prover, exhaustive):
+    def IP(prover):
         proof = prover.proof
-        subproof = find_subproof(proof.seq, Not(proof.goal), Bot())
+        not_goal = Not(proof.goal)
+        subproof = _find_subproof(proof.seq, not_goal, Bot())
         found = subproof is not None
 
         if not found:
-            if Not(proof.goal) in proof.formulas:  # FIX: check validity?
-                return False
-            result = check_validity(prover.logic, [proof.goal], Bot())
-            if result.status == "valid":
+            if not_goal in proof.formulas:
                 return False
 
-            assumption = _Line(Not(proof.goal), "AS", ())
+            # ds, es = prover.domain_semantics, prover.equality_semantics
+            # result = check_validity(
+            #     prover.logic, proof.eff_assumptions, not_goal, ds, es
+            # )
+            # if result.status == "valid":
+            #     return False
+
+            assumption = _Line(not_goal, "AS", ())
             subproof = _Proof(proof.seq + [assumption], Bot())
-            p = prover.new(subproof)
-            if not p.prove(exhaustive):
+            p = prover.new(subproof, ip=False)
+            if not p.prove():
                 return False
             subproof.seq = subproof.seq[len(proof.seq):]
 
@@ -808,13 +842,36 @@ class Introducer:
 
 class Prover:
 
-    def __init__(self, logic, proof, seen=None, deadline=None):
+    def __init__(
+        self,
+        logic,
+        proof,
+        domain_semantics=None,
+        equality_semantics=None,
+        ip=None,
+        exhaustive=True,
+        seen=None,
+        deadline=None
+    ):
         self.logic = logic
+        self.intuitionistic = intuitionistic(logic)
+        self.first_order = first_order(logic)
+        self.modal = modal(logic)
+        self.reflexive = reflexive(logic)
+        self.transitive = transitive(logic)
+        self.s5 = s5(logic)
+
         self.proof = proof
+        self.domain_semantics, self.equality_semantics = resolve_semantics(
+            logic, domain_semantics, equality_semantics
+        )
+
+        self.ip = not self.intuitionistic if ip is None else ip
+        self.exhaustive = exhaustive
         self.seen = {} if seen is None else seen
         self.deadline = deadline
 
-    def prove(self, exhaustive):
+    def prove(self):
         if self.deadline is not None and time.monotonic() > self.deadline:
             raise TimeoutError()
 
@@ -822,16 +879,16 @@ class Prover:
             return True
         if not self.enter_state():
             return False
-        if Introducer.intro(self, exhaustive):
+        if Introducer.intro(self):
             return True
 
         strategies = (
-            lambda p: Eliminator.NotE_force(p, exhaustive) and p.prove(exhaustive),
-            lambda p: Eliminator.ImpE_force(p, exhaustive) and p.prove(exhaustive),
-            lambda p: Eliminator.IffE_force(p, exhaustive) and p.prove(exhaustive),
-            lambda p: issubclass(self.logic, FOL) and Eliminator.ExistsE(p, exhaustive),
-            lambda p: Eliminator.OrE(p, exhaustive),
-            lambda p: Introducer.IP(p, exhaustive),
+            lambda p: Eliminator.NotE_force(p) and p.prove(),
+            lambda p: Eliminator.ImpE_force(p) and p.prove(),
+            lambda p: Eliminator.IffE_force(p) and p.prove(),
+            lambda p: p.first_order and Eliminator.ExistsE(p),
+            lambda p: Eliminator.OrE(p),
+            lambda p: p.ip and Introducer.IP(p),
         )
 
         branches = []
@@ -839,15 +896,26 @@ class Prover:
             p = self.new()
             if strategy(p):
                 branches.append(p.proof)
-                if not exhaustive:
+                if not p.exhaustive:
                     break
 
         return self.proof.commit_best_branch(branches)
 
-    def new(self, proof=None, copy_seen=False):
+    def new(self, proof=None, ip=None, copy_seen=False):
         proof = self.proof.copy() if proof is None else proof
+        ip = self.ip if ip is None else ip
         seen = self.seen.copy() if copy_seen else self.seen
-        return Prover(self.logic, proof, seen, self.deadline)
+
+        return Prover(
+            self.logic,
+            proof,
+            self.domain_semantics,
+            self.equality_semantics,
+            ip,
+            self.exhaustive,
+            seen,
+            self.deadline
+        )
 
     def enter_state(self):
         proof = self.proof
@@ -864,14 +932,14 @@ class Prover:
 class Processor:
 
     @staticmethod
-    def process(proof, target, premise_count):
+    def process(proof, target, logic, premise_count):
         Processor.remove_uncited(proof, proof.id_to_citers())
         id_to_obj, id_to_citers = proof.id_to_obj(), proof.id_to_citers()
         Processor.replace_reiterations(proof, id_to_obj, id_to_citers, {})
 
         premises = proof.seq[:premise_count]
         id_to_idx = {line.id: idx for idx, line in enumerate(premises, 1)}
-        Processor.translate(proof.seq[premise_count:], target, id_to_idx)
+        Processor.translate(proof.seq[premise_count:], target, logic, id_to_idx)
 
     @staticmethod
     def remove_uncited(proof, id_to_citers):
@@ -901,7 +969,9 @@ class Processor:
         for idx, obj in enumerate(proof.seq):
 
             if not obj.is_line():
-                Processor.replace_reiterations(obj, id_to_obj, id_to_citers, replace)
+                Processor.replace_reiterations(
+                    obj, id_to_obj, id_to_citers, replace
+                )
                 seq.append(obj)
                 continue
 
@@ -925,12 +995,16 @@ class Processor:
         proof.seq = seq
 
     @staticmethod
-    def translate(seq, target, id_to_idx):
+    def translate(seq, target, logic, id_to_idx):
         active_subproof = False
 
         for obj in seq:
             if obj.is_line():
-                rule = Rules.rules.get(obj.rule) or getattr(Rules, obj.rule)
+                rule = getattr(Rules, obj.rule, None)
+                if rule is None:
+                    func_name = Rules.rules[obj.rule]
+                    rule = Rule(obj.rule, getattr(logic, func_name))
+
                 citations = tuple(id_to_idx[c] for c in obj.citations)
                 j = Justification(rule, citations)
 
@@ -952,12 +1026,12 @@ class Processor:
 
             start_idx = target.idx[1]
             id_to_idx[assumption.id] = start_idx
-            Processor.translate(obj.seq[1:], target, id_to_idx)
+            Processor.translate(obj.seq[1:], target, logic, id_to_idx)
             id_to_idx[obj.id] = (start_idx, target.idx[1])
             active_subproof = True
 
 
-def find_subproof(seq, assumption, conclusion):
+def _find_subproof(seq, assumption, conclusion):
     for obj in seq:
         if obj.is_line() or len(obj.seq) == 1:
             continue
@@ -969,22 +1043,77 @@ def find_subproof(seq, assumption, conclusion):
     return None
 
 
-def fresh_constant(terms):
+def _ground_terms(proof):
+    goal_terms = ground_terms(proof.goal)
+    assumption_terms = set()
+
+    for obj in proof.seq:
+        if obj.is_line() and obj.is_eff_assumption:
+            assumption_terms.update(ground_terms(obj.formula))
+
+    seed = goal_terms.union(assumption_terms)
+    if not seed:
+        seed = {Func("a", ())}
+
+    frontier = set()
+    for obj in proof.seq:
+        if obj.is_line() and isinstance(f := obj.formula, Forall):
+            for term in seed:
+                inner = sub_term(f.inner, f.var, lambda: term)
+                frontier.update(ground_terms(inner))
+
+    result, seen = [], set()
+    for group in (goal_terms, assumption_terms, seed, frontier):
+        for term in sorted(group, key=lambda t: (len(s := str(t)), s)):
+            if term not in seen:
+                result.append(term)
+                seen.add(term)
+
+    return result
+
+
+def _fresh_constant(proof):
+    for obj in proof.seq:
+        if not (obj.is_line() and not obj.is_eff_assumption):
+            continue
+        for c in sorted(constants(obj.formula), key=str):
+            if c not in proof.used_constants:
+                return c
+
     for name in Func.names:
         c = Func(name, ())
-        if c not in terms:
+        if c not in proof.used_constants:
             return c
     raise ProverError()
 
 
-def prove(logic, premises, conclusion, exhaustive, timeout):
+def prove(
+    logic,
+    premises,
+    conclusion,
+    domain_semantics=None,
+    equality_semantics=None,
+    exhaustive=True,
+    timeout=None
+):
     seq = [_Line(p, "PR", ()) for p in premises]
     proof = _Proof(seq, conclusion)
-    deadline = time.monotonic() + timeout / 1000
-    p = Prover(logic, proof, deadline=deadline)
+
+    deadline = None
+    if timeout is not None:
+        deadline = time.monotonic() + timeout / 1000
+
+    p = Prover(
+        logic,
+        proof,
+        domain_semantics,
+        equality_semantics,
+        exhaustive=exhaustive,
+        deadline=deadline
+    )
 
     try:
-        proved = p.prove(exhaustive)
+        proved = p.prove()
     except TimeoutError:
         return ProofSearchResult("timeout")
     except Exception:
@@ -993,8 +1122,11 @@ def prove(logic, premises, conclusion, exhaustive, timeout):
     if not proved:
         return ProofSearchResult("failure")
 
-    problem = Problem(logic, premises, conclusion)
-    Processor.process(proof, problem.proof, len(premises))
+    problem = Problem(
+        logic, premises, conclusion, domain_semantics, equality_semantics
+    )
+
+    Processor.process(proof, problem.proof, logic, len(premises))
     if problem.errors() or not problem.conclusion_reached():
         return ProofSearchResult("failure")
     return ProofSearchResult("success", problem)

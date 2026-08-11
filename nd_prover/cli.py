@@ -26,24 +26,30 @@ logics = {
     "FOMLT": FOMLT,
     "FOMLS4": FOMLS4,
     "FOMLS5": FOMLS5,
+    "IPL": IPL,
+    "IFOL": IFOL,
+    "IMLK": IMLK,
+    "IMLT": IMLT,
+    "IMLS4": IMLS4,
+    "IMLS5": IMLS5,
+    "IFOMLK": IFOMLK,
+    "IFOMLT": IFOMLT,
+    "IFOMLS4": IFOMLS4,
+    "IFOMLS5": IFOMLS5,
 }
 
 
 def parse_and_verify_formula(f, logic):
     f = parse_formula(f)
-    if logic is TFL and is_tfl_formula(f):
-        return f
-    if logic is FOL and is_fol_formula(f):
-        if not free_vars(f):
-            return f
+    if logic in (TFL, IPL) and not is_tfl_formula(f):
+        raise ParsingError(f'"{f}" is not a TFL formula.')
+    if logic in (FOL, IFOL) and not is_fol_formula(f):
+        raise ParsingError(f'"{f}" is not an FOL formula.')
+    if modal(logic) and not first_order(logic) and not is_ml_formula(f):
+        raise ParsingError(f'"{f}" is not an ML formula.')
+    if first_order(logic) and free_vars(f):
         raise ParsingError(f'"{f}" is not a closed formula.')
-    if logic in (MLK, MLT, MLS4, MLS5) and is_ml_formula(f):
-        return f
-    if logic in (FOMLK, FOMLT, FOMLS4, FOMLS5):
-        if not free_vars(f):
-            return f
-        raise ParsingError(f'"{f}" is not a closed formula.')
-    raise ParsingError(f'"{f}" is not a well-formed {logic.__name__} formula.')
+    return f
 
 
 def parse_and_verify_premises(s, logic):
@@ -58,7 +64,7 @@ def parse_and_verify_premises(s, logic):
                 depth += 1
             elif ch == ")":
                 depth = max(0, depth - 1)
-            elif depth == 0 and ch in (",", ";"):
+            elif depth == 0 and ch in {",", ";"}:
                 if part := text[start:i].strip():
                     parts.append(part)
                 start = i + 1
@@ -120,9 +126,9 @@ def select_edit():
         print("Invalid edit. Please try again.\n")
 
 
-def input_line():
+def input_line(logic):
     raw = input("Enter line: ")
-    return parse_line(raw)
+    return parse_line(raw, logic)
 
 
 def input_assumption():
@@ -131,16 +137,17 @@ def input_assumption():
 
 
 def perform_edit(problem, edit):
+    logic = problem.logic
     try:
         match edit:
             case 1:
-                f, j = input_line()
+                f, j = input_line(logic)
                 problem.add_line(f, j)
             case 2:
                 a = input_assumption()
                 problem.begin_subproof(a)
             case 3:
-                f, j = input_line()
+                f, j = input_line(logic)
                 problem.end_subproof(f, j)
             case 4:
                 a = input_assumption()

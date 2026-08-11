@@ -1,4 +1,4 @@
-__version__ = "3.0.0"
+__version__ = "3.1.0"
 __author__ = "Daniyal Akif"
 __email__ = "daniyalakif@gmail.com"
 __license__ = "Apache-2.0"
@@ -7,9 +7,11 @@ __url__ = "https://github.com/daniyal1249/nd-prover"
 
 
 from .checker import (
-    InferenceError, ProofEditError, Rule, Justification, Rules, TFL, FOL, 
-    MLK, MLT, MLS4, MLS5, FOMLK, FOMLT, FOMLS4, FOMLS5, ProofObject, 
-    Line, Proof, Problem, verify_arity, assumption_constants
+    InferenceError, ProofEditError, SemanticsError, Rule, Justification, 
+    Rules, IPL, TFL, IFOL, FOL, IMLK, MLK, IMLT, MLT, IMLS4, MLS4, IMLS5, 
+    MLS5, IFOMLK, FOMLK, IFOMLT, FOMLT, IFOMLS4, FOMLS4, IFOMLS5, FOMLS5, 
+    ProofObject, Line, Proof, Problem, intuitionistic, first_order, modal, 
+    reflexive, transitive, s5, resolve_semantics
 )
 from .cli import (
     logics, parse_and_verify_formula, parse_and_verify_premises, 
@@ -24,8 +26,7 @@ from .parser import (
 )
 from .prover import (
     ProverError, ProofSearchResult, _ProofObject, _Line, _Proof, 
-    Eliminator, Introducer, Prover, Processor, find_subproof, 
-    fresh_constant, prove
+    Eliminator, Introducer, Prover, Processor, prove
 )
 from .syntax import (
     Metavar, Formula, Bot, Not, And, Or, Imp, Iff, Term, Func, Var, Pred, 

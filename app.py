@@ -9,7 +9,7 @@ app = Flask(
     __name__,
     template_folder="site/templates",
     static_folder="site/static",
-    static_url_path="/static",
+    static_url_path="/static"
 )
 
 
@@ -35,7 +35,7 @@ def robots_txt():
         "User-agent: *",
         "Allow: /",
         "Sitemap: https://ndprover.org/sitemap.xml",
-        "",
+        ""
     ]
     body = "\n".join(lines)
     return body, 200, {"Content-Type": "text/plain"}
@@ -47,45 +47,145 @@ def _json_error(message: str, *, status: str = "error", code: int = 400):
 
 
 def _extract_problem_fields(data):
-    """Extract logic label and problem text fields from a JSON payload."""
-    logic_name = (data.get("logic") or "").strip()
-    premises_text = data.get("premisesText") or ""
-    conclusion_text = data.get("conclusionText") or ""
-    return logic_name, premises_text, conclusion_text
+    """Extract problem fields from a JSON payload."""
+    logic_name = data.get("logic")
+    logic_name = logic_name.strip() if isinstance(logic_name, str) else ""
+
+    premises_text = data.get("premisesText")
+    premises_text = premises_text if isinstance(premises_text, str) else ""
+
+    conclusion_text = data.get("conclusionText")
+    conclusion_text = conclusion_text if isinstance(conclusion_text, str) else ""
+
+    domain_semantics = data.get("domainSemantics")
+    if isinstance(domain_semantics, str):
+        domain_semantics = domain_semantics.strip().lower() or None
+
+    equality_semantics = data.get("equalitySemantics")
+    if isinstance(equality_semantics, str):
+        equality_semantics = equality_semantics.strip().lower() or None
+
+    return (
+        logic_name,
+        premises_text,
+        conclusion_text,
+        domain_semantics,
+        equality_semantics
+    )
 
 
 def _resolve_logic(logic_name):
-    """Resolve the logic implementation from its label, or return an error message."""
+    """Resolve the logic from its label, or return an error message."""
     logic = logics.get(logic_name)
     if logic is None:
-        message = f'Logic not recognized: "{logic_name}".'
-        return None, message
+        msg = f'Logic not recognized: "{logic_name}".'
+        return None, msg
     return logic, None
 
 
-def _parse_generation_problem(data):
-    """Parse a proof-generation payload into logic, premises, and conclusion."""
-    logic_name, premises_text, conclusion_text = _extract_problem_fields(data)
-    logic, error_message = _resolve_logic(logic_name)
+def _parse_problem(data):
+    """Parse and validate a problem payload."""
+    (
+        logic_name,
+        premises_text,
+        conclusion_text,
+        domain_semantics,
+        equality_semantics
+    ) = _extract_problem_fields(data)
 
+    logic, msg = _resolve_logic(logic_name)
     if logic is None:
-        return None, _json_error(error_message)
+        return None, _json_error(msg)
+
+    semantics = (domain_semantics, equality_semantics)
+    if not all(s is None or isinstance(s, str) for s in semantics):
+        return None, _json_error("Invalid semantic configuration.")
 
     try:
         premises = parse_and_verify_premises(premises_text, logic)
+    except ParsingError as e:
+        return None, _json_error(f"Invalid premise(s): {e}")
+
+    if not conclusion_text.strip():
+        msg = "Invalid conclusion: A conclusion must be provided."
+        return None, _json_error(msg)
+
+    try:
         conclusion = parse_and_verify_formula(conclusion_text, logic)
     except ParsingError as e:
+        return None, _json_error(f"Invalid conclusion: {e}")
+
+    try:
+        problem = Problem(
+            logic,
+            premises,
+            conclusion,
+            domain_semantics,
+            equality_semantics
+        )
+    except SemanticsError as e:
+        msg = str(e) or "Invalid semantic configuration."
+        return None, _json_error(msg)
+    except InferenceError as e:
         return None, _json_error(str(e))
 
-    return (logic, premises, conclusion), None
+    return problem, None
+
+
+def _check_problem_validity(problem, timeout):
+    """Check a parsed problem for validity."""
+    return check_validity(
+        problem.logic,
+        problem.premises,
+        problem.conclusion,
+        problem.domain_semantics,
+        problem.equality_semantics,
+        small=True,
+        timeout=timeout
+    )
+
+
+def _search_for_proof(problem, exhaustive, timeout):
+    """Run one proof-search stage for a parsed problem."""
+    return prove(
+        problem.logic,
+        problem.premises,
+        problem.conclusion,
+        problem.domain_semantics,
+        problem.equality_semantics,
+        exhaustive=exhaustive,
+        timeout=timeout
+    )
 
 
 def _generation_note(logic):
-    if logic is FOL:
-        return "\n\n🚧 Note: FOL proof generation is still under development."
-    if issubclass(logic, MLK):
+    if modal(logic):
         return "\n\n🚧 Note: ML and FOML proof generation is still under development."
+    if first_order(logic):
+        return "\n\n🚧 Note: FOL proof generation is still under development."
     return ""
+
+
+def _validity_message(result, *, continue_generation=False, logic=None):
+    """Build the user-facing message for a validity result."""
+    if result.status == "invalid":
+        msg = f"Invalid argument. Countermodel:\n\n{result.countermodel}"
+        if continue_generation and logic is not None:
+            msg += _generation_note(logic)
+        return msg
+
+    if result.status == "valid":
+        if not continue_generation:
+            return "Argument is valid!"
+        return "Argument is valid. Attempting an exhaustive proof search..."
+
+    if continue_generation:
+        return (
+            "Argument validity unknown. "
+            "Attempting an exhaustive proof search..."
+        )
+
+    return "Argument validity unknown."
 
 
 def _serialize_proof(proof):
@@ -97,18 +197,16 @@ def _serialize_proof(proof):
         text: str,
         justText: str,
         isAssumption: bool,
-        isPremise: bool,
+        isPremise: bool
     }
     """
     lines = []
-    
+
     def traverse(obj, indent=0, is_premise=False):
-        """Recursively traverse proof objects."""
         if obj.is_line():
             formula_str = str(obj.formula)
             just_str = str(obj.justification)
             is_assumption = obj.justification.rule is Rules.AS
-            # Check if this is a premise (PR rule) or was marked as premise from context
             is_premise_line = is_premise or obj.justification.rule is Rules.PR
             
             lines.append({
@@ -116,7 +214,7 @@ def _serialize_proof(proof):
                 'text': formula_str,
                 'justText': just_str,
                 'isAssumption': is_assumption,
-                'isPremise': is_premise_line,
+                'isPremise': is_premise_line
             })
         else:
             # Process assumption line (first line of subproof) at indent + 1
@@ -131,7 +229,7 @@ def _serialize_proof(proof):
                     'text': formula_str,
                     'justText': just_str,
                     'isAssumption': True,
-                    'isPremise': False,
+                    'isPremise': False
                 })
                 
                 # Process remaining lines in subproof at the same indent level
@@ -158,7 +256,7 @@ def _generated_proof_payload(logic, problem):
         "status": "complete",
         "outcome": "success",
         "message": "Proof complete! 🎉" + _generation_note(logic),
-        "lines": _serialize_proof(problem.proof),
+        "lines": _serialize_proof(problem.proof)
     }
 
 
@@ -190,20 +288,13 @@ def rules():
 @app.post("/api/check-proof")
 def check_proof():
     data = request.get_json(silent=True) or {}
-    logic_name, premises_text, conclusion_text = _extract_problem_fields(data)
-    logic, error_message = _resolve_logic(logic_name)
+    problem, error_msg = _parse_problem(data)
     line_payloads = data.get("lines") or []
 
-    if logic is None:
-        return _json_error(error_message)
+    if error_msg is not None:
+        return error_msg
 
-    try:
-        premises = parse_and_verify_premises(premises_text, logic)
-        conclusion = parse_and_verify_formula(conclusion_text, logic)
-    except ParsingError as e:
-        return _json_error(str(e))
-
-    problem = Problem(logic, premises, conclusion)
+    logic = problem.logic
 
     for payload in line_payloads:
         kind = payload.get("kind")
@@ -221,43 +312,36 @@ def check_proof():
         # Assumptions / end-and-begin only carry a formula.
         if kind in {"assumption", "end_and_begin"}:
             if not formula_text:
-                message = prefix + "Formula is missing."
-                return _json_error(message)
+                return _json_error(prefix + "Formula is missing.")
             try:
                 assumption = parse_assumption(formula_text)
             except ParsingError as e:
-                message = prefix + str(e)
-                return _json_error(message)
+                return _json_error(prefix + str(e))
 
             if kind == "assumption":
                 try:
                     problem.begin_subproof(assumption)
                 except Exception as e:
-                    message = prefix + str(e)
-                    return _json_error(message)
+                    return _json_error(prefix + str(e))
             else:  # end_and_begin
                 try:
                     problem.end_and_begin_subproof(assumption)
                 except Exception as e:
-                    message = prefix + str(e)
-                    return _json_error(message)
+                    return _json_error(prefix + str(e))
             continue
 
         # All other kinds should have both formula and justification.
         if not formula_text:
-            message = prefix + "Formula is missing."
-            return _json_error(message)
+            return _json_error(prefix + "Formula is missing.")
         if not just_text:
-            message = prefix + "Justification is missing."
-            return _json_error(message)
+            return _json_error(prefix + "Justification is missing.")
         if not raw:
             raw = f"{formula_text}; {just_text}"
 
         try:
-            formula, justification = parse_line(raw)
+            formula, justification = parse_line(raw, logic)
         except ParsingError as e:
-            message = prefix + str(e)
-            return _json_error(message)
+            return _json_error(prefix + str(e))
 
         try:
             if kind == "line":
@@ -265,132 +349,119 @@ def check_proof():
             elif kind == "close_subproof":
                 problem.end_subproof(formula, justification)
         except Exception as e:
-            message = prefix + str(e)
-            return _json_error(message)
+            return _json_error(prefix + str(e))
 
     if errors := problem.errors():
-        message = "\n".join(errors)
-        return _json_error(message)
+        msg = "\n".join(errors)
+        return _json_error(msg)
     is_complete = problem.conclusion_reached()
 
     if is_complete:
-        message = "Proof complete! 🎉"
+        msg = "Proof complete! 🎉"
         status = "complete"
     else:
-        message = "No errors yet, but the proof is incomplete!"
+        msg = "No errors yet, but the proof is incomplete!"
         status = "incomplete"
 
     return jsonify({
         "ok": True,
         "status": status,
         "isComplete": is_complete,
-        "message": message,
-        "proofString": str(problem),
+        "message": msg,
+        "proofString": str(problem)
     })
 
 
 @app.post("/api/validate-problem")
 def validate_problem():
     data = request.get_json(silent=True) or {}
-    logic_name, premises_text, conclusion_text = _extract_problem_fields(data)
-    logic, error_message = _resolve_logic(logic_name)
+    _, error_msg = _parse_problem(data)
 
-    if logic is None:
-        return _json_error(error_message)
-
-    try:
-        parse_and_verify_premises(premises_text, logic)
-    except ParsingError as e:
-        message = f"Invalid premise(s): {e}"
-        return _json_error(message)
-
-    if not conclusion_text.strip():
-        message = "Invalid conclusion: A conclusion must be provided."
-        return _json_error(message)
-
-    try:
-        parse_and_verify_formula(conclusion_text, logic)
-    except ParsingError as e:
-        message = f"Invalid conclusion: {e}"
-        return _json_error(message)
-    except Exception as e:
-        return _json_error(str(e))
+    if error_msg is not None:
+        return error_msg
 
     return jsonify({
         "ok": True,
         "status": "ok",
-        "message": "",
+        "message": ""
+    })
+
+
+@app.post("/api/check-validity")
+def check_validity_api():
+    data = request.get_json(silent=True) or {}
+    problem, error_msg = _parse_problem(data)
+
+    if error_msg is not None:
+        return error_msg
+
+    try:
+        result = _check_problem_validity(problem, 10000)
+    except Exception as e:
+        return _json_error(str(e))
+
+    msg = _validity_message(result)
+
+    return jsonify({
+        "ok": True,
+        "status": "complete",
+        "outcome": result.status,
+        "message": msg
     })
 
 
 @app.post("/api/generate-proof/validity")
 def generate_proof_validity():
     data = request.get_json(silent=True) or {}
-    problem_fields, error_response = _parse_generation_problem(data)
+    problem, error_msg = _parse_problem(data)
 
-    if error_response is not None:
-        return error_response
+    if error_msg is not None:
+        return error_msg
 
-    logic, premises, conclusion = problem_fields
     try:
-        result = check_validity(
-            logic, premises, conclusion, small=True, timeout=1000
-        )
+        result = _check_problem_validity(problem, 1000)
     except Exception as e:
-        return _json_error(str(e) + _generation_note(logic))
+        return _json_error(str(e) + _generation_note(problem.logic))
 
-    if result.status == "invalid":
-        message = (
-            f"Invalid argument. Countermodel:\n\n{result.countermodel}"
-            + _generation_note(logic)
-        )
-    elif result.status == "valid":
-        message = (
-            "Argument is valid. "
-            "Attempting an exhaustive proof search..."
-        )
-    else:
-        message = (
-            "Argument validity unknown. "
-            "Attempting an exhaustive proof search..."
-        )
+    msg = _validity_message(
+        result,
+        continue_generation=True,
+        logic=problem.logic
+    )
 
     return jsonify({
         "ok": True,
         "stage": "validity",
         "outcome": result.status,
-        "message": message,
+        "message": msg
     })
 
 
 @app.post("/api/generate-proof/exhaustive")
 def generate_proof_exhaustive():
     data = request.get_json(silent=True) or {}
-    problem_fields, error_response = _parse_generation_problem(data)
+    problem, error_msg = _parse_problem(data)
 
-    if error_response is not None:
-        return error_response
+    if error_msg is not None:
+        return error_msg
 
-    logic, premises, conclusion = problem_fields
     try:
-        result = prove(
-            logic, premises, conclusion, exhaustive=True, timeout=5000
-        )
+        result = _search_for_proof(problem, True, 5000)
     except Exception as e:
-        return _json_error(str(e) + _generation_note(logic))
+        return _json_error(str(e) + _generation_note(problem.logic))
 
     if result.status == "success":
-        payload = _generated_proof_payload(logic, result.problem)
+        payload = _generated_proof_payload(problem.logic, result.problem)
         payload["stage"] = "exhaustive"
         return jsonify(payload)
 
     if result.status == "failure":
-        message = (
+        msg = (
             "Exhaustive search failed. "
             "Attempting a fast proof search..."
         )
     else:
-        message = (
+        msg = (
             "Exhaustive search timed out. "
             "Attempting a fast proof search..."
         )
@@ -399,7 +470,7 @@ def generate_proof_exhaustive():
         "ok": True,
         "stage": "exhaustive",
         "outcome": result.status,
-        "message": message,
+        "message": msg
     })
 
 
@@ -410,38 +481,35 @@ def generate_proof_fast():
     if validity_outcome not in {"valid", "unknown"}:
         return _json_error("Invalid validity outcome.")
 
-    problem_fields, error_response = _parse_generation_problem(data)
-    if error_response is not None:
-        return error_response
+    problem, error_msg = _parse_problem(data)
+    if error_msg is not None:
+        return error_msg
 
-    logic, premises, conclusion = problem_fields
     try:
-        result = prove(
-            logic, premises, conclusion, exhaustive=False, timeout=4000
-        )
+        result = _search_for_proof(problem, False, 4000)
     except Exception as e:
-        return _json_error(str(e) + _generation_note(logic))
+        return _json_error(str(e) + _generation_note(problem.logic))
 
     if result.status == "success":
-        payload = _generated_proof_payload(logic, result.problem)
+        payload = _generated_proof_payload(problem.logic, result.problem)
         payload["stage"] = "fast"
         return jsonify(payload)
 
     if result.status == "failure":
         if validity_outcome == "valid":
-            message = "Argument is valid, but no proof was found."
+            msg = "Argument is valid, but no proof was found."
         else:
-            message = "Argument validity unknown. No proof was found."
+            msg = "Argument validity unknown. No proof was found."
     elif validity_outcome == "valid":
-        message = "Argument is valid, but proof generation timed out."
+        msg = "Argument is valid, but proof generation timed out."
     else:
-        message = "Argument validity unknown. Proof generation timed out."
+        msg = "Argument validity unknown. Proof generation timed out."
 
     return jsonify({
         "ok": True,
         "stage": "fast",
         "outcome": result.status,
-        "message": message + _generation_note(logic),
+        "message": msg + _generation_note(problem.logic)
     })
 
 

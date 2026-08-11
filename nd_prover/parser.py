@@ -251,12 +251,15 @@ def parse_assumption(a):
     return _parse_formula(a)
 
 
-def parse_rule(rule):
-    rule = "".join(Symbols.sub(rule).split())
-    r = Rules.rules.get(rule)
-    if r is None:
-        raise ParsingError(f'Rule of inference "{rule}" not recognized.')
-    return r
+def parse_rule(rule, logic):
+    rule_name = "".join(Symbols.sub(rule).split())
+    func_name = Rules.rules.get(rule_name)
+    if func_name is None:
+        raise ParsingError(f'Rule of inference "{rule_name}" not recognized.')
+    func = getattr(logic, func_name, None)
+    if func is None:
+        raise ParsingError(f"{rule_name} is not a valid {logic.__name__} rule.")
+    return Rule(rule_name, func)
 
 
 def parse_citations(citations):
@@ -276,15 +279,15 @@ def parse_citations(citations):
     return tuple(c_list)
 
 
-def parse_justification(j):
+def parse_justification(j, logic):
     parts = j.split(",", maxsplit=1)
-    r = parse_rule(parts[0])
+    r = parse_rule(parts[0], logic)
     if len(parts) == 1:
         return Justification(r, ())
     c = parse_citations(parts[1])
     return Justification(r, c)
 
 
-def parse_line(line):
+def parse_line(line, logic):
     f, j = split_line(line)
-    return parse_formula(f), parse_justification(j)
+    return parse_formula(f), parse_justification(j, logic)
