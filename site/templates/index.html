@@ -15,17 +15,44 @@
       <section class="problem-creation-section">
         <section class="problem-setup" aria-label="Create problem">
           <label for="logic">Logic</label>
-          <div class="logic-container">
-            <select id="logic" class="logic">
-              <option value="TFL">Propositional logic (TFL)</option>
-              <option value="MLK">Modal logic K (MLK)</option>
-              <option value="MLT">Modal logic T (MLT)</option>
-              <option value="MLS4">Modal logic S4 (MLS4)</option>
-              <option value="MLS5">Modal logic S5 (MLS5)</option>
-            </select>
-            <div class="first-order-container">
-              <input id="first-order" type="checkbox" />
-              <label for="first-order">First-order</label>
+          <div class="logic-settings">
+            <div class="logic-container">
+              <select id="logic" class="logic">
+                <option value="TFL">Propositional logic (TFL)</option>
+                <option value="MLK">Modal logic K (MLK)</option>
+                <option value="MLT">Modal logic T (MLT)</option>
+                <option value="MLS4">Modal logic S4 (MLS4)</option>
+                <option value="MLS5">Modal logic S5 (MLS5)</option>
+              </select>
+
+              <div class="logic-options">
+                <div class="first-order-container logic-option">
+                  <input id="first-order" type="checkbox" />
+                  <label for="first-order">First-order</label>
+                </div>
+                <div class="intuitionistic-container logic-option">
+                  <input id="intuitionistic" type="checkbox" />
+                  <label for="intuitionistic">Intuitionistic</label>
+                </div>
+              </div>
+            </div>
+
+            <div id="semantics-container" class="semantics-container hidden" aria-label="Semantic options">
+              <div id="domain-semantics-field" class="semantics-field hidden">
+                <label for="domain-semantics">Domains:</label>
+                <select id="domain-semantics" class="semantics-select">
+                  <option value="expanding">Expanding</option>
+                  <option value="constant">Constant</option>
+                </select>
+              </div>
+
+              <div id="equality-semantics-field" class="semantics-field hidden">
+                <label for="equality-semantics">Equality:</label>
+                <select id="equality-semantics" class="semantics-select">
+                  <option value="equivalence">Equivalence</option>
+                  <option value="identity">Identity</option>
+                </select>
+              </div>
             </div>
           </div>
 
@@ -36,6 +63,7 @@
           <input id="conclusion" class="text-input" type="text" />
 
           <div>
+            <button id="check-validity" class="ui-btn" type="button">CHECK VALIDITY</button>
             <button id="create-problem" class="ui-btn" type="button">CREATE PROBLEM</button>
           </div>
         </section>
