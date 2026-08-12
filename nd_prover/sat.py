@@ -1162,7 +1162,7 @@ def check_validity(
     domain_semantics=None,
     equality_semantics=None,
     small=False,
-    timeout=50
+    timeout=100
 ):
     if not intuitionistic(logic):
         if all(is_tfl_formula(p) for p in premises):
