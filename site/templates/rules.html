@@ -62,6 +62,8 @@
         ("MC", "Modal conversion", ["MC1", "MC2", "MC3", "MC4"])
       ]),
       ("Basic deduction rules for FOML", [
+        ("∀I", "Universal introduction", ["ForallI"]),
+        ("∃E", "Existential elimination", ["ExistsE"]),
         ("BF", "Barcan formula", ["BF"]),
         ("ND", "Necessity of distinctness", ["ND"])
       ]),
@@ -71,26 +73,163 @@
       ])
     ] %}
 
+    {% set rule_notes = {
+      "Basic deduction rules for FOL": {
+        "∀I": ("bullets", [
+          (
+            "<span class='rule__math'>c</span> must not occur in any premise "
+            ~ "or undischarged assumption before line <em>m</em>"
+          )
+        ]),
+        "∃E": ("bullets", [
+          (
+            "<span class='rule__math'>c</span> must not occur in any premise "
+            ~ "or undischarged assumption before line <em>i</em>"
+          ),
+          (
+            "<span class='rule__math'>c</span> must not occur in "
+            ~ "<span class='rule__math'>∃x A(...x...x...)</span>"
+          ),
+          (
+            "<span class='rule__math'>c</span> must not occur in "
+            ~ "<span class='rule__math'>B</span>"
+          )
+        ])
+      },
+
+      "Basic deduction rules for ML": {
+        "☐I": (
+          "paragraph",
+          (
+            "No line or subproof above line <em>m</em> may be cited by any "
+            ~ "rule within the strict subproof begun at line <em>m</em> "
+            ~ "unless the rule explicitly allows it."
+          )
+        ),
+        "☐E": (
+          "paragraph",
+          (
+            "<span class='rule__math'>☐E</span> can only be applied if line "
+            ~ "<em>m</em> (containing <span class='rule__math'>☐A</span>) "
+            ~ "lies outside of the strict subproof in which line <em>n</em> "
+            ~ "falls, and this strict subproof is not itself part of a strict "
+            ~ "subproof not containing <em>m</em>."
+          )
+        ),
+        "RT": (
+          "paragraph",
+          (
+            "The line <em>n</em> on which rule "
+            ~ "<span class='rule__math'>RT</span> is applied must not lie in "
+            ~ "a strict subproof that begins after line <em>m</em>."
+          )
+        ),
+        "R4": (
+          "paragraph",
+          (
+            "<span class='rule__math'>R4</span> can only be applied if line "
+            ~ "<em>m</em> (containing <span class='rule__math'>☐A</span>) "
+            ~ "lies outside of the strict subproof in which line <em>n</em> "
+            ~ "falls, and this strict subproof is not itself part of a strict "
+            ~ "subproof not containing <em>m</em>."
+          )
+        ),
+        "R5": (
+          "paragraph",
+          (
+            "<span class='rule__math'>R5</span> can only be applied if line "
+            ~ "<em>m</em> (containing <span class='rule__math'>¬☐A</span>) "
+            ~ "lies outside of the strict subproof in which line <em>n</em> "
+            ~ "falls, and this strict subproof is not itself part of a strict "
+            ~ "subproof not containing <em>m</em>."
+          )
+        )
+      },
+
+      "Basic deduction rules for FOML": {
+        "∀I": ("bullets", [
+          (
+            "<span class='rule__math'>c</span> must not occur in any "
+            ~ "<em>citable</em> premise or undischarged assumption before "
+            ~ "line <em>m</em>"
+          ),
+          (
+            "If used inside a strict subproof, "
+            ~ "<span class='rule__math'>c</span> must not occur in any line "
+            ~ "imported into the strict subproof (i.e. any line justified by "
+            ~ "the rules <span class='rule__math'>☐E</span>, "
+            ~ "<span class='rule__math'>R4</span>, or "
+            ~ "<span class='rule__math'>R5</span>)"
+          )
+        ]),
+        "∃E": ("bullets", [
+          (
+            "<span class='rule__math'>c</span> must not occur in any "
+            ~ "<em>citable</em> premise or undischarged assumption before "
+            ~ "line <em>i</em>"
+          ),
+          (
+            "<span class='rule__math'>c</span> must not occur in "
+            ~ "<span class='rule__math'>∃x A(...x...x...)</span>"
+          ),
+          (
+            "<span class='rule__math'>c</span> must not occur in "
+            ~ "<span class='rule__math'>B</span>"
+          ),
+          (
+            "If used inside a strict subproof, "
+            ~ "<span class='rule__math'>c</span> must not occur in any line "
+            ~ "imported into the strict subproof (i.e. any line justified by "
+            ~ "the rules <span class='rule__math'>☐E</span>, "
+            ~ "<span class='rule__math'>R4</span>, or "
+            ~ "<span class='rule__math'>R5</span>)"
+          )
+        ])
+      }
+    } %}
+
     {% for title, rules in sections %}
+      {% set section_notes = rule_notes.get(title, {}) %}
+
       <div class="table-card rules-section">
         <div class="rules-section__title">{{ title }}</div>
         <div class="rules-list" role="list">
           {% for abbrev, rule_title, parts in rules %}
             <div class="rule" role="listitem" aria-label="{{ abbrev }} — {{ rule_title }}">
               <div class="rule__title">
-                <span class="rule__abbrev">{{ abbrev }}</span> — <span class="rule__title-text">{{ rule_title }}</span>
+                <span class="rule__abbrev">{{ abbrev }}</span> —
+                <span class="rule__title-text">{{ rule_title }}</span>
               </div>
-              <div class="rule__scroll">
-                <div class="rule__parts">
-                  {% for slug in parts %}
-                    <div class="rule__img-wrapper">
-                      <img
-                        class="rule__img"
-                        src="/static/rules/{{ slug }}.svg"
-                        alt="{{ abbrev }} — {{ rule_title }} ({{ loop.index }})">
-                    </div>
-                  {% endfor %}
+
+              {% set note = section_notes.get(abbrev) %}
+
+              <div class="rule__body">
+                <div class="rule__scroll">
+                  <div class="rule__parts">
+                    {% for slug in parts %}
+                      <div class="rule__img-wrapper">
+                        <img
+                          class="rule__img"
+                          src="/static/rules/{{ slug }}.svg"
+                          alt="{{ abbrev }} — {{ rule_title }} ({{ loop.index }})">
+                      </div>
+                    {% endfor %}
+                  </div>
                 </div>
+
+                {% if note %}
+                  <div class="rule__conditions">
+                    {% if note[0] == "paragraph" %}
+                      <p class="rule__conditions-text">{{ note[1] | safe }}</p>
+                    {% elif note[0] == "bullets" %}
+                      <ul class="rule__conditions-list">
+                        {% for item in note[1] %}
+                          <li>{{ item | safe }}</li>
+                        {% endfor %}
+                      </ul>
+                    {% endif %}
+                  </div>
+                {% endif %}
               </div>
             </div>
           {% endfor %}

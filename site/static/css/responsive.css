@@ -178,6 +178,18 @@
   .rule__parts {
     grid-template-columns: 1fr;
   }
+
+  .rule__body {
+    flex-direction: column;
+    row-gap: var(--spacing-md);
+  }
+
+  .rule__conditions {
+    flex-basis: auto;
+    width: 100%;
+    max-width: none;
+    font-size: var(--font-size-md);
+  }
 }
 
 /* === Tablet Breakpoint === */

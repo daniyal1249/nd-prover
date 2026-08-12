@@ -51,7 +51,41 @@
   font-family: var(--math-font);
 }
 
+.rule__body {
+  display: flex;
+  align-items: flex-start;
+  column-gap: var(--spacing-xxl);
+}
+
+.rule__conditions {
+  flex: 1 1 24rem;
+  min-width: 0;
+  max-width: 42rem;
+  font-size: var(--font-size-lg);
+  line-height: 1.5;
+}
+
+.rule__conditions .rule__math {
+  font-family: var(--math-font);
+}
+
+.rule__conditions-text {
+  margin: 0;
+}
+
+.rule__conditions-list {
+  margin: 0;
+  padding-left: var(--spacing-xl);
+}
+
+.rule__conditions-list li + li {
+  margin-top: var(--spacing-xs);
+}
+
 .rule__scroll {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: 100%;
   overflow-x: auto;
   overflow-y: visible;
 }
