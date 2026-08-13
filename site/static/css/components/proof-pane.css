@@ -64,6 +64,13 @@
   display: block;
 }
 
+.results--proof-export {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
+  font-size: var(--font-size-sm);
+  line-height: 1.4;
+}
+
 @property --generation-progress {
   syntax: "<percentage>";
   inherits: false;
@@ -131,4 +138,24 @@
   justify-content: flex-end;
   gap: var(--spacing-sm);
   margin-top: var(--editor-actions-margin-top);
+}
+
+/* === Proof Export === */
+.export-proof {
+  display: flex;
+  align-items: flex-end;
+  margin-right: auto;
+}
+
+.export-proof.is-open .export-proof__toggle {
+  display: none;
+}
+
+.export-proof__options {
+  display: none;
+  gap: var(--spacing-xs);
+}
+
+.export-proof.is-open .export-proof__options {
+  display: flex;
 }

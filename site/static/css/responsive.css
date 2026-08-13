@@ -52,6 +52,12 @@
     font-size: var(--font-size-xxs);
   }
 
+  .ui-btn--compact {
+    min-height: 30px;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+
   /* Tables - Used in instructions, exercises, and rules pages */
   .table-card {
     padding: var(--spacing-lg);
@@ -118,6 +124,10 @@
 
   .results {
     font-size: var(--font-size-md);
+  }
+
+  .results--proof-export {
+    font-size: var(--font-size-xxs);
   }
 
   /* Proof Editor - Scaling */

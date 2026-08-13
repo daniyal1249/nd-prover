@@ -20,6 +20,12 @@
   user-select: none;
 }
 
+.ui-btn--compact {
+  font-weight: 500;
+  font-size: var(--font-size-sm);
+  padding: var(--spacing-xs) var(--spacing-sm);
+}
+
 @media (hover: hover) and (pointer: fine) {
   .ui-btn:not(:disabled):hover {
     filter: brightness(0.95);
