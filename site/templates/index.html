@@ -82,6 +82,35 @@
           <div id="proof" class="proof" role="list"></div>
 
           <div class="editor-actions">
+            <div id="export-proof" class="export-proof">
+              <button
+                id="export-proof-toggle"
+                class="ui-btn ui-btn--compact export-proof__toggle"
+                type="button"
+                aria-expanded="false"
+                aria-controls="export-proof-options">
+                Export proof
+              </button>
+
+              <div
+                id="export-proof-options"
+                class="export-proof__options"
+                hidden>
+                <button
+                  id="export-proof-plain"
+                  class="ui-btn ui-btn--compact"
+                  type="button">
+                  Plain
+                </button>
+                <button
+                  id="export-proof-latex"
+                  class="ui-btn ui-btn--compact"
+                  type="button">
+                  LaTeX
+                </button>
+              </div>
+            </div>
+
             <button id="generate-proof" class="ui-btn hidden" type="button">GENERATE</button>
             <button id="check-proof" class="ui-btn" type="button">CHECK PROOF</button>
           </div>
