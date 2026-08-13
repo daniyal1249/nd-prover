@@ -41,7 +41,7 @@ def robots_txt():
     return body, 200, {"Content-Type": "text/plain"}
 
 
-def _json_error(message: str, *, status: str = "error", code: int = 400):
+def _json_error(message: str, status: str = "error", code: int = 400):
     """Return a standardized JSON error response."""
     return jsonify({"ok": False, "status": status, "message": message}), code
 
@@ -130,6 +130,93 @@ def _parse_problem(data):
         return None, _json_error(str(e))
 
     return problem, None
+
+
+def _reconstruct_problem_from_lines(data):
+    """Parse a problem payload and replay its serialized proof lines."""
+    problem, error_msg = _parse_problem(data)
+
+    if error_msg is not None:
+        return None, error_msg
+
+    for payload in data.get("lines") or []:
+        kind = payload.get("kind")
+        raw = (payload.get("raw") or "").strip()
+        line_no = payload.get("lineNumber")
+        formula_text = (payload.get("formulaText") or "").strip()
+        just_text = (payload.get("justText") or "").strip()
+
+        prefix = f"Line {line_no}: " if line_no is not None else ""
+
+        # Premises are already encoded in the initial Problem context.
+        if kind == "premise":
+            continue
+
+        # Assumptions / end-and-begin only carry a formula.
+        if kind in {"assumption", "end_and_begin"}:
+            if not formula_text:
+                return None, _json_error(prefix + "Formula is missing.")
+            try:
+                assumption = parse_assumption(formula_text)
+            except ParsingError as e:
+                return None, _json_error(prefix + str(e))
+
+            if kind == "assumption":
+                try:
+                    problem.begin_subproof(assumption)
+                except Exception as e:
+                    return None, _json_error(prefix + str(e))
+            else:  # end_and_begin
+                try:
+                    problem.end_and_begin_subproof(assumption)
+                except Exception as e:
+                    return None, _json_error(prefix + str(e))
+
+            continue
+
+        # All other kinds should have both formula and justification.
+        if not formula_text:
+            return None, _json_error(prefix + "Formula is missing.")
+        if not just_text:
+            return None, _json_error(prefix + "Justification is missing.")
+        if not raw:
+            raw = f"{formula_text}; {just_text}"
+
+        try:
+            formula, justification = parse_line(raw, problem.logic)
+        except ParsingError as e:
+            return None, _json_error(prefix + str(e))
+
+        try:
+            if kind == "line":
+                problem.add_line(formula, justification)
+            elif kind == "close_subproof":
+                problem.end_subproof(formula, justification)
+        except Exception as e:
+            return None, _json_error(prefix + str(e))
+
+    return problem, None
+
+
+def _export_proof(data, formatter):
+    """Reconstruct a proof under FOMLS5 and format it for export."""
+    export_data = {
+        **data,
+        "logic": "FOMLS5",
+        "domainSemantics": None,
+        "equalitySemantics": None
+    }
+
+    problem, error_msg = _reconstruct_problem_from_lines(export_data)
+
+    if error_msg is not None:
+        return error_msg
+
+    return jsonify({
+        "ok": True,
+        "status": "ok",
+        "proofString": formatter(problem)
+    })
 
 
 def _check_problem_validity(problem, timeout):
@@ -285,72 +372,15 @@ def rules():
 @app.post("/api/check-proof")
 def check_proof():
     data = request.get_json(silent=True) or {}
-    problem, error_msg = _parse_problem(data)
-    line_payloads = data.get("lines") or []
+    problem, error_msg = _reconstruct_problem_from_lines(data)
 
     if error_msg is not None:
         return error_msg
 
-    logic = problem.logic
-
-    for payload in line_payloads:
-        kind = payload.get("kind")
-        raw = (payload.get("raw") or "").strip()
-        line_no = payload.get("lineNumber")
-        formula_text = (payload.get("formulaText") or "").strip()
-        just_text = (payload.get("justText") or "").strip()
-
-        prefix = f"Line {line_no}: " if line_no is not None else ""
-
-        # Premises are already encoded in the initial Problem context.
-        if kind == "premise":
-            continue
-
-        # Assumptions / end-and-begin only carry a formula.
-        if kind in {"assumption", "end_and_begin"}:
-            if not formula_text:
-                return _json_error(prefix + "Formula is missing.")
-            try:
-                assumption = parse_assumption(formula_text)
-            except ParsingError as e:
-                return _json_error(prefix + str(e))
-
-            if kind == "assumption":
-                try:
-                    problem.begin_subproof(assumption)
-                except Exception as e:
-                    return _json_error(prefix + str(e))
-            else:  # end_and_begin
-                try:
-                    problem.end_and_begin_subproof(assumption)
-                except Exception as e:
-                    return _json_error(prefix + str(e))
-            continue
-
-        # All other kinds should have both formula and justification.
-        if not formula_text:
-            return _json_error(prefix + "Formula is missing.")
-        if not just_text:
-            return _json_error(prefix + "Justification is missing.")
-        if not raw:
-            raw = f"{formula_text}; {just_text}"
-
-        try:
-            formula, justification = parse_line(raw, logic)
-        except ParsingError as e:
-            return _json_error(prefix + str(e))
-
-        try:
-            if kind == "line":
-                problem.add_line(formula, justification)
-            elif kind == "close_subproof":
-                problem.end_subproof(formula, justification)
-        except Exception as e:
-            return _json_error(prefix + str(e))
-
     if errors := problem.errors():
         msg = "\n".join(errors)
         return _json_error(msg)
+
     is_complete = problem.conclusion_reached()
 
     if is_complete:
@@ -364,9 +394,20 @@ def check_proof():
         "ok": True,
         "status": status,
         "isComplete": is_complete,
-        "message": msg,
-        "proofString": str(problem)
+        "message": msg
     })
+
+
+@app.post("/api/export-proof/plain")
+def export_proof_plain():
+    data = request.get_json(silent=True) or {}
+    return _export_proof(data, Problem.to_plain_text)
+
+
+@app.post("/api/export-proof/latex")
+def export_proof_latex():
+    data = request.get_json(silent=True) or {}
+    return _export_proof(data, problem_to_latex)
 
 
 @app.post("/api/validate-problem")

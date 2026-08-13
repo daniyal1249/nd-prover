@@ -706,6 +706,7 @@ class Proof(ProofObject):
                 if not (error_msg := str(e)):
                     error_msg = f"Invalid application of the rule {rule.name}."
                 errors_list.append(f"Line {obj.idx}: {error_msg}")
+
         return errors_list
 
     def retrieve_cited_at(self, citations, idx, full_scope):
@@ -729,6 +730,7 @@ class Proof(ProofObject):
             if obj.idx in citations:
                 partitions.append(current)
                 current = []
+
         partitions.append(current)
         return partitions
 
@@ -742,6 +744,7 @@ class Proof(ProofObject):
             if obj.idx == idx:
                 break
             seq.append(obj)
+
         if full:
             return self.context + seq
         return self.strict_context + seq
@@ -784,6 +787,7 @@ class Proof(ProofObject):
                 lines.append(("", bar, ""))
             elif idx != len(seq) - 1:
                 lines.append(("", f"{indent}│", ""))
+
         return lines
 
 
@@ -815,15 +819,20 @@ class Problem:
         self.proof = Proof([], context, None)
 
     def __str__(self):
+        return self.to_plain_text()
+
+    def to_plain_text(self):
         lines = self.proof._collect_lines()
         if not lines:
             return ""
         width = max(len(l[1]) for l in lines)
 
-        lines_str = []
+        lines_str = ["```"]
         for idx, text, j in lines:
             line_str = f"{idx:>2} {text:<{width + 5}} {j}"
             lines_str.append(line_str)
+
+        lines_str.append("```")
         return "\n".join(lines_str)
 
     def add_line(self, formula, justification):

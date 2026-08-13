@@ -168,7 +168,7 @@ def main():
     problem = create_problem()
     while not problem.conclusion_reached():
         print()
-        if problem_str := str(problem):
+        if problem_str := problem.to_plain_text():
             print(f"{problem_str}\n")
         edit = select_edit()
         perform_edit(problem, edit)

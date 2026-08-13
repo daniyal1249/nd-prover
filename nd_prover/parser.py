@@ -275,7 +275,7 @@ def parse_citations(citations):
         try:
             c_list.append(int(c))
         except ValueError:
-            raise ParsingError(f'Invalid citations syntax: "{citations}".')
+            raise ParsingError(f'Invalid citation syntax: "{citations}".')
     return tuple(c_list)
 
 
