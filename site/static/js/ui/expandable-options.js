@@ -38,14 +38,9 @@ export function initExpandableOptions(root, toggle, options) {
   document.addEventListener('click', (e) => {
     if (!isOpen) return;
     const target = e.target;
-
-    if (
-        target &&
-        (toggle.contains(target) || options.contains(target))
-    ) {
+    if (target && (toggle.contains(target) || options.contains(target))) {
         return;
     }
-
     close();
   });
 
