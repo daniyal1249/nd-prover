@@ -33,6 +33,7 @@ import {
 import { initProblemUI } from './ui/problem-ui.js';
 import { initProofUI } from './ui/proof-ui.js';
 import { initActionBtnDelay } from './ui/action-btn-delay.js';
+import { initExportProof } from './ui/export-proof.js';
 import { initUrlState, scheduleUrlUpdate } from './utils/url-state.js';
 
 /**
@@ -433,6 +434,7 @@ function init() {
   // Initialize UI handlers
   initProblemUI(state, render);
   initProofUI(state, render);
+  initExportProof(state);
   initActionBtnDelay(document.getElementById('proof'));
   const loadedFromUrl = initUrlState(state, render, { renderOnInit: false });
 

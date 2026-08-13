@@ -9,6 +9,7 @@ export const RESULT_SOURCES = {
   validation: 'validation',
   validity: 'validity',
   proofCheck: 'proof-check',
+  proofExport: 'proof-export',
   generation: 'generation'
 };
 
@@ -18,18 +19,26 @@ export const RESULT_SOURCES = {
  * @param {HTMLElement|null} resultsSection - Results pane element
  * @param {HTMLElement|null} resultsBox - Results text element
  * @param {string} message - Message to display
- * @param {'progress'|'success'|'error'} status - Visual status
+ * @param {'neutral'|'progress'|'success'|'error'} status - Visual status
  * @param {string|null} source - Source of the displayed result
+ * @param {string|null} displayClass - Optional class for the displayed result
  */
 export function setResultsMessage(
   resultsSection,
   resultsBox,
   message,
   status = 'progress',
-  source = null
+  source = null,
+  displayClass = null
 ) {
   if (!resultsBox) {
     return;
+  }
+
+  resultsBox.classList.remove('results--proof-export');
+
+  if (displayClass) {
+    resultsBox.classList.add(displayClass);
   }
 
   if (resultsSection) {
@@ -77,7 +86,8 @@ export function clearResults(resultsSection, resultsBox) {
     resultsBox.textContent = '';
     resultsBox.classList.remove(
       'results--show',
-      'results--generating'
+      'results--generating',
+      'results--proof-export'
     );
     resultsBox.style.removeProperty('--generation-duration');
   }
