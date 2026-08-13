@@ -18,6 +18,9 @@ from .cli import (
     select_logic, input_premises, input_conclusion, create_problem, 
     select_edit, input_line, input_assumption, perform_edit, main
 )
+from .latex import (
+    formula_to_latex, justification_to_latex, problem_to_latex
+)
 from .parser import (
     ParsingError, Symbols, split_line, strip_parens, find_main_connective, 
     split_args, parse_args_from_parens, parse_term, _parse_formula, 
@@ -28,15 +31,15 @@ from .prover import (
     ProverError, ProofSearchResult, _ProofObject, _Line, _Proof, 
     Eliminator, Introducer, Prover, Processor, prove
 )
+from .sat import (
+    Countermodel, ValidityResult, Translator, prop_vars, evaluate, 
+    check_validity_tfl, check_validity
+)
 from .syntax import (
     Metavar, Formula, Bot, Not, And, Or, Imp, Iff, Term, Func, Var, Pred, 
     Eq, Forall, Exists, Box, Dia, BoxMarker, is_tfl_formula, 
     is_fol_formula, is_ml_formula, is_constant, is_ground_term, terms, 
     constants, ground_terms, free_vars, sub_term
-)
-from .sat import (
-    Countermodel, ValidityResult, Translator, prop_vars, evaluate, 
-    check_validity_tfl, check_validity
 )
 
 
