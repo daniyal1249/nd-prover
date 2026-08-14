@@ -3,10 +3,13 @@
 {% block title %}Rules - Natural Deduction Proof Generator & Checker{% endblock %}
 
 {% block meta_description %}
-  <meta
-    name="description"
-    content="ND-Prover – natural deduction rules of inference for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
-  />
+  {% set description =
+    "ND-Prover – natural deduction rules of inference for propositional, "
+    ~ "first-order, and modal logic (K, T, S4, S5), based on forall x: "
+    ~ "Calgary and the Open Logic Project."
+  %}
+
+  <meta name="description" content="{{ description }}" />
 {% endblock %}
 
 {% block extra_css %}

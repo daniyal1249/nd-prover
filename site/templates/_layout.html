@@ -6,29 +6,26 @@
   <!-- maximum-scale=1 -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
+  {% set description =
+    "ND-Prover – Fitch-style natural deduction proof generator and checker "
+    ~ "for propositional, first-order, and modal logic (K, T, S4, S5), "
+    ~ "based on forall x: Calgary and the Open Logic Project."
+  %}
+
   {% block meta_description %}
-  <meta
-    name="description"
-    content="ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
-  />
+    <meta name="description" content="{{ description }}" />
   {% endblock %}
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Natural Deduction Proof Generator & Checker" />
-  <meta
-    property="og:description"
-    content="ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
-  />
+  <meta property="og:description" content="{{ description }}" />
   <meta property="og:url" content="https://ndprover.org{{ request.path }}" />
 
   <!-- Twitter Cards -->
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:title" content="Natural Deduction Proof Generator & Checker" />
-  <meta
-    name="twitter:description"
-    content="ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
-  />
+  <meta name="twitter:description" content="{{ description }}" />
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://ndprover.org{{ request.path }}" />
@@ -41,7 +38,7 @@
     "name": "ND-Prover",
     "url": "https://ndprover.org/",
     "applicationCategory": "EducationalApplication",
-    "description": "ND-Prover – Fitch-style natural deduction proof generator and checker for propositional, first-order, and modal logics (K, T, S4, S5), based on forall x: Calgary and the Open Logic Project."
+    "description": {{ description | tojson }}
   }
   </script>
 
