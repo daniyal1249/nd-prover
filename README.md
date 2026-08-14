@@ -1,30 +1,28 @@
 # ND-Prover
 
-A Fitch-style natural deduction proof generator and checker, implemented in Python.
-
-Supports propositional logic and the modal logics K, T, S4, and S5, as well as their first-order counterparts, FOL and FOML. Includes countermodel generation for invalid arguments.
+A Fitch-style natural deduction proof generator and checker, implemented 
+in Python. It is based on the natural deduction system presented in 
+[*forall x: Calgary*](https://forallx.openlogicproject.org).
 
 ![ND-Prover Demo](prover.gif)
 
 Try ND-Prover online at [ndprover.org](https://ndprover.org).
 
-## Development Roadmap
+## Supported Logics
 
-- TFL — Propositional logic proof generator
-    - [x] Public alpha
-    - [x] Stable release
+- Propositional logic
+- First-order logic
+- Modal logic (K, T, S4, S5)
+- First-order modal logic
 
-- ML — Modal logic proof generator
-    - [x] Public alpha
-    - [ ] Stable release
+## Features
 
-- FOL — First-order logic proof generator
-    - [x] Public alpha
-    - [ ] Stable release
-
-- FOML — First-order modal logic proof generator
-    - [x] Public alpha
-    - [ ] Stable release
+- Support for both classical and intuitionistic logics
+- Argument validity checking
+- Automated proof generation for valid arguments
+- Countermodel generation for invalid arguments
+- Verification of user-provided proofs
+- Plain-text and LaTeX proof export
 
 ## Package Installation
 
@@ -75,7 +73,6 @@ A proof of the law of excluded middle (LEM) using ND-Prover:
 
 ```
 Proof of  ∴ P ∨ ¬P
-──────────────────
 
  1 │ │ ¬(P ∨ ¬P)       AS
    │ ├───────────      
@@ -100,7 +97,6 @@ A proof that identity is symmetric:
 
 ```
 Proof of  ∴ ∀x∀y(x = y → y = x)
-───────────────────────────────
 
  1 │ │ a = b                  AS
    │ ├───────                 
@@ -121,7 +117,6 @@ A proof in modal logic S5:
 
 ```
 Proof of ◇☐A ∴ ☐A
-─────────────────
 
  1 │ ◇☐A          PR
    ├─────         
