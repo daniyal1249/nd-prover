@@ -30,12 +30,46 @@ export function processFormula(raw) {
   // Add space after forall x or exists x
   t = t.replace(/([∀∃][a-zA-Z])/g, '$1 ');
   
-  // Add space after commas and semicolons
-  t = t.replace(/[,;]/g, '$& ');
+  // Normalize premise separators and application commas
+  t = normalizeFormulaSeparators(t);
   
   t = t.replace(/ +/g, ' ');
   t = t.trim();
   return t;
+}
+
+/**
+ * Normalizes comma and semicolon spacing in formula text.
+ * 
+ * @param {string} str - Formula text to normalize
+ * @returns {string} Formula text with normalized separators
+ */
+function normalizeFormulaSeparators(str) {
+  let depth = 0;
+  let result = '';
+
+  for (const ch of str) {
+    if (ch === '(') {
+      depth++;
+      result += ch;
+      continue;
+    }
+    if (ch === ')') {
+      depth = Math.max(0, depth - 1);
+      result += ch;
+      continue;
+    }
+    if (ch === ',') {
+      result += depth > 0 ? ',' : ', ';
+      continue;
+    }
+    if (ch === ';') {
+      result += '; ';
+      continue;
+    }
+    result += ch;
+  }
+  return result;
 }
 
 /**

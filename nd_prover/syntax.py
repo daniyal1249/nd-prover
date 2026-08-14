@@ -114,7 +114,7 @@ class Func(Term):
     def _str(self):
         if not self.args:
             return self.name
-        return f"{self.name}({', '.join(str(t) for t in self.args)})"
+        return f"{self.name}({','.join(str(t) for t in self.args)})"
 
 @dataclass(frozen=True)
 class Var(Term):
@@ -133,7 +133,7 @@ class Pred(Formula):
     def _str(self):
         if not self.args:
             return self.name
-        return f"{self.name}({', '.join(str(t) for t in self.args)})"
+        return f"{self.name}({','.join(str(t) for t in self.args)})"
 
 @dataclass(frozen=True)
 class Eq(Formula):
