@@ -1,10 +1,10 @@
 # ND-Prover
 
-A Fitch-style natural deduction proof generator and checker, implemented 
-in Python. It is based on the natural deduction system presented in 
-[*forall x: Calgary*](https://forallx.openlogicproject.org).
+A Fitch-style natural deduction proof generator and checker, implemented in Python.
 
-![ND-Prover Demo](prover.gif)
+It is based on the natural deduction system presented in [*forall x: Calgary*](https://forallx.openlogicproject.org).
+
+![ND-Prover demo](nd-prover.gif)
 
 Try ND-Prover online at [ndprover.org](https://ndprover.org).
 
