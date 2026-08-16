@@ -42,7 +42,7 @@ and running the following in the cloned repo:
 
 ```
 $ nd-prover
-Select logic (TFL, FOL, MLK, MLT, MLS4, MLS5, FOMLK, FOMLT, FOMLS4, FOMLS5): TFL
+Select logic (TFL, FOL, K, T, S4, S5, QK, QT, QS4, QS5): TFL
 Enter premises (separated by "," or ";"), or "NA" if none: P -> Q, P
 Enter conclusion: Q
 

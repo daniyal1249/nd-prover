@@ -402,11 +402,11 @@ class FOL(IFOL, TFL):
         raise InferenceError()
 
 
-class IMLK(IPL):
+class IK(IPL):
     pass
 
 
-class MLK(IMLK, TFL):
+class K(IK, TFL):
 
     @Rules.add("☐I")
     def BoxI(premises, **kwargs):
@@ -471,11 +471,11 @@ class MLK(IMLK, TFL):
         raise InferenceError()
 
 
-class IMLT(IMLK):
+class IT(IK):
     pass
 
 
-class MLT(IMLT, MLK):
+class T(IT, K):
 
     @Rules.add("RT")
     def RT(premises, **kwargs):
@@ -485,11 +485,11 @@ class MLT(IMLT, MLK):
         return [a.inner]
 
 
-class IMLS4(IMLT):
+class IS4(IT):
     pass
 
 
-class MLS4(IMLS4, MLT):
+class S4(IS4, T):
 
     @Rules.add("R4", strict=True)
     def R4(premises, scope, **kwargs):
@@ -514,11 +514,11 @@ class MLS4(IMLS4, MLT):
         return [a.formula]
 
 
-class IMLS5(IMLS4):
+class IS5(IS4):
     pass
 
 
-class MLS5(IMLS5, MLS4):
+class S5(IS5, S4):
 
     @Rules.add("R5", strict=True)
     def R5(premises, scope, **kwargs):
@@ -544,11 +544,11 @@ class MLS5(IMLS5, MLS4):
         return [a.formula]
 
 
-class IFOMLK(IFOL, IMLK):
+class IQK(IFOL, IK):
     pass
 
 
-class FOMLK(IFOMLK, FOL, MLK):
+class QK(IQK, FOL, K):
 
     @Rules.add("BF")
     def BF(premises, **kwargs):
@@ -582,27 +582,27 @@ class FOMLK(IFOMLK, FOL, MLK):
         return [Box(a)]
 
 
-class IFOMLT(IFOMLK, IMLT):
+class IQT(IQK, IT):
     pass
 
 
-class FOMLT(IFOMLT, FOMLK, MLT):
+class QT(IQT, QK, T):
     pass
 
 
-class IFOMLS4(IFOMLT, IMLS4):
+class IQS4(IQT, IS4):
     pass
 
 
-class FOMLS4(IFOMLS4, FOMLT, MLS4):
+class QS4(IQS4, QT, S4):
     pass
 
 
-class IFOMLS5(IFOMLS4, IMLS5):
+class IQS5(IQS4, IS5):
     pass
 
 
-class FOMLS5(IFOMLS5, FOMLS4, MLS5):
+class QS5(IQS5, QS4, S5):
     pass
 
 
@@ -895,19 +895,19 @@ def first_order(logic):
 
 
 def modal(logic):
-    return issubclass(logic, IMLK)
+    return issubclass(logic, IK)
 
 
 def reflexive(logic):
-    return issubclass(logic, IMLT)
+    return issubclass(logic, IT)
 
 
 def transitive(logic):
-    return issubclass(logic, IMLS4)
+    return issubclass(logic, IS4)
 
 
 def s5(logic):
-    return issubclass(logic, IMLS5)
+    return issubclass(logic, IS5)
 
 
 def resolve_semantics(logic, domain=None, equality=None):
@@ -932,7 +932,7 @@ def resolve_semantics(logic, domain=None, equality=None):
         if domain not in {"constant", "expanding"}:
             raise SemanticsError()
 
-        # FOMLS5
+        # QS5
         if is_s5 and not is_intuitionistic:
             domain = "constant"
 

@@ -10,21 +10,21 @@ const LOGIC_MAP = {
     classical: { propositional: 'TFL', firstOrder: 'FOL' },
     intuitionistic: { propositional: 'IPL', firstOrder: 'IFOL' }
   },
-  MLK: {
-    classical: { propositional: 'MLK', firstOrder: 'FOMLK' },
-    intuitionistic: { propositional: 'IMLK', firstOrder: 'IFOMLK' }
+  K: {
+    classical: { propositional: 'K', firstOrder: 'QK' },
+    intuitionistic: { propositional: 'IK', firstOrder: 'IQK' }
   },
-  MLT: {
-    classical: { propositional: 'MLT', firstOrder: 'FOMLT' },
-    intuitionistic: { propositional: 'IMLT', firstOrder: 'IFOMLT' }
+  T: {
+    classical: { propositional: 'T', firstOrder: 'QT' },
+    intuitionistic: { propositional: 'IT', firstOrder: 'IQT' }
   },
-  MLS4: {
-    classical: { propositional: 'MLS4', firstOrder: 'FOMLS4' },
-    intuitionistic: { propositional: 'IMLS4', firstOrder: 'IFOMLS4' }
+  S4: {
+    classical: { propositional: 'S4', firstOrder: 'QS4' },
+    intuitionistic: { propositional: 'IS4', firstOrder: 'IQS4' }
   },
-  MLS5: {
-    classical: { propositional: 'MLS5', firstOrder: 'FOMLS5' },
-    intuitionistic: { propositional: 'IMLS5', firstOrder: 'IFOMLS5' }
+  S5: {
+    classical: { propositional: 'S5', firstOrder: 'QS5' },
+    intuitionistic: { propositional: 'IS5', firstOrder: 'IQS5' }
   }
 };
 
@@ -47,7 +47,7 @@ const INVERSE_LOGIC_MAP = Object.entries(LOGIC_MAP).reduce(
 /**
  * Maps the base logic and checkbox settings to a concrete logic class label.
  *
- * @param {string} baseLogic - Base logic value (TFL, MLK, MLT, MLS4, MLS5)
+ * @param {string} baseLogic - Base logic value (TFL, K, T, S4, S5)
  * @param {boolean} isFirstOrder - Whether first-order logic is selected
  * @param {boolean} isIntuitionistic - Whether intuitionistic logic is selected
  * @returns {string} Concrete logic label
@@ -110,14 +110,14 @@ export function resolveSemanticOptions(
 
   const showDomain =
     intuitionisticFirstOrder ||
-    (classicalModalFirstOrder && baseLogic !== 'MLS5');
+    (classicalModalFirstOrder && baseLogic !== 'S5');
   const showEquality = intuitionisticFirstOrder;
 
   let domainSemantics = null;
   if (isFirstOrder && isIntuitionistic) {
     domainSemantics = domainChoice;
   } else if (classicalModalFirstOrder) {
-    domainSemantics = baseLogic === 'MLS5' ? 'constant' : domainChoice;
+    domainSemantics = baseLogic === 'S5' ? 'constant' : domainChoice;
   }
 
   let equalitySemantics = null;

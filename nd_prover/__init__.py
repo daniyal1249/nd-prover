@@ -8,10 +8,10 @@ __url__ = "https://github.com/daniyal1249/nd-prover"
 
 from .checker import (
     InferenceError, ProofEditError, SemanticsError, Rule, Justification, 
-    Rules, IPL, TFL, IFOL, FOL, IMLK, MLK, IMLT, MLT, IMLS4, MLS4, IMLS5, 
-    MLS5, IFOMLK, FOMLK, IFOMLT, FOMLT, IFOMLS4, FOMLS4, IFOMLS5, FOMLS5, 
-    ProofObject, Line, Proof, Problem, intuitionistic, first_order, modal, 
-    reflexive, transitive, s5, resolve_semantics
+    Rules, IPL, TFL, IFOL, FOL, IK, K, IT, T, IS4, S4, IS5, S5, IQK, QK, 
+    IQT, QT, IQS4, QS4, IQS5, QS5, ProofObject, Line, Proof, Problem, 
+    intuitionistic, first_order, modal, reflexive, transitive, s5, 
+    resolve_semantics
 )
 from .cli import (
     logics, parse_and_verify_formula, parse_and_verify_premises, 

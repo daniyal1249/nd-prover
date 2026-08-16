@@ -199,10 +199,10 @@ def _reconstruct_problem_from_lines(data):
 
 
 def _export_proof(data, formatter):
-    """Reconstruct a proof under FOMLS5 and format it for export."""
+    """Reconstruct a proof under QS5 and format it for export."""
     export_data = {
         **data,
-        "logic": "FOMLS5",
+        "logic": "QS5",
         "domainSemantics": None,
         "equalitySemantics": None
     }
@@ -247,7 +247,7 @@ def _search_for_proof(problem, exhaustive, timeout):
 
 def _generation_note(logic):
     if modal(logic):
-        return "\n\n🚧 Note: ML and FOML proof generation is still under development."
+        return "\n\n🚧 Note: ML and QML proof generation is still under development."
     if first_order(logic):
         return "\n\n🚧 Note: FOL proof generation is still under development."
     return ""

@@ -11,7 +11,7 @@ import { serializeProofState } from '../utils/serialization.js';
 import { initExpandableOptions } from './expandable-options.js';
 import { RESULT_SOURCES, setResultsMessage } from './results-ui.js';
 
-const EXPORT_LOGIC = 'FOMLS5';
+const EXPORT_LOGIC = 'QS5';
 
 const EXPORT_ENDPOINTS = {
   plain: '/api/export-proof/plain',
