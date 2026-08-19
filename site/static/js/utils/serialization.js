@@ -88,6 +88,7 @@ export function serializeProofState(state) {
     conclusionText: problem.conclusionText,
     domainSemantics: problem.domainSemantics ?? null,
     equalitySemantics: problem.equalitySemantics ?? null,
+    derivedRules: state.derivedRules !== false,
     lines: state.lines.map((line, index) => {
       const kind = computeLineKind(state.lines, index, line);
       const isAssumptionLike = kind === 'assumption' || kind === 'end_and_begin';

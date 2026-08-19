@@ -49,8 +49,8 @@ export function initUrlState(state, render, opts = {}) {
 
 /**
  * Debounced request to write current app state into the URL.
- * Call this after any mutation to `state.problemDraft`, 
- * `state.proofProblem`, or `state.lines`.
+ * Call this after any mutation to `state.problemDraft`,
+ * `state.proofProblem`, `state.derivedRules`, or `state.lines`.
  */
 export function scheduleUrlUpdate() {
   if (!_state || _suspendWrites) {
@@ -122,6 +122,7 @@ function buildSnapshotFromState(state) {
     },
     proof: {
       active: proofActive,
+      derivedRules: state.derivedRules !== false,
       problem: committed,
       // Each line: [indent, flags, text, justText] where flags bitmask:
       // 1=assumption, 2=premise.
@@ -141,9 +142,11 @@ function applySnapshotToState(snapshot, state) {
   const {
     active: proofActive,
     tuples,
-    problem: proofProblem
+    problem: proofProblem,
+    derivedRules
   } = extractProofFromSnapshot(snapshot);
   state.proofProblem = proofActive ? proofProblem : null;
+  state.derivedRules = derivedRules;
 
   state.lines = [];
   state.nextId = 1;
@@ -196,6 +199,7 @@ function syncUiFromState(state) {
   const logicSelect = document.getElementById('logic');
   const firstOrderCheckbox = document.getElementById('first-order');
   const intuitionisticCheckbox = document.getElementById('intuitionistic');
+  const derivedRulesCheckbox = document.getElementById('derived-rules');
   const semanticsContainer = document.getElementById('semantics-container');
   const domainSemanticsField = document.getElementById('domain-semantics-field');
   const equalitySemanticsField = document.getElementById('equality-semantics-field');
@@ -225,6 +229,9 @@ function syncUiFromState(state) {
   }
   if (intuitionisticCheckbox) {
     intuitionisticCheckbox.checked = isIntuitionistic;
+  }
+  if (derivedRulesCheckbox) {
+    derivedRulesCheckbox.checked = state.derivedRules !== false;
   }
 
   if (domainSemanticsSelect) {
@@ -294,14 +301,20 @@ function extractDraftFromSnapshot(snapshot) {
 
 function extractProofFromSnapshot(snapshot) {
   if (!isSnapshotShape(snapshot)) {
-    return { active: false, tuples: [], problem: null };
+    return {
+      active: false,
+      tuples: [],
+      problem: null,
+      derivedRules: true
+    };
   }
 
   const proof = snapshot.proof || {};
   const active = !!proof.active;
   const tuples = Array.isArray(proof.lines) ? proof.lines : [];
   const problem = proof.problem || null;
-  return { active, tuples, problem };
+  const derivedRules = proof.derivedRules !== false;
+  return { active, tuples, problem, derivedRules };
 }
 
 function isSnapshotShape(snapshot) {

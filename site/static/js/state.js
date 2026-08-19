@@ -11,6 +11,7 @@
  * @property {Array} lines - Array of proof line objects
  *   Each line: { id, indent, text, justText, isAssumption, isPremise }
  * @property {number} nextId - Counter for generating unique line IDs
+ * @property {boolean} derivedRules - Whether derived rules are enabled in the proof editor
  * @property {Object} problemDraft - Draft problem configuration (problem-setup inputs)
  * @property {string} problemDraft.logic - Selected logic system label (TFL, FOL, etc.)
  * @property {string} problemDraft.premisesText - Symbolized premises text
@@ -27,6 +28,7 @@
 export const state = {
   lines: [],
   nextId: 1,
+  derivedRules: true,
   problemDraft: {
     logic: 'TFL',
     premisesText: '',

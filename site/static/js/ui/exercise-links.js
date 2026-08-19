@@ -66,6 +66,7 @@ function buildSnapshot({ logic, premisesText, conclusionText }) {
     },
     proof: {
       active: true,
+      derivedRules: true,
       problem: {
         logic,
         premisesText: premises,

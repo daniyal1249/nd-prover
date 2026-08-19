@@ -212,9 +212,12 @@ async function generateProof(
   resultsSection,
   resultsBox
 ) {
-  const payload = buildProblemPayload(
-    state.proofProblem || state.problemDraft || {}
-  );
+  const payload = {
+    ...buildProblemPayload(
+      state.proofProblem || state.problemDraft || {}
+    ),
+    derivedRules: state.derivedRules !== false
+  };
 
   setResultsMessage(
     resultsSection,
@@ -324,6 +327,16 @@ async function generateProof(
  * @param {Function} renderProof - Function to render the proof
  */
 export function initProofUI(state, renderProof) {
+  // Derived rules checkbox
+  const derivedRulesCheckbox = document.getElementById('derived-rules');
+  if (derivedRulesCheckbox) {
+    derivedRulesCheckbox.checked = state.derivedRules !== false;
+    derivedRulesCheckbox.addEventListener('change', () => {
+      state.derivedRules = derivedRulesCheckbox.checked;
+      scheduleUrlUpdate();
+    });
+  }
+
   // Add line button (first-line only)
   const btnAddLine = document.getElementById('btn-add-line');
   btnAddLine.addEventListener('click', () => {
