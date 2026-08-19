@@ -174,17 +174,36 @@ class Eliminator:
             if Eliminator.IffE(prover):
                 continue
 
-            if prover.first_order and Eliminator.ForallE(prover):
-                continue
-            if prover.modal and Eliminator.DefDia(prover):
-                continue
-            if prover.reflexive and Eliminator.RT(prover):
-                continue
+            if prover.derived_rules:
+                if Eliminator.DS(prover):
+                    continue
+                if Eliminator.MT(prover):
+                    continue
+                if not prover.intuitionistic and Eliminator.DNE(prover):
+                    continue
+                if Eliminator.DeM(prover):
+                    continue
+
+            if prover.first_order:
+                if prover.derived_rules and Eliminator.CQ(prover):
+                    continue
+                if Eliminator.ForallE(prover):
+                    continue
+
+            if prover.modal:
+                if prover.derived_rules and Eliminator.MC(prover):
+                    continue
+                if Eliminator.DefDia(prover):
+                    continue
+                if prover.reflexive and Eliminator.RT(prover):
+                    continue
 
             if prover.first_order and prover.modal:
-                if prover.domain_semantics == "constant":
-                    if Eliminator.BF(prover):
-                        continue
+                ds = prover.domain_semantics
+                if ds == "constant" and Eliminator.BF(prover):
+                    continue
+                if prover.derived_rules and Eliminator.CBF(prover):
+                    continue
 
             return False
 
@@ -291,6 +310,108 @@ class Eliminator:
         return False
 
     @staticmethod
+    def DS(prover):
+        proof = prover.proof
+        for obj in proof.seq:
+            if not (obj.is_line() and isinstance(f := obj.formula, Or)):
+                continue
+            if f.left in proof.formulas or f.right in proof.formulas:
+                continue
+
+            for obj2 in proof.seq:
+                if obj2.is_line() and isinstance(f2 := obj2.formula, Not):
+                    line = None
+                    if f2.inner == f.left:
+                        line = _Line(f.right, "DS", (obj.id, obj2.id))
+                    elif f2.inner == f.right:
+                        line = _Line(f.left, "DS", (obj.id, obj2.id))
+                    if line is not None:
+                        proof.add(line)
+                        return True
+        return False
+
+    @staticmethod
+    def MT(prover):
+        proof = prover.proof
+        for obj in proof.seq:
+            if not (obj.is_line() and isinstance(f := obj.formula, Imp)):
+                continue
+            if Not(f.left) in proof.formulas:
+                continue
+
+            for obj2 in proof.seq:
+                if obj2.is_line() and isinstance(f2 := obj2.formula, Not):
+                    if f2.inner == f.right:
+                        line = _Line(Not(f.left), "MT", (obj.id, obj2.id))
+                        proof.add(line)
+                        return True
+        return False
+
+    @staticmethod
+    def DNE(prover):
+        proof = prover.proof
+        for obj in proof.seq:
+            if not (obj.is_line() and isinstance(f := obj.formula, Not) 
+                    and isinstance(f.inner, Not)):
+                continue
+
+            if f.inner.inner not in proof.formulas:
+                line = _Line(f.inner.inner, "DNE", (obj.id,))
+                proof.add(line)
+                return True
+        return False
+
+    @staticmethod
+    def DeM(prover):
+        proof = prover.proof
+        for obj in proof.seq:
+            if not obj.is_line():
+                continue
+
+            match obj.formula:
+                case Not(Or(a, b)):
+                    transformed = And(Not(a), Not(b))
+                case And(Not(a), Not(b)):
+                    transformed = Not(Or(a, b))
+                case Not(And(a, b)) if not prover.intuitionistic:
+                    transformed = Or(Not(a), Not(b))
+                case Or(Not(a), Not(b)):
+                    transformed = Not(And(a, b))
+                case _:
+                    continue
+
+            if transformed not in proof.formulas:
+                line = _Line(transformed, "DeM", (obj.id,))
+                proof.add(line)
+                return True
+        return False
+
+    @staticmethod
+    def CQ(prover):
+        proof = prover.proof
+        for obj in proof.seq:
+            if not obj.is_line():
+                continue
+
+            match obj.formula:
+                case Forall(v, Not(b)):
+                    transformed = Not(Exists(v, b))
+                case Not(Exists(v, b)):
+                    transformed = Forall(v, Not(b))
+                case Exists(v, Not(b)):
+                    transformed = Not(Forall(v, b))
+                case Not(Forall(v, b)) if not prover.intuitionistic:
+                    transformed = Exists(v, Not(b))
+                case _:
+                    continue
+
+            if transformed not in proof.formulas:
+                line = _Line(transformed, "CQ", (obj.id,))
+                proof.add(line)
+                return True
+        return False
+
+    @staticmethod
     def ForallE(prover):
         proof = prover.proof
         for obj in proof.seq:
@@ -303,6 +424,33 @@ class Eliminator:
                     line = _Line(inner, "∀E", (obj.id,))
                     proof.add(line)
                     return True
+        return False
+
+    @staticmethod
+    def MC(prover):
+        proof = prover.proof
+        for obj in proof.seq:
+            if not obj.is_line():
+                continue
+
+            match obj.formula:
+                case Not(Box(b)):
+                    transformed = Dia(Not(b))
+                    if transformed != proof.goal:
+                        continue
+                case Dia(Not(b)):
+                    transformed = Not(Box(b))
+                case Not(Dia(b)):
+                    transformed = Box(Not(b))
+                case Box(Not(b)):
+                    transformed = Not(Dia(b))
+                case _:
+                    continue
+
+            if transformed not in proof.formulas:
+                line = _Line(transformed, "MC", (obj.id,))
+                proof.add(line)
+                return True
         return False
 
     @staticmethod
@@ -343,6 +491,21 @@ class Eliminator:
             box_forall = Box(Forall(f.var, f.inner.inner))
             if box_forall not in proof.formulas:
                 line = _Line(box_forall, "BF", (obj.id,))
+                proof.add(line)
+                return True
+        return False
+
+    @staticmethod
+    def CBF(prover):
+        proof = prover.proof
+        for obj in proof.seq:
+            if not (obj.is_line() and isinstance(f := obj.formula, Box) 
+                    and isinstance(f.inner, Forall)):
+                continue
+
+            forall_box = Forall(f.inner.var, Box(f.inner.inner))
+            if forall_box not in proof.formulas:
+                line = _Line(forall_box, "CBF", (obj.id,))
                 proof.add(line)
                 return True
         return False
@@ -848,6 +1011,7 @@ class Prover:
         proof,
         domain_semantics=None,
         equality_semantics=None,
+        derived_rules=True,
         ip=None,
         exhaustive=True,
         seen=None,
@@ -866,6 +1030,7 @@ class Prover:
             logic, domain_semantics, equality_semantics
         )
 
+        self.derived_rules = derived_rules
         self.ip = not self.intuitionistic if ip is None else ip
         self.exhaustive = exhaustive
         self.seen = {} if seen is None else seen
@@ -911,6 +1076,7 @@ class Prover:
             proof,
             self.domain_semantics,
             self.equality_semantics,
+            self.derived_rules,
             ip,
             self.exhaustive,
             seen,
@@ -1093,6 +1259,7 @@ def prove(
     conclusion,
     domain_semantics=None,
     equality_semantics=None,
+    derived_rules=True,
     exhaustive=True,
     timeout=None
 ):
@@ -1108,6 +1275,7 @@ def prove(
         proof,
         domain_semantics,
         equality_semantics,
+        derived_rules,
         exhaustive=exhaustive,
         deadline=deadline
     )
@@ -1123,7 +1291,12 @@ def prove(
         return ProofSearchResult("failure")
 
     problem = Problem(
-        logic, premises, conclusion, domain_semantics, equality_semantics
+        logic,
+        premises,
+        conclusion,
+        domain_semantics,
+        equality_semantics,
+        derived_rules
     )
 
     Processor.process(proof, problem.proof, logic, len(premises))

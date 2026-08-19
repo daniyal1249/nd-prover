@@ -61,12 +61,14 @@ class Justification:
 class Rules:
     PR = Rule("PR", None)
     AS = Rule("AS", None)
-    rules, strict = {}, set()
+    rules, derived, strict = {}, set(), set()
 
     @classmethod
-    def add(cls, name, strict=False):
+    def add(cls, name, derived=False, strict=False):
         def decorator(func):
             cls.rules[name] = func.__name__
+            if derived:
+                cls.derived.add(name)
             if strict:
                 cls.strict.add(name)
             return staticmethod(func)
@@ -179,7 +181,7 @@ class IPL:
             raise InferenceError()
         return [a.formula]
 
-    @Rules.add("DS")
+    @Rules.add("DS", derived=True)
     def DS(premises, **kwargs):
         a, b = _verify_arity(premises, 2)
         if not (a.is_line() and isinstance(a := a.formula, Or) 
@@ -192,7 +194,7 @@ class IPL:
             return [a.left]
         raise InferenceError()
 
-    @Rules.add("MT")
+    @Rules.add("MT", derived=True)
     def MT(premises, **kwargs):
         a, b = _verify_arity(premises, 2)
         if not (a.is_line() and isinstance(a := a.formula, Imp) 
@@ -201,7 +203,7 @@ class IPL:
             raise InferenceError()
         return [Not(a.left)]
 
-    @Rules.add("DeM")
+    @Rules.add("DeM", derived=True)
     def DeM(premises, **kwargs):
         c = _verify_arity(premises, 1)
         if not c.is_line():
@@ -232,7 +234,7 @@ class TFL(IPL):
             raise InferenceError()
         return [a.assumption.inner]
 
-    @Rules.add("DNE")
+    @Rules.add("DNE", derived=True)
     def DNE(premises, **kwargs):
         a = _verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Not) 
@@ -240,7 +242,7 @@ class TFL(IPL):
             raise InferenceError()
         return [a.inner.inner]
 
-    @Rules.add("LEM")
+    @Rules.add("LEM", derived=True)
     def LEM(premises, **kwargs):
         a, b = _verify_arity(premises, 2)
         if not (a.is_subproof() and b.is_subproof()):
@@ -254,7 +256,7 @@ class TFL(IPL):
             raise InferenceError()
         return [ac]
 
-    @Rules.add("DeM")
+    @Rules.add("DeM", derived=True)
     def DeM(premises, **kwargs):
         c = _verify_arity(premises, 1)
         if not c.is_line():
@@ -360,7 +362,7 @@ class IFOL(IPL):
 
         return [b.conclusion]
 
-    @Rules.add("CQ")
+    @Rules.add("CQ", derived=True)
     def CQ(premises, **kwargs):
         a = _verify_arity(premises, 1)
         if not a.is_line():
@@ -383,7 +385,7 @@ class IFOL(IPL):
 
 class FOL(IFOL, TFL):
 
-    @Rules.add("CQ")
+    @Rules.add("CQ", derived=True)
     def CQ(premises, **kwargs):
         a = _verify_arity(premises, 1)
         if not a.is_line():
@@ -452,7 +454,7 @@ class K(IK, TFL):
         
         raise InferenceError()
 
-    @Rules.add("MC")
+    @Rules.add("MC", derived=True)
     def MC(premises, **kwargs):
         a = _verify_arity(premises, 1)
         if not a.is_line():
@@ -566,7 +568,7 @@ class QK(IQK, FOL, K):
             raise InferenceError()
         return [Box(a)]
 
-    @Rules.add("CBF")
+    @Rules.add("CBF", derived=True)
     def CBF(premises, **kwargs):
         a = _verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Box) 
@@ -574,7 +576,7 @@ class QK(IQK, FOL, K):
             raise InferenceError()
         return [Forall(a.inner.var, Box(a.inner.inner))]
 
-    @Rules.add("NI")
+    @Rules.add("NI", derived=True)
     def NI(premises, **kwargs):
         a = _verify_arity(premises, 1)
         if not (a.is_line() and isinstance(a := a.formula, Eq)):
@@ -799,7 +801,8 @@ class Problem:
         premises,
         conclusion,
         domain_semantics=None,
-        equality_semantics=None
+        equality_semantics=None,
+        derived_rules=True
     ):
         self.logic = logic
         self.verify_formula(conclusion)
@@ -816,6 +819,7 @@ class Problem:
         self.domain_semantics, self.equality_semantics = resolve_semantics(
             logic, domain_semantics, equality_semantics
         )
+        self.derived_rules = derived_rules
         self.proof = Proof([], context, None)
 
     def __str__(self):
@@ -879,6 +883,8 @@ class Problem:
         func_name = Rules.rules[rule.name]
         if not hasattr(logic, func_name):
             raise InferenceError(f"{rule} is not a valid {logic.__name__} rule.")
+        if rule.name in Rules.derived and not self.derived_rules:
+            raise InferenceError(f"Derived rule {rule} is unavailable.")
         if rule.name == "BF" and self.domain_semantics == "expanding":
             raise InferenceError("BF is not valid in expanding-domain semantics.")
 

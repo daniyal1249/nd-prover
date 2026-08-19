@@ -65,12 +65,15 @@ def _extract_problem_fields(data):
     if isinstance(equality_semantics, str):
         equality_semantics = equality_semantics.strip().lower() or None
 
+    derived_rules = data.get("derivedRules", True)
+
     return (
         logic_name,
         premises_text,
         conclusion_text,
         domain_semantics,
-        equality_semantics
+        equality_semantics,
+        derived_rules
     )
 
 
@@ -90,7 +93,8 @@ def _parse_problem(data):
         premises_text,
         conclusion_text,
         domain_semantics,
-        equality_semantics
+        equality_semantics,
+        derived_rules
     ) = _extract_problem_fields(data)
 
     logic, msg = _resolve_logic(logic_name)
@@ -100,6 +104,8 @@ def _parse_problem(data):
     semantics = (domain_semantics, equality_semantics)
     if not all(s is None or isinstance(s, str) for s in semantics):
         return None, _json_error("Invalid semantic configuration.")
+    if not isinstance(derived_rules, bool):
+        return None, _json_error("Invalid derived rules setting.")
 
     try:
         premises = parse_and_verify_premises(premises_text, logic)
@@ -121,7 +127,8 @@ def _parse_problem(data):
             premises,
             conclusion,
             domain_semantics,
-            equality_semantics
+            equality_semantics,
+            derived_rules
         )
     except SemanticsError as e:
         msg = str(e) or "Invalid semantic configuration."
@@ -240,6 +247,7 @@ def _search_for_proof(problem, exhaustive, timeout):
         problem.conclusion,
         problem.domain_semantics,
         problem.equality_semantics,
+        problem.derived_rules,
         exhaustive=exhaustive,
         timeout=timeout
     )
