@@ -1,4 +1,4 @@
-__version__ = "3.1.0"
+__version__ = "3.2.0"
 __author__ = "Daniyal Akif"
 __email__ = "daniyalakif@gmail.com"
 __license__ = "Apache-2.0"
