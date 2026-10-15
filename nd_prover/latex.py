@@ -159,15 +159,15 @@ def _render_seq(seq, lines, depth):
 
 def problem_to_latex(problem):
     lines = [
-        r"% Requires: \usepackage{fitch}",
+        r"% Requires: \usepackage[arrayenv=tabular]{fitch}",
         r"% Modal proofs also require: \usepackage{amssymb}",
         r"",
-        r"$\begin{nd}"
+        r"\begin{fitchproof}"
     ]
 
     for line in problem.proof.context:
         lines.append(_line_to_latex(line, 1))
 
     _render_seq(problem.proof.seq, lines, 1)
-    lines.append(r"\end{nd}$")
+    lines.append(r"\end{fitchproof}")
     return "\n".join(lines)
