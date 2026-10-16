@@ -7,6 +7,42 @@
  */
 
 /**
+ * Updates citation numbers after inserting or deleting proof lines.
+ * Numbers outside the old proof and references to deleted lines are preserved.
+ *
+ * @param {Object} state - Application state object
+ * @param {number} oldLineCount - Number of lines before the edit
+ * @param {number} start - First inserted or deleted line number (1-based)
+ * @param {number} removedCount - Number of deleted lines
+ * @param {number} addedCount - Number of inserted lines
+ */
+function updateCitations(state, oldLineCount, start, removedCount, addedCount) {
+  for (const line of state.lines) {
+    const justText = line.justText || '';
+    const comma = justText.indexOf(',');
+    if (comma === -1) {
+      continue;
+    }
+
+    const citations = justText.slice(comma + 1);
+    const updated = citations.replace(/\d+/g, (match, offset) => {
+      const number = Number(match);
+      // A minus after a number separates range endpoints; otherwise it is a sign.
+      const isNegative = /(?:^|[^\d\s])\s*-\s*$/.test(citations.slice(0, offset));
+      if (isNegative || number < 1 || number > oldLineCount || number < start) {
+        return match;
+      }
+      if (number < start + removedCount) {
+        return match;
+      }
+      return String(number + addedCount - removedCount);
+    });
+
+    line.justText = justText.slice(0, comma + 1) + updated;
+  }
+}
+
+/**
  * Adds a new proof line to the state.
  * 
  * @param {Object} state - Application state object
@@ -23,6 +59,10 @@ export function addLine(
   isAssumption = false,
   isPremise = false
 ) {
+  const oldLineCount = state.lines.length;
+  const insertIndex = afterIndex == null || afterIndex < 0
+    ? oldLineCount
+    : Math.min(afterIndex + 1, oldLineCount);
   const line = {
     id: state.nextId++,
     indent,
@@ -37,6 +77,7 @@ export function addLine(
   } else {
     state.lines.splice(afterIndex + 1, 0, line);
   }
+  updateCitations(state, oldLineCount, insertIndex + 1, 0, 1);
   
   return line;
 }
@@ -53,7 +94,9 @@ export function deleteLineAt(state, i) {
     return;
   }
   
+  const oldLineCount = state.lines.length;
   const line = state.lines[i];
+  let removedCount = 1;
   if (line.isAssumption) {
     // Delete entire subproof
     const startIndent = line.indent;
@@ -68,11 +111,10 @@ export function deleteLineAt(state, i) {
       }
       j++;
     }
-    state.lines.splice(i, j - i);
-  } else {
-    // Delete single line
-    state.lines.splice(i, 1);
+    removedCount = j - i;
   }
+  state.lines.splice(i, removedCount);
+  updateCitations(state, oldLineCount, i + 1, removedCount, 0);
 }
 
 /**

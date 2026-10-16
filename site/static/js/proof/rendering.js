@@ -574,7 +574,7 @@ export function removeLineFromDOM(row, proofRoot) {
 }
 
 /**
- * Updates line number displays and dataset.index for all proof lines to match state.
+ * Updates line numbers, citations, and dataset.index to match state.
  * 
  * @param {HTMLElement} proofRoot - Root element containing proof lines
  * @param {Object} state - Application state object
@@ -609,6 +609,10 @@ export function updateLineNumbers(proofRoot, state) {
       const lineNumber = row.querySelector('.line-number');
       if (lineNumber) {
         lineNumber.textContent = String(idx + 1);
+      }
+      const justInput = row.querySelector('.justification-input');
+      if (justInput) {
+        justInput.value = state.lines[idx].justText || '';
       }
     }
   });
