@@ -167,3 +167,10 @@ select.semantics-select {
   gap: var(--spacing-sm);
   margin-top: var(--spacing-xs);
 }
+
+/* === Dark Theme === */
+/* Native form controls default to the UA text color; align them with --ink. */
+:root[data-theme="dark"] select.logic,
+:root[data-theme="dark"] .text-input {
+  color: var(--ink);
+}

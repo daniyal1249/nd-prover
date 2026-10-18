@@ -111,3 +111,9 @@
   transform: scale(var(--rule-scale));
   transform-origin: left top;
 }
+
+/* === Dark Theme === */
+/* Rule diagrams are black-on-transparent SVGs; invert them to match --ink. */
+:root[data-theme="dark"] .rule__img {
+  filter: invert(0.9);
+}
