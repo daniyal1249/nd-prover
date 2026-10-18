@@ -72,3 +72,18 @@
   filter: brightness(0.98);
   background: var(--background-lighter);
 }
+
+/* === Dark Theme === */
+/* brightness(0.95) is invisible on a dark background, so use the
+   hover background token instead. */
+@media (hover: hover) and (pointer: fine) {
+  :root[data-theme="dark"] .ui-btn:not(:disabled):hover {
+    filter: none;
+    background: var(--hover-background);
+  }
+}
+
+:root[data-theme="dark"] .ui-btn:not(:disabled):active {
+  filter: none;
+  background: var(--hover-background);
+}

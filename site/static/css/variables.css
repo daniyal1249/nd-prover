@@ -103,3 +103,27 @@
   --transition-fast: 0.05s linear;
   --transition-medium: 0.08s linear;
 }
+
+/* === Dark Theme === */
+/* Activated by data-theme="dark" on <html> (see ui/theme-toggle.js).
+   Only color tokens change; spacing, typography, and layout are shared. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --ink: #e6e6e6;
+  --border-color: #3a3a3a;
+  --hover-background: #2a2a2a;
+  --hover-background-strong: #383838;
+  --bar-color: #e6e6e6;
+  --background: #1e1e1e;
+  --text-color-secondary: #d4d4d4;
+  --text-color-tertiary: #c4c4c4;
+  --text-color-muted: #9a9a9a;
+  --text-color-button: #c8c8c8;
+  --background-light: #262626;
+  --background-lighter: #303030;
+  --success-color: #66bb6a;
+  --success-background: #1c2b1e;
+  --error-color: #ef5350;
+  --error-background: #2f1c1e;
+}
