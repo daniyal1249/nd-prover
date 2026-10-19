@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from copy import deepcopy
+
 from .sat import *
 
 
@@ -23,6 +25,12 @@ class ProverError(Exception):
 class ProofSearchResult:
     status: str
     problem: Problem = None
+
+
+@dataclass
+class ProofCompletionResult:
+    status: str
+    proof: "_Proof" = None
 
 
 class _ProofObject:
@@ -139,9 +147,9 @@ class _Proof(_ProofObject):
                 id_to_citers[obj.id] = set()
         return id_to_citers
 
-    def pop_reiteration(self):
+    def pop_reiteration(self, protected=()):
         end = self.seq[-1]
-        if end.is_line() and end.rule == "R":
+        if end.is_line() and end.rule == "R" and end.id not in protected:
             self.seq.pop()
             self.line_count -= 1
             return end.citations[0]
@@ -655,7 +663,7 @@ class Eliminator:
             if not p.prove():
                 continue
 
-            branch.pop_reiteration()
+            branch.pop_reiteration(prover.protected)
             if branch.seq != proof.seq:
                 branches.append(branch)
                 if not prover.exhaustive:
@@ -681,7 +689,7 @@ class Eliminator:
                 branch = _Proof(proof.seq, f.left)
                 p = prover.new(branch)
                 if p.prove():
-                    branch.pop_reiteration()
+                    branch.pop_reiteration(prover.protected)
                     if branch.seq != proof.seq:
                         proof.seq = branch.seq
                         return True
@@ -710,7 +718,7 @@ class Eliminator:
                 if not p.prove():
                     continue
 
-                branch.pop_reiteration()
+                branch.pop_reiteration(prover.protected)
                 if branch.seq != proof.seq:
                     branches.append(branch)
                     # FIX: consider always breaking
@@ -788,13 +796,13 @@ class Introducer:
             p1 = prover.new(branch1, copy_seen=True)
             if not p1.prove():
                 continue
-            conjunct1_id = branch1.pop_reiteration()
+            conjunct1_id = branch1.pop_reiteration(prover.protected)
 
             branch2 = _Proof(branch1.seq, conjunct2)
             p2 = prover.new(branch2)
             if not p2.prove():
                 continue
-            conjunct2_id = branch2.pop_reiteration()
+            conjunct2_id = branch2.pop_reiteration(prover.protected)
 
             line = _Line(proof.goal, "∧I", (conjunct1_id, conjunct2_id))
             branch2.add(line)
@@ -829,7 +837,7 @@ class Introducer:
                 if not p.prove():
                     continue
 
-                disjunct_id = branch.pop_reiteration()
+                disjunct_id = branch.pop_reiteration(prover.protected)
                 line = _Line(proof.goal, "∨I", (disjunct_id,))
                 branch.add(line)
                 branches.append(branch)
@@ -902,7 +910,7 @@ class Introducer:
         if not p.prove():
             return False
 
-        inner_id = branch.pop_reiteration()
+        inner_id = branch.pop_reiteration(prover.protected)
         line = _Line(proof.goal, "∀I", (inner_id,))
         branch.add(line)
         proof.seq = branch.seq
@@ -930,7 +938,7 @@ class Introducer:
             if not p.prove():
                 continue
 
-            inner_id = branch.pop_reiteration()
+            inner_id = branch.pop_reiteration(prover.protected)
             line = _Line(exists, "∃I", (inner_id,))
             branch.add(line)
             branches.append(branch)
@@ -968,7 +976,7 @@ class Introducer:
         if not p.prove():
             return False
 
-        expanded_id = branch.pop_reiteration()
+        expanded_id = branch.pop_reiteration(prover.protected)
         line = _Line(proof.goal, "Def◇", (expanded_id,))
         branch.add(line)
         proof.seq = branch.seq
@@ -1017,7 +1025,8 @@ class Prover:
         ip=None,
         exhaustive=True,
         seen=None,
-        deadline=None
+        deadline=None,
+        protected=()
     ):
         self.logic = logic
         self.intuitionistic = intuitionistic(logic)
@@ -1037,6 +1046,7 @@ class Prover:
         self.exhaustive = exhaustive
         self.seen = {} if seen is None else seen
         self.deadline = deadline
+        self.protected = protected
 
     def prove(self):
         self.check_timeout()
@@ -1081,7 +1091,8 @@ class Prover:
             ip,
             self.exhaustive,
             seen,
-            self.deadline
+            self.deadline,
+            self.protected
         )
 
     def check_timeout(self):
@@ -1104,26 +1115,32 @@ class Processor:
 
     @staticmethod
     def process(proof, target, logic, premise_count):
-        Processor.remove_uncited(proof, proof.id_to_citers())
-        id_to_obj, id_to_citers = proof.id_to_obj(), proof.id_to_citers()
-        Processor.replace_reiterations(proof, id_to_obj, id_to_citers, {})
+        Processor.clean(proof)
 
         premises = proof.seq[:premise_count]
         id_to_idx = {line.id: idx for idx, line in enumerate(premises, 1)}
         Processor.translate(proof.seq[premise_count:], target, logic, id_to_idx)
 
     @staticmethod
-    def remove_uncited(proof, id_to_citers):
+    def clean(proof, protected=()):
+        Processor.remove_uncited(proof, proof.id_to_citers(), protected)
+        id_to_obj, id_to_citers = proof.id_to_obj(), proof.id_to_citers()
+        Processor.replace_reiterations(
+            proof, id_to_obj, id_to_citers, {}, protected
+        )
+
+    @staticmethod
+    def remove_uncited(proof, id_to_citers, protected=()):
         while True:
             seq, n = [], len(proof.seq)
             for idx, obj in enumerate(proof.seq):
 
                 if not obj.is_line():
-                    if id_to_citers[obj.id]:
-                        Processor.remove_uncited(obj, id_to_citers)
+                    if obj.id in protected or id_to_citers[obj.id]:
+                        Processor.remove_uncited(obj, id_to_citers, protected)
                         seq.append(obj)
                     continue
-                if obj.is_assumption or idx == n - 1:
+                if obj.id in protected or obj.is_assumption or idx == n - 1:
                     seq.append(obj)
                     continue
                 if id_to_citers[obj.id]:
@@ -1135,14 +1152,24 @@ class Processor:
             id_to_citers = proof.id_to_citers()
 
     @staticmethod
-    def replace_reiterations(proof, id_to_obj, id_to_citers, replace):
+    def replace_reiterations(
+        proof,
+        id_to_obj,
+        id_to_citers,
+        replace,
+        protected=()
+    ):
         seq, n = [], len(proof.seq)
         for idx, obj in enumerate(proof.seq):
 
             if not obj.is_line():
                 Processor.replace_reiterations(
-                    obj, id_to_obj, id_to_citers, replace
+                    obj, id_to_obj, id_to_citers, replace, protected
                 )
+                seq.append(obj)
+                continue
+
+            if obj.id in protected:
                 seq.append(obj)
                 continue
 
@@ -1157,7 +1184,10 @@ class Processor:
                 continue
 
             citers = id_to_citers[obj.id]
-            if not all(id_to_obj[c].rule == "R" for c in citers):
+            if not all(
+                c not in protected and id_to_obj[c].rule == "R"
+                for c in citers
+            ):
                 seq.append(obj)
                 continue
             for c in citers:
@@ -1258,6 +1288,71 @@ def _fresh_constant(proof):
     raise ProverError()
 
 
+def _search(
+    logic,
+    proof,
+    domain_semantics,
+    equality_semantics,
+    derived_rules,
+    exhaustive,
+    timeout,
+    protected=()
+):
+    deadline = None
+    if timeout is not None:
+        deadline = time.monotonic() + timeout / 1000
+
+    p = Prover(
+        logic,
+        proof,
+        domain_semantics,
+        equality_semantics,
+        derived_rules,
+        exhaustive=exhaustive,
+        deadline=deadline,
+        protected=protected
+    )
+
+    try:
+        proved = p.prove()
+    except TimeoutError:
+        return ProofCompletionResult("timeout")
+    except Exception:
+        return ProofCompletionResult("failure")
+
+    if not proved:
+        return ProofCompletionResult("failure")
+    return ProofCompletionResult("success", proof)
+
+
+def complete_proof(
+    logic,
+    proof,
+    domain_semantics=None,
+    equality_semantics=None,
+    derived_rules=True,
+    exhaustive=True,
+    timeout=None
+):
+    # Preserve the input proof and its existing objects.
+    proof = deepcopy(proof)
+    protected = frozenset(proof.id_to_citers())
+
+    result = _search(
+        logic,
+        proof,
+        domain_semantics,
+        equality_semantics,
+        derived_rules,
+        exhaustive,
+        timeout,
+        protected
+    )
+    if result.status == "success":
+        Processor.clean(proof, protected)
+    return result
+
+
 def prove(
     logic,
     premises,
@@ -1270,30 +1365,17 @@ def prove(
 ):
     seq = [_Line(p, "PR", ()) for p in premises]
     proof = _Proof(seq, conclusion)
-
-    deadline = None
-    if timeout is not None:
-        deadline = time.monotonic() + timeout / 1000
-
-    p = Prover(
+    result = _search(
         logic,
         proof,
         domain_semantics,
         equality_semantics,
         derived_rules,
-        exhaustive=exhaustive,
-        deadline=deadline
+        exhaustive,
+        timeout
     )
-
-    try:
-        proved = p.prove()
-    except TimeoutError:
-        return ProofSearchResult("timeout")
-    except Exception:
-        return ProofSearchResult("failure")
-
-    if not proved:
-        return ProofSearchResult("failure")
+    if result.status != "success":
+        return ProofSearchResult(result.status)
 
     problem = Problem(
         logic,

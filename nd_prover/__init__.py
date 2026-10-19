@@ -28,8 +28,9 @@ from .parser import (
     parse_justification, parse_line
 )
 from .prover import (
-    ProverError, ProofSearchResult, _ProofObject, _Line, _Proof, 
-    Eliminator, Introducer, Prover, Processor, prove
+    ProverError, ProofSearchResult, ProofCompletionResult, _ProofObject, 
+    _Line, _Proof, Eliminator, Introducer, Prover, Processor, 
+    complete_proof, prove
 )
 from .sat import (
     Countermodel, ValidityResult, Translator, prop_vars, evaluate, 
