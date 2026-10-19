@@ -10,6 +10,10 @@
   <meta name="description" content="{{ description }}" />
 {% endblock %}
 
+{% block extra_css %}
+  <link rel="stylesheet" href="/static/css/components/assistance-dialog.css">
+{% endblock %}
+
 {% block content %}
   <div class="main-grid">
     <!-- LEFT COLUMN: Create problem + Proof (independent vertical stack) -->
@@ -282,6 +286,31 @@
     </div>
   </div>
 
+  <dialog
+    id="assistance-dialog"
+    class="assistance-dialog"
+    aria-labelledby="assistance-dialog-title"
+    aria-describedby="assistance-dialog-notice assistance-dialog-integrity">
+    <h2 id="assistance-dialog-title"></h2>
+    <p id="assistance-dialog-notice">
+      Use hints and validity checks responsibly. Relying on them to do the work
+      prevents you from learning to construct proofs independently.
+    </p>
+    <p id="assistance-dialog-integrity">
+      Misusing these tools to complete homework is cheating.
+    </p>
+    <p class="assistance-dialog__prompt"></p>
+    <form method="dialog">
+      <div class="assistance-dialog__choices">
+        <button class="ui-btn ui-btn--compact" type="submit" value="formula">Next formula</button>
+        <button class="ui-btn ui-btn--compact" type="submit" value="justification">Next justification</button>
+      </div>
+      <div class="assistance-dialog__actions">
+        <button class="ui-btn ui-btn--compact" type="submit" value="cancel" autofocus>Cancel</button>
+        <button class="ui-btn ui-btn--compact" type="submit" value="continue">Continue</button>
+      </div>
+    </form>
+  </dialog>
 {% endblock %}
 
 {% block scripts %}

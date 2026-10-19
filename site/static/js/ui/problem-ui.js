@@ -10,6 +10,7 @@
 import { processFormula } from '../utils/input-processing.js';
 import { addLine } from '../proof/line-operations.js';
 import { updateGenerateButtonVisibility } from './proof-ui.js';
+import { showAssistanceDialog } from './assistance-dialog.js';
 import {
   getLogicValue,
   resolveSemanticOptions,
@@ -293,6 +294,9 @@ export function initProblemUI(state, renderProof) {
     if (isCheckingValidity) {
       return;
     }
+    if (await showAssistanceDialog('validity', checkValidityBtn) !== 'continue') {
+      return;
+    }
 
     isCheckingValidity = true;
     checkValidityBtn.disabled = true;
@@ -364,6 +368,9 @@ export function initProblemUI(state, renderProof) {
       stopResultsProgress(resultsSection, resultsBox);
       isCheckingValidity = false;
       checkValidityBtn.disabled = false;
+      if (document.activeElement === document.body) {
+        checkValidityBtn.focus({ preventScroll: true });
+      }
     }
   });
 
