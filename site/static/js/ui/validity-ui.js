@@ -3,7 +3,10 @@
  *
  * Shares the validity-stage request contract between standalone validity
  * checking and the first stage of proof generation.
+ * Dependencies: utils/requests.js
  */
+
+import { postJson } from '../utils/requests.js';
 
 export const VALIDITY_PROGRESS_MESSAGE = 'Checking argument validity...';
 
@@ -40,17 +43,8 @@ export async function requestValidity(
   timeoutMs,
   errorMessage
 ) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
   try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal
-    });
-    const data = await response.json();
+    const { response, data } = await postJson(endpoint, payload, timeoutMs);
 
     if (!response.ok || !data.ok) {
       throw new ValidityRequestError(
@@ -73,7 +67,5 @@ export async function requestValidity(
       throw error;
     }
     throw new ValidityRequestError(errorMessage);
-  } finally {
-    clearTimeout(timeoutId);
   }
 }
