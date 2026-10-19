@@ -8,7 +8,7 @@
 
 /**
  * Commits the currently active editor's content to state.
- * Handles both formula inputs and justification inputs.
+ * Handles formula inputs, justification inputs, and subproof goal inputs.
  * 
  * @param {Object} state - Application state object
  * @param {Function} processFormula - Function to process formula text
@@ -36,6 +36,8 @@ export function commitActiveEditor(state, processFormula, processJustification) 
     state.lines[idx].text = processFormula(val);
   } else if (ae.classList.contains('justification-input')) {
     state.lines[idx].justText = val ? processJustification(val) : '';
+  } else if (ae.classList.contains('subproof-goal-input')) {
+    state.lines[idx].goal = processFormula(val);
   }
 }
 

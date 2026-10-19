@@ -10,6 +10,7 @@
  * @type {Object}
  * @property {Array} lines - Array of proof line objects
  *   Each line: { id, indent, text, justText, isAssumption, isPremise }
+ *   Assumptions also store goal text and a goalExpanded boolean.
  * @property {number} nextId - Counter for generating unique line IDs
  * @property {boolean} derivedRules - Whether derived rules are enabled in the proof editor
  * @property {Object} problemDraft - Draft problem configuration (problem-setup inputs)

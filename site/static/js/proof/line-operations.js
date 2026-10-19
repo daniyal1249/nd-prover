@@ -43,6 +43,30 @@ function updateCitations(state, oldLineCount, start, removedCount, addedCount) {
 }
 
 /**
+ * Finds the assumptions whose subproofs contain the final proof line.
+ *
+ * @param {Array} lines - All proof lines
+ * @returns {Array} Open assumptions, from outermost to innermost
+ */
+export function getOpenAssumptions(lines) {
+  const open = [];
+  for (const line of lines) {
+    while (open.length > 0) {
+      const assumption = open[open.length - 1];
+      if (line.indent > assumption.indent ||
+          (line.indent === assumption.indent && !line.isAssumption)) {
+        break;
+      }
+      open.pop();
+    }
+    if (line.isAssumption) {
+      open.push(line);
+    }
+  }
+  return open;
+}
+
+/**
  * Adds a new proof line to the state.
  * 
  * @param {Object} state - Application state object
@@ -71,6 +95,10 @@ export function addLine(
     isAssumption,
     isPremise
   };
+  if (isAssumption) {
+    line.goal = '';
+    line.goalExpanded = false;
+  }
   
   if (afterIndex == null || afterIndex < 0) {
     state.lines.push(line);
