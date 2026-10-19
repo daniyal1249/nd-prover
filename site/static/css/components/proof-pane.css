@@ -40,7 +40,10 @@
   border-radius: 0;
   overflow-x: auto;
   overflow-y: visible;
-  width: 100%;
+  /* Give chevron glows room without moving the proof content. */
+  width: calc(100% + var(--spacing-sm));
+  margin-left: calc(-1 * var(--spacing-sm));
+  padding-left: var(--spacing-sm);
   padding-bottom: var(--proof-padding-bottom);
 }
 

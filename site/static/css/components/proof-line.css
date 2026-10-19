@@ -274,6 +274,42 @@
   outline-offset: -2px;
 }
 
+.subproof-goal-toggle.needs-goal:not(.has-goal)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--spacing-xl);
+  height: var(--spacing-xl);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    color-mix(in srgb, currentColor 24%, transparent),
+    transparent
+  );
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: subproof-goal-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes subproof-goal-pulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subproof-goal-toggle.needs-goal:not(.has-goal)::after {
+    animation: none;
+  }
+}
+
 .subproof-goal {
   grid-column: 3 / 5;
   grid-row: 2;

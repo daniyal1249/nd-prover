@@ -3,6 +3,7 @@
  *
  * Checks partial proofs, caches completions, and reveals one selected field.
  * Dependencies: proof/line-operations.js, proof/focus-management.js,
+ *               proof/subproof-goals.js,
  *               utils/serialization.js, utils/input-processing.js,
  *               utils/requests.js, utils/url-state.js,
  *               ui/validity-ui.js, ui/assistance-dialog.js
@@ -10,6 +11,7 @@
 
 import { addLine } from '../proof/line-operations.js';
 import { commitActiveEditor, focusLineAt } from '../proof/focus-management.js';
+import { pulseMissingSubproofGoal } from '../proof/subproof-goals.js';
 import { processFormula, processJustification } from '../utils/input-processing.js';
 import { postJson } from '../utils/requests.js';
 import { serializeHintState } from '../utils/serialization.js';
@@ -200,6 +202,9 @@ export function initHintUI(state, renderProof) {
         const message = error instanceof HintError || error instanceof ValidityRequestError
           ? error.message : HINT_ERROR_MESSAGE;
         show(message, 'error');
+        if (error instanceof HintError && error.status === 'missing-goal') {
+          pulseMissingSubproofGoal();
+        }
       }
     } finally {
       if (resultsSection?.dataset.resultSource === RESULT_SOURCES.hint) {

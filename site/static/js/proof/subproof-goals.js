@@ -10,6 +10,21 @@ import { processFormula } from '../utils/input-processing.js';
 import { scheduleUrlUpdate } from '../utils/url-state.js';
 
 /**
+ * Highlights the first empty open-subproof toggle until the next click anywhere.
+ */
+export function pulseMissingSubproofGoal() {
+  const toggle = document.querySelector('#proof .subproof-goal-toggle:not(.has-goal)');
+  if (!toggle) {
+    return;
+  }
+
+  toggle.classList.add('needs-goal');
+  document.addEventListener('click', () => {
+    toggle.classList.remove('needs-goal');
+  }, { capture: true, once: true });
+}
+
+/**
  * Creates a goal toggle and editor inside an assumption row.
  *
  * @param {HTMLElement} row - Assumption row

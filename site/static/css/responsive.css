@@ -135,8 +135,9 @@
   .proof {
     transform: scale(var(--proof-mobile-scale));
     transform-origin: top left;
-    width: calc(100% / var(--proof-mobile-scale));
-    max-width: calc(100% / var(--proof-mobile-scale));
+    width: calc(100% / var(--proof-mobile-scale) + var(--spacing-sm));
+    max-width: calc(100% / var(--proof-mobile-scale) + var(--spacing-sm));
+    margin-left: calc(-1 * var(--spacing-sm) * var(--proof-mobile-scale));
   }
 
   /* Editor Actions */
