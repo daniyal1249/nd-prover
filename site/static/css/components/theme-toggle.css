@@ -1,0 +1,62 @@
+/**
+ * Theme Toggle Component
+ *
+ * Light/dark mode switch shown in the top-right corner of the site header.
+ * Positioned absolutely so it does not affect the header layout.
+ * Dependencies: variables.css, header.css
+ */
+
+.theme-toggle {
+  position: absolute;
+  top: var(--spacing-md);
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--border-radius-md);
+  background: transparent;
+  color: var(--text-color-secondary);
+  cursor: pointer;
+  appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .theme-toggle:hover {
+    background: var(--hover-background);
+  }
+}
+
+.theme-toggle:active {
+  background: var(--hover-background);
+}
+
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.theme-toggle__icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+/* Show the moon in light mode (switch to dark) and the sun in dark mode */
+.theme-toggle__icon--sun {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle__icon--sun {
+  display: block;
+}
+
+:root[data-theme="dark"] .theme-toggle__icon--moon {
+  display: none;
+}

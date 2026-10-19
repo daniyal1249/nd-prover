@@ -8,6 +8,7 @@
 /* === Top Header === */
 /* Top header (centered title) */
 .site-header {
+  position: relative; /* positioning context for .theme-toggle */
   padding: var(--spacing-xxl) var(--spacing-lg) var(--spacing-lg);
   text-align: center;
 }

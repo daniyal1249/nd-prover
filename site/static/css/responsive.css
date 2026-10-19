@@ -39,6 +39,27 @@
     font-size: var(--font-size-lg);
   }
 
+  /* Keep the toggle out of flow so nothing moves. At narrow widths the
+     centered title can run under a 34px corner box, so shrink the control
+     into the band above the title's glyph tops (about 23px below the
+     header's top edge) and widen its hit area invisibly to 44px. */
+  .theme-toggle {
+    top: 0;
+    width: 24px;
+    height: 24px;
+  }
+
+  .theme-toggle::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+  }
+
+  .theme-toggle__icon {
+    width: 16px;
+    height: 16px;
+  }
+
   .nav-exercises__options {
     flex-wrap: wrap;
     justify-content: center;
