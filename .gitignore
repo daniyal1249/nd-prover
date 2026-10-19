@@ -6,10 +6,18 @@ build/
 *.egg-info/
 .null-ls*
 
+archive/
 old_checker/
+benchmark_data/
+benchmarks/
+results/
+nd_prover_paper_eval/
+
 .build/
 RULES.md
 
-discord_app.py
+tests/
 test.py
 test2.py
+test3.py
+discord_app.py
