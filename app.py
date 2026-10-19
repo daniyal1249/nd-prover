@@ -441,8 +441,12 @@ def check_validity_api():
     if error_msg is not None:
         return error_msg
 
+    timeout = data.get("timeout", 10000)
+    if type(timeout) is not int or not 0 < timeout <= 10000:
+        return _json_error("Invalid validity timeout.")
+
     try:
-        result = _check_problem_validity(problem, 10000)
+        result = _check_problem_validity(problem, timeout)
     except Exception as e:
         return _json_error(str(e))
 

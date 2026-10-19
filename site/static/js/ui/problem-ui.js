@@ -29,7 +29,7 @@ import {
   VALIDITY_PROGRESS_MESSAGE,
   ValidityRequestError,
   buildProblemPayload,
-  requestValidity
+  requestCachedValidity
 } from './validity-ui.js';
 
 const VALIDITY_REQUEST_TIMEOUT = 12000;
@@ -317,8 +317,7 @@ export function initProblemUI(state, renderProof) {
         '10s'
       );
 
-      const data = await requestValidity(
-        '/api/check-validity',
+      const data = await requestCachedValidity(
         payload,
         VALIDITY_REQUEST_TIMEOUT,
         VALIDITY_ERROR_MESSAGE
