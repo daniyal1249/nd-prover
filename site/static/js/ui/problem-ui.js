@@ -10,6 +10,7 @@
 import { processFormula } from '../utils/input-processing.js';
 import { addLine } from '../proof/line-operations.js';
 import { updateGenerateButtonVisibility } from './proof-ui.js';
+import { showAssistanceDialog } from './assistance-dialog.js';
 import {
   getLogicValue,
   resolveSemanticOptions,
@@ -29,7 +30,7 @@ import {
   VALIDITY_PROGRESS_MESSAGE,
   ValidityRequestError,
   buildProblemPayload,
-  requestValidity
+  requestCachedValidity
 } from './validity-ui.js';
 
 const VALIDITY_REQUEST_TIMEOUT = 12000;
@@ -293,6 +294,9 @@ export function initProblemUI(state, renderProof) {
     if (isCheckingValidity) {
       return;
     }
+    if (await showAssistanceDialog('validity', checkValidityBtn) !== 'continue') {
+      return;
+    }
 
     isCheckingValidity = true;
     checkValidityBtn.disabled = true;
@@ -317,8 +321,7 @@ export function initProblemUI(state, renderProof) {
         '10s'
       );
 
-      const data = await requestValidity(
-        '/api/check-validity',
+      const data = await requestCachedValidity(
         payload,
         VALIDITY_REQUEST_TIMEOUT,
         VALIDITY_ERROR_MESSAGE
@@ -365,6 +368,9 @@ export function initProblemUI(state, renderProof) {
       stopResultsProgress(resultsSection, resultsBox);
       isCheckingValidity = false;
       checkValidityBtn.disabled = false;
+      if (document.activeElement === document.body) {
+        checkValidityBtn.focus({ preventScroll: true });
+      }
     }
   });
 

@@ -11,6 +11,7 @@
 import { textWidth, pxVar } from '../utils/text-measurement.js';
 import { processFormula, processJustification } from '../utils/input-processing.js';
 import { commitActiveEditor, focusLineAt } from './focus-management.js';
+import { updateSubproofGoals } from './subproof-goals.js';
 import { scheduleUrlUpdate } from '../utils/url-state.js';
 
 /**
@@ -574,7 +575,7 @@ export function removeLineFromDOM(row, proofRoot) {
 }
 
 /**
- * Updates line number displays and dataset.index for all proof lines to match state.
+ * Updates line numbers, citations, indices, and open-subproof controls.
  * 
  * @param {HTMLElement} proofRoot - Root element containing proof lines
  * @param {Object} state - Application state object
@@ -610,6 +611,10 @@ export function updateLineNumbers(proofRoot, state) {
       if (lineNumber) {
         lineNumber.textContent = String(idx + 1);
       }
+      const justInput = row.querySelector('.justification-input');
+      if (justInput) {
+        justInput.value = state.lines[idx].justText || '';
+      }
     }
   });
   
@@ -623,7 +628,8 @@ export function updateLineNumbers(proofRoot, state) {
   sortedRows.forEach((row) => {
     proofRoot.appendChild(row);
   });
-  
+
+  updateSubproofGoals(proofRoot, state);
 }
 
 /**
@@ -782,4 +788,5 @@ export function renderProof(
     );
     proofRoot.append(row);
   });
+  updateSubproofGoals(proofRoot, state);
 }

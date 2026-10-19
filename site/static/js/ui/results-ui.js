@@ -10,6 +10,7 @@ export const RESULT_SOURCES = {
   validity: 'validity',
   proofCheck: 'proof-check',
   proofExport: 'proof-export',
+  hint: 'hint',
   generation: 'generation'
 };
 

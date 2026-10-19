@@ -9,8 +9,9 @@
 /* === Proof Line Grid === */
 .proof-line {
   display: grid;
-  /* line-number | proof | justification-cell | actions */
+  /* goal-toggle | line-number | proof | justification-cell | actions */
   grid-template-columns:
+    var(--goal-toggle-width)
     var(--line-number-width)
     var(--proof-formula-width)
     var(--justification-width)
@@ -20,6 +21,7 @@
   position: relative;
   /* Ensure proof lines maintain their full width for hover region to work */
   min-width: calc(
+    var(--goal-toggle-width) +
     var(--line-number-width) +
     var(--proof-formula-width) +
     var(--justification-width) +
@@ -29,6 +31,8 @@
 
 /* === Line Number === */
 .line-number {
+  grid-column: 2;
+  grid-row: 1;
   padding:
     var(--line-number-padding-vertical)
     var(--spacing-sm)
@@ -43,6 +47,8 @@
 
 /* === Formula Cell === */
 .formula-cell {
+  grid-column: 3;
+  grid-row: 1;
   position: relative;
   min-height: var(--proof-row-min-height);
   background: var(--background);
@@ -124,6 +130,8 @@
 
 /* === Justification Column === */
 .justification-cell {
+  grid-column: 4;
+  grid-row: 1;
   position: relative;
   background: var(--background);
   min-height: var(--proof-row-min-height);
@@ -203,6 +211,8 @@
 /* === Line Actions === */
 /* Per-line actions */
 .line-actions {
+  grid-column: 5;
+  grid-row: 1;
   display: flex;
   gap: var(--line-actions-gap);
   align-items: center;
@@ -218,4 +228,107 @@
 .line-actions:hover {
   opacity: 1;
   pointer-events: auto;
+}
+
+/* === Subproof Goals === */
+.subproof-goal-toggle {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--goal-toggle-width);
+  height: var(--proof-row-min-height);
+  padding: 0;
+  border: none;
+  border-radius: var(--border-radius-sm);
+  background: transparent;
+  color: var(--error-color);
+  cursor: pointer;
+}
+
+.subproof-goal-toggle.has-goal {
+  color: var(--success-color);
+}
+
+.subproof-goal-toggle::before {
+  content: "";
+  position: relative;
+  z-index: 1;
+  width: 7px;
+  height: 7px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+  transition: transform var(--transition-medium);
+}
+
+.subproof-goal-toggle[aria-expanded="true"]::before {
+  transform: rotate(45deg);
+}
+
+.subproof-goal-toggle:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: -2px;
+}
+
+.subproof-goal-toggle.needs-goal:not(.has-goal)::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: var(--spacing-xl);
+  height: var(--spacing-xl);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle closest-side,
+    color-mix(in srgb, currentColor 24%, transparent),
+    transparent
+  );
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  animation: subproof-goal-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes subproof-goal-pulse {
+  0%, 100% {
+    opacity: 0.35;
+    transform: translate(-50%, -50%) scale(0.7);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .subproof-goal-toggle.needs-goal:not(.has-goal)::after {
+    animation: none;
+  }
+}
+
+.subproof-goal {
+  grid-column: 3 / 5;
+  grid-row: 2;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  max-width: calc(100cqw - var(--goal-toggle-width) - var(--line-number-width));
+  padding: var(--spacing-sm) var(--spacing-sm) var(--spacing-sm) 0;
+}
+
+.subproof-goal[hidden] {
+  display: none;
+}
+
+.subproof-goal .subproof-goal-input {
+  width: calc(var(--proof-formula-min-width) + 2 * var(--spacing-lg));
+  min-width: 0;
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: 2px;
+  font-size: var(--font-size-md);
 }

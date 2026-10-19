@@ -1,0 +1,54 @@
+/**
+ * Assistance Notice Dialog
+ *
+ * Styles for the shared hint and validity notice.
+ * Dependencies: variables.css, components/buttons.css
+ */
+
+.assistance-dialog {
+  width: min(440px, calc(100% - 2 * var(--spacing-lg)));
+  max-height: calc(100% - 2 * var(--spacing-lg));
+  margin: auto;
+  padding: var(--spacing-xl);
+  overflow-y: auto;
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-lg);
+  background: var(--background);
+  color: var(--ink);
+  font-family: var(--sans);
+  box-shadow: 0 12px 40px rgb(0 0 0 / 0.15);
+}
+
+.assistance-dialog::backdrop {
+  background: rgb(0 0 0 / 0.25);
+}
+
+.assistance-dialog h2 {
+  margin: 0 0 var(--spacing-md);
+  font-size: var(--font-size-xxl);
+  font-weight: 600;
+}
+
+.assistance-dialog p {
+  margin: 0 0 var(--spacing-md);
+  color: var(--text-color-secondary);
+  font-size: var(--font-size-md);
+  line-height: 1.6;
+}
+
+.assistance-dialog .assistance-dialog__prompt {
+  margin-bottom: var(--spacing-lg);
+}
+
+.assistance-dialog__choices {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--spacing-sm);
+}
+
+.assistance-dialog__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}

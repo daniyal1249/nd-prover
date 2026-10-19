@@ -21,7 +21,7 @@ import {
   VALIDITY_PROGRESS_MESSAGE,
   ValidityRequestError,
   buildProblemPayload,
-  requestValidity
+  requestCachedValidity
 } from './validity-ui.js';
 
 const GENERATION_REQUEST_TIMEOUTS = {
@@ -227,11 +227,11 @@ async function generateProof(
     RESULT_SOURCES.generation
   );
 
-  const validityData = await requestValidity(
-    '/api/generate-proof/validity',
+  const validityData = await requestCachedValidity(
     payload,
     GENERATION_REQUEST_TIMEOUTS.validity,
-    GENERATION_ERROR_MESSAGE
+    GENERATION_ERROR_MESSAGE,
+    3000
   );
 
   if (validityData.outcome === 'invalid') {
@@ -248,7 +248,9 @@ async function generateProof(
   setResultsMessage(
     resultsSection,
     resultsBox,
-    validityData.message,
+    validityData.outcome === 'valid'
+      ? 'Argument is valid. Attempting an exhaustive proof search...'
+      : 'Argument validity unknown. Attempting an exhaustive proof search...',
     'progress',
     RESULT_SOURCES.generation
   );

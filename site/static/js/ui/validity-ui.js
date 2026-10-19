@@ -3,9 +3,16 @@
  *
  * Shares the validity-stage request contract between standalone validity
  * checking and the first stage of proof generation.
+ * Dependencies: utils/requests.js
  */
 
+import { postJson } from '../utils/requests.js';
+
 export const VALIDITY_PROGRESS_MESSAGE = 'Checking argument validity...';
+
+const VALIDITY_CACHE_LIMIT = 100;
+const validityCache = new Map();
+const pendingValidityRequests = new Map();
 
 export class ValidityRequestError extends Error {}
 
@@ -40,17 +47,8 @@ export async function requestValidity(
   timeoutMs,
   errorMessage
 ) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
-
   try {
-    const response = await fetch(endpoint, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      signal: controller.signal
-    });
-    const data = await response.json();
+    const { response, data } = await postJson(endpoint, payload, timeoutMs);
 
     if (!response.ok || !data.ok) {
       throw new ValidityRequestError(
@@ -73,7 +71,51 @@ export async function requestValidity(
       throw error;
     }
     throw new ValidityRequestError(errorMessage);
-  } finally {
-    clearTimeout(timeoutId);
   }
+}
+
+/**
+ * Shares validity results, including countermodel messages, between callers.
+ * Keeps up to 100 definitive results for this page session, most recently used last.
+ *
+ * @param {Object} payload - Draft or committed problem configuration
+ * @param {number} timeoutMs - Browser-side safety timeout
+ * @param {string} errorMessage - Fallback error message
+ * @param {number} semanticTimeoutMs - Backend semantic-check budget
+ * @returns {Promise<Object>} Parsed validity response
+ */
+export async function requestCachedValidity(
+  payload,
+  timeoutMs,
+  errorMessage,
+  semanticTimeoutMs = 10000
+) {
+  const problem = buildProblemPayload(payload);
+  const key = JSON.stringify(problem);
+  const cached = validityCache.get(key);
+  if (cached) {
+    validityCache.delete(key);
+    validityCache.set(key, cached);
+    return { ...cached };
+  }
+
+  const requestKey = JSON.stringify([problem, semanticTimeoutMs]);
+  let pending = pendingValidityRequests.get(requestKey);
+  if (!pending) {
+    pending = requestValidity(
+      '/api/check-validity', { ...problem, timeout: semanticTimeoutMs }, timeoutMs, errorMessage
+    )
+      .then((data) => {
+        if (data.outcome !== 'unknown') {
+          validityCache.set(key, data);
+          if (validityCache.size > VALIDITY_CACHE_LIMIT) {
+            validityCache.delete(validityCache.keys().next().value);
+          }
+        }
+        return data;
+      })
+      .finally(() => pendingValidityRequests.delete(requestKey));
+    pendingValidityRequests.set(requestKey, pending);
+  }
+  return { ...await pending };
 }

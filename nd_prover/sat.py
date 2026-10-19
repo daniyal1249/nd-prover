@@ -129,7 +129,8 @@ class Translator:
         logic,
         domain_semantics=None,
         equality_semantics=None,
-        small=False,
+        produce_models=True,
+        small=True,
         deadline=None
     ):
         self.intuitionistic = intuitionistic(logic)
@@ -153,7 +154,8 @@ class Translator:
 
         self.ctx = smt.Context()
         self.solver = smt.SolverFor("UFLIA" if small else "UF", ctx=self.ctx)
-        self.solver.setOption("produce-models", "true")
+        if produce_models:
+            self.solver.setOption("produce-models", "true")
 
         if self.first_order or self.worlded:
             self.solver.setOption("finite-model-find", "true")
@@ -1130,7 +1132,7 @@ def evaluate(formula, model):
             return False
 
 
-def check_validity_tfl(premises, conclusion, max_vars):
+def check_validity_tfl(premises, conclusion, max_vars, countermodel=False):
     all_vars = set()
     for premise in premises:
         all_vars.update(prop_vars(premise))
@@ -1149,7 +1151,7 @@ def check_validity_tfl(premises, conclusion, max_vars):
 
         if all(evaluate(p, model) for p in premises):
             if not evaluate(conclusion, model):
-                cm = Countermodel(preds=model)
+                cm = Countermodel(preds=model) if countermodel else None
                 return ValidityResult("invalid", cm)
 
     return ValidityResult("valid")
@@ -1161,13 +1163,16 @@ def check_validity(
     conclusion,
     domain_semantics=None,
     equality_semantics=None,
-    small=False,
+    countermodel=False,
+    small=True,
     timeout=100
 ):
+    cm = countermodel
+    small = cm and small
     if not intuitionistic(logic):
         if all(is_tfl_formula(p) for p in premises):
             if is_tfl_formula(conclusion):
-                result = check_validity_tfl(premises, conclusion, 15)
+                result = check_validity_tfl(premises, conclusion, 15, cm)
                 if result.status != "unknown":
                     return result
 
@@ -1176,7 +1181,7 @@ def check_validity(
         deadline = time.monotonic() + timeout / 1000
 
     translator = Translator(
-        logic, domain_semantics, equality_semantics, small, deadline
+        logic, domain_semantics, equality_semantics, cm, small, deadline
     )
 
     world = translator.root if translator.worlded else None
@@ -1187,6 +1192,8 @@ def check_validity(
 
     result = translator.check()
     if result == smt.sat:
+        if not cm:
+            return ValidityResult("invalid")
         cm = translator.minimize() if small else translator.extract()
         return ValidityResult("invalid", cm)
 

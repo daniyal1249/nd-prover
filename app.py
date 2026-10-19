@@ -205,6 +205,163 @@ def _reconstruct_problem_from_lines(data):
     return problem, None
 
 
+def _hint_scope(problem, data):
+    """Validate open goals and select the innermost unfinished scope."""
+    submitted = data.get("goals") or []
+    if not isinstance(submitted, list) or not all(
+        isinstance(g, dict) and isinstance(g.get("lineNumber"), int)
+        for g in submitted
+    ):
+        return None, None, None, _json_error("Invalid subproof goals.")
+
+    submitted = {g.get("lineNumber"): g.get("formulaText") for g in submitted}
+    scopes, goals = [problem.proof], [problem.conclusion]
+    validated = {}
+
+    while scopes[-1].seq and scopes[-1].seq[-1].is_subproof():
+        scope = scopes[-1].seq[-1]
+        line_no = scope.seq[0].idx
+        raw = submitted.get(line_no)
+        prefix = f"Line {line_no}: "
+
+        if raw is None or isinstance(raw, str) and not raw.strip():
+            return None, None, None, _json_error(
+                prefix + "Subproof goal is missing.", status="missing-goal"
+            )
+        if not isinstance(raw, str):
+            return None, None, None, _json_error(
+                prefix + "Invalid subproof goal."
+            )
+
+        try:
+            goal = parse_and_verify_formula(raw, problem.logic)
+        except ParsingError as e:
+            return None, None, None, _json_error(
+                prefix + f"Invalid subproof goal: {e}"
+            )
+
+        validated[line_no] = str(goal)
+        scopes.append(scope)
+        goals.append(goal)
+
+    while len(scopes) > 1 and scopes[-1].conclusion == goals[-1]:
+        scopes.pop()
+        goals.pop()
+
+    return scopes, goals[-1], validated, None
+
+
+def _generated_hint_goals(proof, original_length):
+    """Collect goals for assumptions added by proof completion."""
+    goals = {}
+    for obj in proof.seq:
+        if obj.is_subproof():
+            line_no = obj.seq[0].idx
+            if line_no > original_length and obj.conclusion is not None:
+                goals[line_no] = str(obj.conclusion)
+            goals.update(_generated_hint_goals(obj, original_length))
+
+    return goals
+
+
+def _complete_hint(problem, scopes, goal):
+    """Complete one scope, then verify the result in its enclosing proof."""
+    converted = {}
+
+    def convert(obj):
+        if obj.is_line():
+            j = obj.justification
+            citations = tuple(converted[c].id for c in j.citations)
+            result = _Line(obj.formula, str(j.rule), citations)
+        else:
+            result = _Proof([convert(item) for item in obj.seq], obj.conclusion)
+        converted[obj.idx] = result
+        return result
+
+    for obj in problem.proof.context + problem.proof.seq:
+        convert(obj)
+
+    scope = scopes[-1]
+    context = (
+        scope.context if scope.strict_context is None else scope.strict_context
+    )
+    proof = _Proof([converted[obj.idx] for obj in context + scope.seq], goal)
+    protected = frozenset(proof.id_to_citers())
+
+    # Import only formulas available across the nearest strict boundary.
+    strict_parent = None
+    for idx, opened in enumerate(scopes[1:], 1):
+        if isinstance(opened.assumption, BoxMarker):
+            strict_parent = scopes[idx - 1]
+    if strict_parent is not None:
+        parent_context = (
+            strict_parent.context if strict_parent.strict_context is None
+            else strict_parent.strict_context
+        )
+        parent = _Proof(
+            [
+                converted[obj.idx]
+                for obj in parent_context + strict_parent.seq[:-1]
+            ],
+            goal
+        )
+        p = Prover(
+            problem.logic,
+            parent,
+            problem.domain_semantics,
+            problem.equality_semantics,
+            problem.derived_rules
+        )
+        Eliminator.strict_elim(p, proof)
+
+    # Root validity is already checked before requesting a hint.
+    if len(scopes) > 1:
+        result = check_validity(
+            problem.logic,
+            proof.eff_assumptions,
+            goal,
+            problem.domain_semantics,
+            problem.equality_semantics,
+            countermodel=False,
+            timeout=3000
+        )
+        if result.status != "valid":
+            return result.status
+
+    for exhaustive in (True, False):
+        result = complete_proof(
+            problem.logic,
+            proof,
+            problem.domain_semantics,
+            problem.equality_semantics,
+            problem.derived_rules,
+            exhaustive=exhaustive,
+            timeout=5000
+        )
+        if result.status == "success":
+            break
+    if result.status != "success":
+        return result.status
+
+    if strict_parent is not None:
+        # Imports are generated material, so unused imports can be removed.
+        Processor.clean(result.proof, protected)
+
+    start = 1 if scope.assumption is not None else 0
+    target = Proof(scope.seq[:start], scope.context, scope.strict_context)
+    id_to_idx = {obj.id: idx for idx, obj in converted.items()}
+    Processor.translate(
+        result.proof.seq[len(context) + start:],
+        target,
+        problem.logic,
+        id_to_idx
+    )
+    scope.seq = target.seq
+    if problem.errors() or scope.conclusion != goal:
+        return "failure"
+    return "success"
+
+
 def _export_proof(data, formatter):
     """Reconstruct a proof under QS5 and format it for export."""
     export_data = {
@@ -234,7 +391,7 @@ def _check_problem_validity(problem, timeout):
         problem.conclusion,
         problem.domain_semantics,
         problem.equality_semantics,
-        small=True,
+        countermodel=True,
         timeout=timeout
     )
 
@@ -406,6 +563,93 @@ def check_proof():
     })
 
 
+@app.post("/api/get-hint")
+def get_hint():
+    data = request.get_json(silent=True) or {}
+    problem, error_msg = _reconstruct_problem_from_lines(data)
+
+    if error_msg is not None:
+        return error_msg
+
+    if errors := problem.errors():
+        return _json_error("\n".join(errors))
+
+    scopes, goal, goals, error_msg = _hint_scope(problem, data)
+    if error_msg is not None:
+        return error_msg
+
+    original = _serialize_proof(problem.proof)
+    cached = data.get("cachedProof")
+    if isinstance(cached, dict) and cached.get("lines") == original:
+        cached_goals = cached.get("goals")
+        if isinstance(cached_goals, list) and all(
+            isinstance(g, dict) and isinstance(g.get("lineNumber"), int)
+            for g in cached_goals
+        ):
+            cached_goals = {
+                g.get("lineNumber"): g.get("formulaText") for g in cached_goals
+            }
+            if all(
+                cached_goals.get(line_no) == text
+                for line_no, text in goals.items()
+            ):
+                return jsonify({
+                    "ok": True,
+                    "status": "complete",
+                    "outcome": "cached",
+                    "message": "Cached completion is compatible."
+                })
+
+    already_complete = problem.conclusion_reached()
+    try:
+        outcome = (
+            "success" if already_complete
+            else _complete_hint(problem, scopes, goal)
+        )
+    except Exception as e:
+        return _json_error(str(e) or "Unable to complete the current goal.")
+
+    if outcome == "invalid":
+        return _json_error(
+            "Current goal does not follow from the available assumptions!"
+        )
+    if outcome == "unknown":
+        return _json_error("Current goal validity unknown. Please try again.")
+
+    if outcome == "success":
+        lines = _serialize_proof(problem.proof)
+        if lines[:len(original)] != original:
+            return _json_error("Unable to preserve the existing proof.")
+        goals.update(_generated_hint_goals(problem.proof, len(original)))
+        return jsonify({
+            "ok": True,
+            "status": "complete",
+            "outcome": outcome,
+            "message": (
+                "Proof already complete!" if already_complete
+                else "Current goal completed."
+            ),
+            "isComplete": problem.conclusion_reached(),
+            "goalLineNumber": scopes[-1].seq[0].idx if len(scopes) > 1 else None,
+            "goalText": str(goal),
+            "goals": [
+                {"lineNumber": line_no, "formulaText": text}
+                for line_no, text in goals.items()
+            ],
+            "lines": lines
+        })
+
+    msg = "No completion was found for the current goal."
+    if outcome == "timeout":
+        msg = "Proof completion timed out."
+    return jsonify({
+        "ok": True,
+        "status": "complete",
+        "outcome": outcome,
+        "message": msg
+    })
+
+
 @app.post("/api/export-proof/plain")
 def export_proof_plain():
     data = request.get_json(silent=True) or {}
@@ -441,8 +685,12 @@ def check_validity_api():
     if error_msg is not None:
         return error_msg
 
+    timeout = data.get("timeout", 10000)
+    if type(timeout) is not int or not 0 < timeout <= 10000:
+        return _json_error("Invalid validity timeout.")
+
     try:
-        result = _check_problem_validity(problem, 10000)
+        result = _check_problem_validity(problem, timeout)
     except Exception as e:
         return _json_error(str(e))
 
