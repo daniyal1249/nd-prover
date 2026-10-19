@@ -85,6 +85,7 @@
 
   /* === Component-Specific Dimensions === */
   --input-min-height: 22px;
+  --goal-toggle-width: 12px;
   --action-btn-width: 24px;
   --action-btn-height: 34px;
   --problem-setup-label-width: 120px;
