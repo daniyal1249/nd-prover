@@ -134,6 +134,11 @@
 }
 
 /* === Editor Actions === */
+/* Temporarily hide unrestricted generation while retaining its controls. */
+#generate-proof {
+  display: none !important;
+}
+
 .editor-actions {
   display: flex;
   align-items: flex-end;

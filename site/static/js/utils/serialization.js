@@ -110,3 +110,19 @@ export function serializeProofState(state) {
     })
   };
 }
+
+/**
+ * Includes saved subproof goals with the usual proof-checking payload.
+ *
+ * @param {Object} state - Global application state
+ * @returns {Object} Hint request payload
+ */
+export function serializeHintState(state) {
+  return {
+    ...serializeProofState(state),
+    goals: state.lines.flatMap((line, index) => line.isAssumption ? [{
+      lineNumber: index + 1,
+      formulaText: (line.goal || '').trim()
+    }] : [])
+  };
+}
