@@ -2,7 +2,9 @@
 
 A Fitch-style natural deduction proof generator and checker, implemented in Python.
 
-It is based on the natural deduction system presented in [*forall x: Calgary*](https://forallx.openlogicproject.org).
+It is based on the natural deduction system presented in
+[*forall x: Calgary*](https://forallx.openlogicproject.org) and builds on Kevin
+Klement's [proof checker](https://github.com/OpenLogicProject/fitch-checker).
 
 ![ND-Prover demo](nd-prover.gif)
 
@@ -22,6 +24,7 @@ Try ND-Prover online at [ndprover.org](https://ndprover.org).
 - Automated proof generation for valid arguments
 - Countermodel generation for invalid arguments
 - Verification of user-provided proofs
+- Step-by-step hints for completing partial proofs
 - Plain-text and LaTeX proof export
 
 ## Package Installation
