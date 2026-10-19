@@ -234,7 +234,7 @@ def _check_problem_validity(problem, timeout):
         problem.conclusion,
         problem.domain_semantics,
         problem.equality_semantics,
-        small=True,
+        countermodel=True,
         timeout=timeout
     )
 
