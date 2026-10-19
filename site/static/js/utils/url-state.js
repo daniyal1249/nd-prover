@@ -93,12 +93,16 @@ function buildSnapshotFromState(state) {
   const storedLines = proofActive
     ? (state.lines || []).map((line) => {
       const flags = (line.isAssumption ? 1 : 0) | (line.isPremise ? 2 : 0);
-      return [
+      const storedLine = [
         Number(line.indent || 0),
         flags,
         String(line.text || ''),
         String(line.justText || '')
       ];
+      if (line.isAssumption) {
+        storedLine.push(String(line.goal || ''));
+      }
+      return storedLine;
     })
     : [];
 
@@ -124,7 +128,7 @@ function buildSnapshotFromState(state) {
       active: proofActive,
       derivedRules: state.derivedRules !== false,
       problem: committed,
-      // Each line: [indent, flags, text, justText] where flags bitmask:
+      // Each line: [indent, flags, text, justText, goal?] where flags bitmask:
       // 1=assumption, 2=premise.
       lines: storedLines
     }
@@ -171,14 +175,19 @@ function applySnapshotToState(snapshot, state) {
           ? rawJust
           : (rawJust ? processJustification(rawJust) : '');
 
-      state.lines.push({
+      const line = {
         id: state.nextId++,
         indent,
         text,
         justText,
         isAssumption,
         isPremise
-      });
+      };
+      if (isAssumption) {
+        line.goal = processFormula(String(t[4] || ''));
+        line.goalExpanded = false;
+      }
+      state.lines.push(line);
     }
   }
 }
