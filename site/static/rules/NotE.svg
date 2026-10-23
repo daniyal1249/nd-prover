@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="118.892pt" height="69.489pt" viewBox="0 0 118.892 69.489" version="1.1">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="115.641pt" height="69.489pt" viewBox="0 0 115.641 69.489" version="1.1">
 <defs>
 <g>
 <symbol overflow="visible" id="glyph0-0">
@@ -69,16 +69,15 @@
 </g>
 <g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
   <use xlink:href="#glyph3-1" x="73.4214" y="61.768"/>
-  <use xlink:href="#glyph3-2" x="81.385954" y="61.768"/>
 </g>
 <g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
-  <use xlink:href="#glyph0-1" x="88.535164" y="61.768"/>
+  <use xlink:href="#glyph0-1" x="85.283349" y="61.768"/>
 </g>
 <g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
-  <use xlink:href="#glyph3-2" x="98.774793" y="61.768"/>
+  <use xlink:href="#glyph3-2" x="95.522978" y="61.768"/>
 </g>
 <g style="fill:rgb(0%,0%,0%);fill-opacity:1;">
-  <use xlink:href="#glyph0-2" x="105.924002" y="61.768"/>
+  <use xlink:href="#glyph0-2" x="102.672188" y="61.768"/>
 </g>
 </g>
 </svg>
