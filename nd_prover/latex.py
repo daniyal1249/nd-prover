@@ -162,6 +162,8 @@ def problem_to_latex(problem):
         r"% Requires: \usepackage[arrayenv=tabular]{fitch}",
         r"% Modal proofs also require: \usepackage{amssymb}",
         r"",
+        r"\begingroup",
+        r"\renewcommand{\ndjustformat}[2]{#1 #2}",
         r"\begin{fitchproof}"
     ]
 
@@ -170,4 +172,5 @@ def problem_to_latex(problem):
 
     _render_seq(problem.proof.seq, lines, 1)
     lines.append(r"\end{fitchproof}")
+    lines.append(r"\endgroup")
     return "\n".join(lines)

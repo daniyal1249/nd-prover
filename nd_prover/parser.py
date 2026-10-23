@@ -280,7 +280,14 @@ def parse_citations(citations):
 
 
 def parse_justification(j, logic):
+    j = j.strip()
     parts = j.split(",", maxsplit=1)
+    if len(parts) == 1 or "".join(Symbols.sub(parts[0]).split()) not in Rules.rules:
+        for match in reversed(list(re.finditer(r"\s+(?=[+-]?\s*\d)", j))):
+            rule = j[:match.start()]
+            if "".join(Symbols.sub(rule).split()) in Rules.rules:
+                parts = [rule, j[match.end():]]
+                break
     r = parse_rule(parts[0], logic)
     if len(parts) == 1:
         return Justification(r, ())

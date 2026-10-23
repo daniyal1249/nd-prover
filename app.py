@@ -511,7 +511,7 @@ def _generated_proof_payload(logic, problem):
 
 @app.get("/")
 def index():
-    return render_template("index.html")
+    return render_template("index.html", rule_names=list(Rules.rules))
 
 
 @app.get("/exercises/tfl")

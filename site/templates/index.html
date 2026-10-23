@@ -315,6 +315,7 @@
 {% endblock %}
 
 {% block scripts %}
+  <script id="rule-names" type="application/json">{{ rule_names | tojson }}</script>
   <!-- Main Application Script -->
   <script type="module" src="/static/js/main.js"></script>
 {% endblock %}

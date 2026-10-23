@@ -61,13 +61,13 @@ Enter conclusion: Q
 5 - Delete the last line
 
 Select edit: 1
-Enter line: Q ; ->E, 1,2
+Enter line: Q ; ->E 1,2
 
  1 │ P → Q      PR
    │
  2 │ P          PR
    ├───
- 3 │ Q          →E, 1,2
+ 3 │ Q          →E 1,2
 
 Proof complete! 🎉
 ```
@@ -81,17 +81,17 @@ Proof of  ∴ P ∨ ¬P
    │ ├───────────      
  2 │ │ │ P             AS
    │ │ ├───            
- 3 │ │ │ P ∨ ¬P        ∨I, 2
+ 3 │ │ │ P ∨ ¬P        ∨I 2
    │ │ │               
- 4 │ │ │ ⊥             ¬E, 1,3
+ 4 │ │ │ ⊥             ¬E 1,3
    │ │                 
- 5 │ │ ¬P              ¬I, 2-4
+ 5 │ │ ¬P              ¬I 2-4
    │ │                 
- 6 │ │ P ∨ ¬P          ∨I, 5
+ 6 │ │ P ∨ ¬P          ∨I 5
    │ │                 
- 7 │ │ ⊥               ¬E, 1,6
+ 7 │ │ ⊥               ¬E 1,6
    │                   
- 8 │ P ∨ ¬P            IP, 1-7
+ 8 │ P ∨ ¬P            IP 1-7
 
 Proof complete! 🎉
 ```
@@ -105,13 +105,13 @@ Proof of  ∴ ∀x∀y(x = y → y = x)
    │ ├───────                 
  2 │ │ a = a                  =I
    │ │                        
- 3 │ │ b = a                  =E, 1,2
+ 3 │ │ b = a                  =E 1,2
    │                          
- 4 │ a = b → b = a            →I, 1-3
+ 4 │ a = b → b = a            →I 1-3
    │                          
- 5 │ ∀y(a = y → y = a)        ∀I, 4
+ 5 │ ∀y(a = y → y = a)        ∀I 4
    │                          
- 6 │ ∀x∀y(x = y → y = x)      ∀I, 5
+ 6 │ ∀x∀y(x = y → y = x)      ∀I 5
 
 Proof complete! 🎉
 ```
@@ -123,19 +123,19 @@ Proof of ◇☐A ∴ ☐A
 
  1 │ ◇☐A          PR
    ├─────         
- 2 │ ¬☐¬☐A        Def◇, 1
+ 2 │ ¬☐¬☐A        Def◇ 1
    │              
  3 │ │ ¬☐A        AS
    │ ├─────       
  4 │ │ │ ☐        AS
    │ │ ├───       
- 5 │ │ │ ¬☐A      R5, 3
+ 5 │ │ │ ¬☐A      R5 3
    │ │            
- 6 │ │ ☐¬☐A       ☐I, 4-5
+ 6 │ │ ☐¬☐A       ☐I 4-5
    │ │            
- 7 │ │ ⊥          ¬E, 2,6
+ 7 │ │ ⊥          ¬E 2,6
    │              
- 8 │ ☐A           IP, 3-7
+ 8 │ ☐A           IP 3-7
 
 Proof complete! 🎉
 ```

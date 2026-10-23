@@ -9,6 +9,10 @@
 
 import { symbolize } from './symbolization.js';
 
+const RULE_NAMES = new Set(JSON.parse(
+  document.getElementById('rule-names')?.textContent || '[]'
+));
+
 /**
  * Processes formula text by symbolizing and normalizing spacing.
  * 
@@ -83,30 +87,42 @@ function escapeRegex(str) {
 }
 
 /**
- * Processes justification text by symbolizing rule names and preserving
- * line references. Handles comma-separated justifications.
+ * Splits a justification into a normalized rule name and citation text.
+ * Accepts a comma or whitespace between the rule and its citations.
  * 
+ * @param {string} raw - Raw justification text
+ * @returns {Array<string>} Rule name and citations
+ */
+export function splitJustification(raw) {
+  const s = String(raw ?? '').trim();
+  const i = s.indexOf(',');
+  const clean = (t) => t.replace(/\s+/g, '');
+  const ruleName = (t) => clean(symbolize(t));
+
+  if (i !== -1 && RULE_NAMES.has(ruleName(s.slice(0, i)))) {
+    return [ruleName(s.slice(0, i)), clean(s.slice(i + 1))];
+  }
+
+  const boundaries = Array.from(s.matchAll(/\s+(?=[+-]?\s*\p{Decimal_Number})/gu));
+  for (const match of boundaries.reverse()) {
+    const rule = ruleName(s.slice(0, match.index));
+    if (RULE_NAMES.has(rule)) {
+      return [rule, clean(s.slice(match.index + match[0].length))];
+    }
+  }
+
+  return i === -1
+    ? [ruleName(s), '']
+    : [ruleName(s.slice(0, i)), clean(s.slice(i + 1))];
+}
+
+/**
+ * Formats a justification with one space before its citations.
+ *
  * @param {string} raw - Raw justification text
  * @returns {string} Processed justification text
  */
 export function processJustification(raw) {
-  const s = String(raw ?? '');
-  const i = s.indexOf(',');
-  const clean = (t) => t.replace(/\s+/g, '');
-  
-  // If no comma, just symbolize and clean
-  if (i === -1) {
-    return clean(symbolize(s));
-  }
-  
-  // Check if text after comma is empty or just whitespace
-  const right = clean(s.slice(i + 1));
-  if (!right) {
-    // Treat as if no comma, just symbolize and clean the left part
-    return clean(symbolize(s.slice(0, i)));
-  }
-  
-  // Split on comma: symbolize left part (rule), preserve right part (line refs)
-  const left = clean(symbolize(s.slice(0, i)));
-  return `${left}, ${right}`;
+  const [rule, citations] = splitJustification(raw);
+  return citations ? `${rule} ${citations}` : rule;
 }

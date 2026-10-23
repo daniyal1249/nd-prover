@@ -55,7 +55,7 @@ class Justification:
             else:
                 i, j = idx
                 j_list.append(f"{i}-{j}")
-        return f"{self.rule}, {','.join(j_list)}"
+        return f"{self.rule} {','.join(j_list)}"
 
 
 class Rules:

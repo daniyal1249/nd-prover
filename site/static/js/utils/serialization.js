@@ -9,8 +9,8 @@
  * Builds the raw line string expected by nd_prover.parser.parse_line.
  *
  * Examples:
- *   text: 'P → Q', justText: '→E, 1,2'
- *   => 'P → Q; →E, 1,2'
+ *   text: 'P → Q', justText: '→E 1,2'
+ *   => 'P → Q; →E 1,2'
  *
  *   text: 'P', justText: ''
  *   => 'P'

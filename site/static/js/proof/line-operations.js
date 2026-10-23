@@ -3,8 +3,10 @@
  * 
  * Functions for adding, deleting, and manipulating proof lines and subproofs.
  * 
- * Dependencies: state.js
+ * Dependencies: state.js, utils/input-processing.js
  */
+
+import { splitJustification } from '../utils/input-processing.js';
 
 /**
  * Updates citation numbers after inserting or deleting proof lines.
@@ -18,13 +20,11 @@
  */
 function updateCitations(state, oldLineCount, start, removedCount, addedCount) {
   for (const line of state.lines) {
-    const justText = line.justText || '';
-    const comma = justText.indexOf(',');
-    if (comma === -1) {
+    const [rule, citations] = splitJustification(line.justText);
+    if (!citations) {
       continue;
     }
 
-    const citations = justText.slice(comma + 1);
     const updated = citations.replace(/\d+/g, (match, offset) => {
       const number = Number(match);
       // A minus after a number separates range endpoints; otherwise it is a sign.
@@ -38,7 +38,7 @@ function updateCitations(state, oldLineCount, start, removedCount, addedCount) {
       return String(number + addedCount - removedCount);
     });
 
-    line.justText = justText.slice(0, comma + 1) + updated;
+    line.justText = `${rule} ${updated}`;
   }
 }
 
