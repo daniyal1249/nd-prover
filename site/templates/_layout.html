@@ -142,6 +142,7 @@
 
     <nav class="site-nav" aria-label="Site">
       <a
+        id="nav-editor"
         href="/"
         class="{% if request.path == '/' %}active{% endif %}">Proof editor</a>
       <a
@@ -178,6 +179,7 @@
   </header>
 
   {% block content %}{% endblock %}
+  <script type="module" src="/static/js/ui/navigation.js"></script>
   <script type="module" src="/static/js/ui/nav-exercises.js"></script>
   <script type="module" src="/static/js/ui/theme-toggle.js"></script>
   {% block scripts %}{% endblock %}

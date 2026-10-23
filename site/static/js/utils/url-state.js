@@ -17,6 +17,7 @@ import {
 } from './logic-mapping.js';
 import { processFormula, processJustification } from './input-processing.js';
 import { renderProblemSummary } from '../ui/problem-summary.js';
+import { syncEditorLink } from '../ui/navigation.js';
 
 const HASH_PARAM = 's';
 
@@ -44,6 +45,18 @@ export function initUrlState(state, render, opts = {}) {
     applySnapshotFromUrl({ shouldRender: true });
   });
 
+  const nav = document.querySelector('.site-nav');
+  if (nav) {
+    nav.addEventListener('click', flushUrlUpdate);
+    nav.addEventListener('auxclick', flushUrlUpdate);
+  }
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') {
+      flushUrlUpdate();
+    }
+  });
+  window.addEventListener('pagehide', flushUrlUpdate);
+
   return loaded;
 }
 
@@ -65,6 +78,24 @@ export function scheduleUrlUpdate() {
     _timer = null;
     writeUrlFromState(_state);
   }, 200);
+}
+
+function flushUrlUpdate() {
+  if (!_state || _suspendWrites) {
+    return;
+  }
+
+  // Inputs commit on blur; save them before leaving or following a link.
+  const activeElement = document.activeElement;
+  if (activeElement && activeElement.matches('input, textarea')) {
+    activeElement.blur();
+  }
+
+  if (_timer) {
+    clearTimeout(_timer);
+    _timer = null;
+  }
+  writeUrlFromState(_state);
 }
 
 function buildSnapshotFromState(state) {
@@ -371,6 +402,7 @@ function setEncodedSnapshotInUrl(encoded) {
 
   // replaceState avoids triggering a hashchange event (keeps editing smooth).
   history.replaceState(null, '', nextUrl);
+  syncEditorLink();
 }
 
 function encodeSnapshot(snapshot) {
