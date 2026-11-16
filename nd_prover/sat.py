@@ -154,8 +154,9 @@ class Translator:
 
         self.ctx = smt.Context()
         self.solver = smt.SolverFor("UFLIA" if small else "UF", ctx=self.ctx)
-        if produce_models:
-            self.solver.setOption("produce-models", "true")
+        self.solver.setOption(
+            "produce-models", "true" if produce_models else "false"
+        )
 
         if self.first_order or self.worlded:
             self.solver.setOption("finite-model-find", "true")
