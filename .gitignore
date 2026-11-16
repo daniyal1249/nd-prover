@@ -9,14 +9,13 @@ build/
 archive/
 old_checker/
 benchmark_data/
-benchmarks/
-results/
-nd_prover_paper_eval/
+benchmarks/*/results/*.csv
+benchmarks/*/results/local/
 
 .build/
 RULES.md
 
-tests/
+/tests/
 test.py
 test2.py
 test3.py
