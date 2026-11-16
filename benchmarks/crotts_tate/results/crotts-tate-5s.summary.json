@@ -1,0 +1,50 @@
+[
+  {
+    "group": "all",
+    "cases": 288,
+    "solved": 278,
+    "success_percent": 96.52777777777777,
+    "mean_lines_all": 8.378472222222221,
+    "mean_rules_all": 3.5694444444444446,
+    "mean_lines_solved": 8.679856115107913,
+    "mean_rules_solved": 3.697841726618705,
+    "mean_generated_lines_solved": 5.9928057553956835,
+    "mean_ms_all": 127.76610208129568,
+    "failures": 8,
+    "timeouts": 1,
+    "input_errors": 1,
+    "errors": 0
+  },
+  {
+    "group": "propositional",
+    "cases": 203,
+    "solved": 203,
+    "success_percent": 100.0,
+    "mean_lines_all": 9.12807881773399,
+    "mean_rules_all": 3.7438423645320196,
+    "mean_lines_solved": 9.12807881773399,
+    "mean_rules_solved": 3.7438423645320196,
+    "mean_generated_lines_solved": 6.300492610837439,
+    "mean_ms_all": 37.54493201855717,
+    "failures": 0,
+    "timeouts": 0,
+    "input_errors": 0,
+    "errors": 0
+  },
+  {
+    "group": "first_order",
+    "cases": 85,
+    "solved": 75,
+    "success_percent": 88.23529411764706,
+    "mean_lines_all": 6.588235294117647,
+    "mean_rules_all": 3.152941176470588,
+    "mean_lines_solved": 7.466666666666667,
+    "mean_rules_solved": 3.5733333333333333,
+    "mean_generated_lines_solved": 5.16,
+    "mean_ms_all": 343.23548470171824,
+    "failures": 8,
+    "timeouts": 1,
+    "input_errors": 1,
+    "errors": 0
+  }
+]

@@ -1,0 +1,297 @@
+;
+; Zeroth and first-order logic natural deduction proofs.
+;
+; Format: P1, P2, ..., Pn / C
+;
+; FLAT supports multiple symbols which, semantically, mean the same. 
+; For example, =>, /, and ∴ are all conclusion indicators.
+;
+
+Ma, (Ma → (x)(Px → Kx)), ((x)(Px → Kx) → (∃x)Lx), ((∃x)Lx →Ta) => Ta
+~~Kb, (Lb -> ~Kb) => ~Lb
+((Nd & Pd) -> Om), (~Bc -> (Nd & Pd)), ~Om => ~~Bc
+(~Qrb → ~Ne), ~Qrb => (~Ne || Ka)
+(Ct -> (Ts -> Hs)), ~(Ts -> Hs), (~Va || Ct) => ~Va
+(Ba -> (Gkl -> Da)), (~Ba -> Rm), ~(Gkl -> Da) => Rm
+(Ba -> (Gkl -> Da)), (~Ba -> Rm), ~(Gkl -> Da) => Rm
+(((∃x)Bx & (y)Zy)->Qa), (∃x)Bx, (Qa -> (Ci & Ce)), (y)Zy => (Ci & Ce)
+(~Nr || Gr), (~Nr -> Et), (Gr -> ~Hs), ((Et || ~Hs) -> (Nq -> Ga)), ~Ga => ~Nq
+((~Vc & ~Ke) -> (Be -> Ke)), ~Vc, (Ke -> Vc) => ~Be
+(~Dq & ~~Ba), ((~Dq & Rb) -> ~Ar), (~Ba || Rb) => ~Ar
+(Fa -> Am), (~Ja & ~Kb), (Hn -> (Ga -> Fa)), (~Kb -> (~Ja -> Hn)) => (Ga -> Am)
+(Rk ->Db), (Bt -> Rk), ((Bt -> Db) -> (Es || Fe)), ~Es => Fe
+~(Rm || Sa), (~(Tcb & Va) -> (Rm || Sa)), (~~(Tcb & Va) -> Wa) => (Wa || ~Rm)
+((Ad || Gd) -> (z)Mza), ((z)Mza -> (Bf -> Fd)), (Ad & Bf) => Fd
+((∃x)Dx -> Wd), ((Ga -> Wd) -> (Vat & ~Tcb)), (Ga -> (∃x)Dx), (Qb -> Tcb) => ~Qb
+((~Nb & Md) -> (w)Qw), (~Om -> Md), (~Om & ~Nb) => ((w)Qw || Sk)
+(x)Px, ((x)Px -> Al), (Al -> (Eb || Fb)), ~Eb => Fb
+(Pa || Qa), ((Qa & ~Rg) -> Sb), (Rg -> Pa), ~Pa => Sb
+((Mp || Np) -> ~Sc), (Tf -> (Mp || Np)), (~Sc -> ~(Mp || Np)) => (Tf -> ~(Mp || Np))
+(Ka || (Lt || St)), ~(Ka || Lt) => St
+((Ad || Bq) || Ct), ~Ad => (Ct || Bq)
+~(~Ba → An), (Cab → (~An → Ba)) => ~Cab
+(Bd → Ec), (~Fe || Gm), ((Bd & Cm) & Da), ((Da & Cm) → Fe) => (Ec & Gm)
+((Ga | Ha) → (Ja | Ka)) => (~(Ja | Ka) → ~(Ha | Ga))
+((Wp & ~Ca) ∨ (Ka & Qd)), ((~Ca & Wp) → Ulm), ((Ka & Qd) → Ta) => (Ulm ∨ Ta)
+((~(Sd & Tb) ∨ ~~Km) & (Tb & Sd)) => Km
+((Ab & Ca) → Ba), ((~Ba ∨ ~Ab) ∨ Dab), (Ca & Ab) => ~~(Dab ∨ Pab)
+(~Ak & ((Ak | Bk) | Ct)) => (Bk | Ct)
+(Fa -> (Ga & Ha)), ((Ha & Ga) -> Jm) => (Fa -> Jm)
+(x)(Ax & Bx) => ((x)Ax & (x)Bx)
+~(x)~Ax, ((∃x)Ax → (x)Bx), (x)((Bx ∨ Cx) → Dx) => (x)Dx
+(~(∃x)(Rx || Sx) || (x)Tx), (∃x)~Tx => ~(∃x)Sx
+((x)Ax → (x)Bx), ~(x)Bx => (∃x)~Ax
+~(∃y)Cy, ((y)~Cy → (z)Dz) => Db
+~(x)~Fx => (∃x)Fx
+((∃y)Hy → (∃y)Jy), (y)~Jy => ~Ha
+~(∃x)~Px, (~(∃y)Sy || ~(x)Px) => ~Sd
+((x)~Kx || (∃x)Lx), (x)~Lx => ~Kb
+(∃x)(Kx & (Ax & Sx)), (x)((Ax ∨ Sx) → ~Wx) => (∃x)(Kx & ~Wx)
+(x)(Nx -> Dxx), (∃x)(Ex & Nx) => (∃x)(Ex & Dxx)
+(x)(Ex -> Dxt), (x)(Dxt -> ~Ox) => (x)(Ex -> ~Ox)
+(∃x)Px, (x)(y)(Lxy <-> Lxx), (x)(Px -> ~Lmx) => ~Lmm
+(x)(Px -> ~(y)(Py -> Lxy)) => ~(∃x)(Px & (y)(Py -> Lxy))
+(x)(Px -> ~(∃y)Mxy) => ~(∃x)(Px & Mxb)
+(x)(Kbx -> Gxc), ((∃x)Gxc -> (∃y)Gcy) => ((∃x)Kbx -> (∃y)Mxy)
+(∃y)(x)(Lxy → Mxy) => ((∃x)(y)Lxy → (∃y)(∃x)Mxy)
+(Na & ~Nb) => ~a = b
+(c = d -> e = g), d = c, Fg => Fe
+((∃x)x=a->~b=b)=>~a=b
+(z)(Cz -> Dz), (~Dg & Ca) => ~g=a
+(~Tjc -> ~Sib), (Tjc -> Ljl), Sib => Ljl
+(I -> ~S), (~S -> K), ((K & N) -> J), (I & N) => (K & J)
+S, G => ((S & G) & S)
+((S & N) & J)=>(S&J)
+(A->B), (S->~N), (K&S), (~N->(K->G)) => G
+(I->~S), (~S->~G), (~S -> J), (J -> R), I => (I -> (~G & R))
+(~S -> (J&K)), ((N&K)->~J), N, ~S => S
+S, ((S || N) -> ~K)=>~K
+(S || N), (S -> F), (N -> F), S, N => F
+(E <-> N), (E <-> G), ((S & D) <-> G), N, (S & D) => ((S & D) <-> N)
+F, (E & G) => (F & G)
+A, (A -> B) => (B & A)
+(A & E), (B & C), ((A & B) -> D) => (E & D)
+(A & B), ((B & A) -> C), (C -> D) => D
+((D & G) & H), ((H & D) -> I), ((I & G) -> J) => J
+(A->B), (B->C) => (A -> C)
+(A -> B), ~B => ~A
+(~F & G), (~C -> D), (D -> F) => C
+(G -> H), ((H & G)->K), (K -> L) => (G -> (K & L))
+(A -> B), ~B => (A -> C)
+A, ((A || B) -> C) => C
+(T <-> K), (J -> T), (J || K) => T
+(A <-> B), (C <-> B) => (A <-> C)
+((G || H) -> I), (K -> H), K => (K -> (I || (M & N)))
+(A & K), (A -> (I || J)), ((I & K) -> L), (L <-> J) => (L & A)
+(C -> A), (B & D), C => (C -> (A & B))
+(G & L), ((H || L) <-> K) => (G & K)
+A, (A -> B), C, D, E => B
+(F & G), (H <-> F) => (G & H)
+(A & (B & C)), ((A & B) -> D) => (C & D)
+(F -> K), (F -> (G & J)), ((K & J) -> H), F => (F & (G & H))
+(~L -> (G & C)), (D -> (~L & J)), (G -> ~J) => ~D
+(C -> E), ((G -> I) <-> (A & E)), (A & C) => ((A & C) -> (G -> I))
+(A -> (D || F)), (G <-> ~D), (F -> ~G), A => (A -> ~G)
+((A & D) -> E), (E -> (A -> D)), A => (A -> (D <-> E))
+(C || ~B), ((~A || B) & ~C) => ~A
+(J -> L), (K -> J), (L -> M) => (~M -> ~K)
+((G || H) & ~J), ((~I -> J) & (H -> ~I)) => G
+(K -> C), (H -> (S || T)), (S -> K), H => (H -> (C || T))
+((A & B) -> C), (C -> D), ~(D || E) => (~A || ~B)
+~C => ~(B & C)
+(Da -> (Bc & Cc)), Da => (Bc & Cc)
+((x)Dx -> (Bc & Cc)), (x)Dx => (Bc & Cc)
+(Da -> (∃y)(By & Cy)), Da => (∃y)(By & Cy)
+((x)Dx -> (∃y)(By & Cy)), (x)Dx => (∃y)(By & Cy)
+(x)(Gx -> Mx), Ge => Me
+(x)(Gx -> Mx), (y)(My -> Ly), Ge => Le
+(x)(Gx -> Mx), (z)Gz=>(x)Mx
+(w)(Gw -> Mw), (∃y)(Gy & Ay), (Gf & Af) => (∃z)(Az & Mz)
+(∃x)Gx, (z)(Gz -> Mz), (∃y)(My -> Ge) =>Ge
+(z)(Kz->Jz), Kn => Jn
+(y)Gy,(z)(Gz->Hz)=>(∃x)Hx
+(w)(Dw↔Cw), (x)Cx=>((x)Cx -> (∃x)Dx)
+(x)(Mx->Bx), ~Bc=>~Mc
+Fa, (x)(Mx<->Gx), (x)(Fx->Gx) => (∃z)(Mz&Gz)
+(y)My, (z)(Kz<->Mz) => (z)Kz
+(∃x)Fx, (x)(Fx->Gx) => (∃x)Gx
+(x)(Ax -> Bx), (∃x)Ax => ((∃x)Ax->(∃x)Bx)
+(x)Cx, (x)(Cx -> (Dx & Ex)) => ((∃x)Dx & (y)Ey)
+(∃x)Cx, (x)(Cx -> (Dx & Ex)) => ((∃x)Dx & (∃x)Ex)
+Fe, (z)(Fz -> Gz) => (∃x)(Fx&Gx)
+(x)(y)Cxy, => (y)(∃x)Cxy
+(w)(x)(y)(z)Fwxyzxw => (x)(y)Fxyxxyx
+(x)Mx, (y)~Dyy => (x)(~Dxx & Mx)
+(x)Mx, (y)~Dyy => (∃x)(y)(~Dxx & My)
+(x)(Mx -> Wx), (x)~Wx => (z)~Mz
+(∃y)(x)Lxy=>(x)(∃y)Lxy
+(∃y)(x)Lyx=>(x)(∃y)Lyx
+(x)~Mx, ((∃y)Jy->(∃x)Mx)=>(y)~Jy
+P, (P -> Q) => (P & Q)
+((P & Q) -> R), (Q -> P), Q => R
+(P -> Q), (Q -> R), P => (P -> (Q & R))
+P, Q => (Q -> P)
+(P -> Q), ~Q => ~P
+(P -> (Q -> R)) => (Q -> (P -> R))
+(P || (Q & R)) => (P || Q)
+((L & M) -> ~P), (I -> P), M, I => ~L
+(P || Q), ~P => Q
+(A || B), (A -> C), (~D -> ~B) => (C || D)
+Pa, Qa => (∃x)(Px & Qx)
+(x)(Px -> Qx), Pa => Qa
+(x)(Px -> Qx), (x)(Qx -> Rx) => (x)(Px -> Rx)
+(∃x)(y)Pxy=>(y)(∃x)Pxy
+(A -> B), A => B
+(P -> ~Q), Q => ~P
+(P | Q), ~Q, (~R -> ~P) => (~Q & R)
+(M & (~N -> ~M)) => ((N & M) | ~M)
+P, (P -> (Q & ~R)), (~P | (~S & T)), ((T & ~S) -> ~U) => ~U
+((P & Q) | (R & S)), ~(P & Q), (T -> ~(R & S)) => ~T
+(A & B), ~B => Q
+(A -> (B & (C & D))), A, ((C & D) -> E) => (A & E)
+(P -> Q), (Q->R), (Q->S), (S -> T) => (P->T)
+(A | ~B), ~A, (C -> B) => ((~C & ~A) | Q)
+(A -> B) => (~A | B)
+~(A -> B) => (A & ~B)
+(A & (B & ~C)), (~C -> ~D) => (A & ~D)
+(A -> B), (B -> A) => (A <-> B)
+A, ~A => Z
+(A <-> B) => ((A -> B) & (B -> A))
+(A <-> B) => (((A -> B) & (B -> A)) | (A & (B & (C & D))))
+(A & B) => ~(~A | ~B)
+((A & B) -> (A & C)), B, ~C, (~A -> C) => (A & C)
+(~P -> ~Q), ((C -> D) & E), (~E | C), (Q -> ~D) => ~Q
+((A | B) & (A | C)), ~C, (A -> B), (B -> ~D), (~E -> D), (~E | (~F | ~G)), F => (~G | H)
+D, ((D & E) -> ~F), (F | G), (G -> ((A -> B) -> C)), (E & ~H) => (((A -> B) -> C) | P)
+(G -> H), ((A & B) <-> (C & D)), (~Q -> ~C), (D -> ((A & B) & C)), (F -> G), D => ((F -> H) & Q)
+((P & Q) & R), (S & T) => (Q & S)
+(Q & P), R => (P & (R & Q))
+((P & Q) -> (R -> S)), (A & ~(R -> S)) => (~P | ~Q)
+(A -> (B -> (C -> (D -> E)))), (~G & ~F), (~F -> A) => ((B -> (C -> (D -> E))) & ~G)
+(P & (Q & R)) => ((R & P) & Q)
+((P & Q) | (X -> Y)), ~(P & Q), ~Y => ~X
+(~X -> (Y -> ~Z)), (~M -> (~Z -> X)), (~M & ~X) => ~Y
+(~B -> ~A), ~B => (~A | (K <-> C))
+(C -> (D & M)), (~C -> ~H), H => (D & M)
+(A -> ~(~C | ~D)), ~(C & D) => ~A
+(B | (C -> D)), (~Q -> (C & ~D)), (~D -> ~B), (~D & ~A) => ((Q & ~A) -> ~B)
+~(A <-> B) => ~((A->B) & (B->A))
+~((A->B) & (B->A)) => ~(A <-> B)
+(A | B), (A -> C), (B -> D) => (C | D)
+(P -> Q) => (~Q -> ~P)
+(~Q | ~S), (P->Q), (R->S) => (~P | ~R)
+(P -> (Q | R)), (~S -> ~Q), (~U -> ~R), P => (P & (S | U))
+(A -> (B & C)), ((B | D) -> E), A => (A -> E)
+(A -> (B & C)), ((B | D) -> E), A => (~E -> ~A)
+(A -> (B & C)), ((B | D) -> E), A => ~(A & ~E)
+(A -> (B & C)), ((B | D) -> E), A => (~A | E)
+(F & (G || H)), (F > ~H) / (G || E)
+(A -> (B & C)), ((B | D) -> E), A => ~~(~A | E)
+(A | (B & C)), ~(B & C), => ~~A
+(A | ~(B & C)), (B & C) / ~~A
+(A & ~~B), (B -> C), => (A -> C)
+(~~A -> ~~~B), ~~~~B => (~A & B)
+(P > ~(Q || R)), (~~S > ~~T), ~T, (~S > (U & P)) => ((~R > U) & P)
+((P & Q) > R), (P > Q), P / R
+Pac, Qbc => (∃x)(Pax & Qbx)
+~Dga, Fgbcdefghij => (∃x)(~Dxa & Fxbcdefghij)
+~Bea, ~Ped, Febcq, Ge, ~Gh => (∃x)((~Bxa & ~Pxd) & (Fxbcq & Gx))
+Aa, Ba, Cc, Dc => ((∃x)(Ax & Bx) & (∃y)(Cy & Dy))
+(z)(Zzss -> Cz), (Zsss & Dst), (y)(~Dyt | Ay) => (∃x)(Ax & Cx)
+Hab, (Hab -> (z)(Jz -> Kz)), ((z)(Jz -> Kz) -> (∃y)Py), ((∃y)Py -> Bb) => Bb
+(y)(~Vy -> By), (x)(Fxr -> ~Bx), Fir, ~Vi => ~Bi
+(y)(~Vy -> By), (x)~(Fxr & Bx), Fir, ~Vi => ~Bi
+(z)(Mz <-> Nz), (Ma & Bb) => (∃x)Nx
+(x)(Rx | Cx), (∃x)~Rx => (∃x)Cx
+Pa, Qa, (∃x)(Px | Qx), (x)(Px -> Kx), (x)(Qx -> Kx) => (∃x)Kx
+(x)(Cx -> ~Bx), (∃x)Bx, Bd, Cd => (∃x)~Cx
+(x)(Rx | Cx), (x)(Cx -> Sx), ~Ra => ((∃x)(~Rx & Sx) | Fbc)
+(x)(Px|Qx), (Pa->Ja), (Qa->Ka)=>(Ja|Ka)
+(Cd <> (∃x)Fax), ~Cd / ~Far
+(~Ljr -> Cjr), ~Cjr / Ljr
+(~~Pa -> ~~Qa), ~~~Qa / ~~~Pa
+(Pa -> Qa), ~~~Qa / ~~~Pa
+(Pas > ~Psa), (Ba > ~Pas), (Pas | Ba) => (~Pas || ~Psa)
+(∃x)(Lx & Tx), (z)(Tz & Dz) / (∃y)(Ly & Dy)
+(x)(Cx > Dx), (x)((∃y)(Dy & Exy) > Fx), (∃x)(Gx & (∃y)(Cy & Exy)) / (∃x)(Gx & Fx)
+(A -> B), A ∴ B
+(A -> B), ~B ∴ ~A
+X, (P -> (Q & R)), W, ~(Q & R), (~P -> ~S), ((~S & W) -> (T & ~U)), (~U -> ~V) ∴ ((~V & X) & ~S)
+(C & ~(D -> ~E)), (A -> (D -> ~E)) ∴ (~A & C)
+((P & Q) & (R & S)) ∴ ((S & Q) & (R & P))
+((¬R ∨ ¬F) → (~S & ~L)), (~S → T), ¬T ∴ R
+(P -> Q), (R ∨ ~Q), (~P -> (S ∨ T)), (~R & ~T) ∴ S
+(R -> (~Q || S)), ((U & T) || (~S & Q)), (~U || ~T) => ~R
+(A & ~B), (B ∨ C), (C → (D → ~E)), E ∴ ~D
+(C → (D & M)), (~C → ~H), H ∴ (~D → ~M)
+~(C & D), (~C → S), (~D → T) ∴ (S ∨ T)
+~(~A ∨ B) ∴ A
+(P ↔ Q), (~(P ∨ Q) → ~R), ~Q ∴ ~R
+(L -> K), (K -> ~C), (C || D), ~D => ~L
+(~I <-> A), ((F & H) || ~I), ~(A || B) => (F & ~B)
+(D -> ~B), (~C -> B), (~D -> ~C) => (D <-> C)
+((A & C) -> B), ((~B || ~A) || D), (C & A) => ~~(D || P)
+(R -> B), (~(R & ~B) -> J) => J
+~(C || D), (D <-> (E || F)), (~A -> (C || F)) => A
+~(J & T), ~(~T || E) => ~(J || E)
+(x)Px => (Pa & Pb)
+(x)(Px || Qx), (x)~Px => (x)Qx
+(x)(Px || Qx), (x)~Px => (∃x)Qx
+(A & B) => (B & A)
+((P & Q) & R), (S & T) => (Q & S)
+(x)(y)Pxy => (∃z)Paz
+(∃z)(Qz & Rz), ((∃z)Qz -> Rc) => Rc
+(x)(y)(z)(w)Pxyzw => Pabcd
+(P -> (Q & R)), ~(Q & R), (P || (S <-> T)), U => (U & (T -> S))
+(U <-> V), ((V -> U) -> (R -> (S -> T))), ~(S -> T) => ~R
+((U <-> V) <-> (W <-> X)) => (((U <-> V) -> (W <-> X)) | Y)
+P, Q, R, S, (T || ~R) => ((T & (P & (Q & R))) | Z)
+(~(P || Q) || R), ~~~R, => (~P & ~Q)
+(~D -> (A -> ~B)), ((C & D) <-> E), ~E, ~~C, A => ~B
+((C || D) & (~E || ~F)), ~D, (~F -> ~C) => ~E
+((T -> ~Q) & (R -> S)), ~S, (~~R || ~T), (U <-> ~T) => U
+(x)(Px -> (Qx & Rx)), Pa => ((Qa & Ra) & Pa)
+(Pa -> (∃y)Dy), ((x)Qx || ~(∃y)Dy), ~(x)Qx => ~Pa
+(M -> A), (A -> K), (M || N), (K -> C), ~C => N
+(E→(G∧A)), (¬F→¬A), (¬W→¬G), ((W∧F)→¬S), S => ¬E
+(~P -> ~Q), (~F & Q), (~P || (S || T)) => (S || T)
+(~S -> ~T), ~~T => ~~~~S
+((A & B) & C) => (C & (A & B))
+(A→C), (D∨(A∧B)), ¬D / C
+(I→J), (J∨(I∨K)), (J→M), ¬M, (K→¬N) / ¬N
+(A→C), (C→(A↔B)), ¬B, (¬D→(D∨¬(A↔B))), (D→B) / (¬A∧¬B)
+(A→B), ((A∧B)→(¬¬C∧¬D)), (¬E→¬C), A, (¬¬E→F) / (F∨(¬A↔¬B))
+((A∨B)∧C), (A→D), (B→E), (E→F) / (D∨F)
+(Q→(V ∨R)), (T→¬U), ¬V, (T ∨Q), (¬U→V) / R
+(¬S→(N∨O)), ((N→U)∧(P→T)), ((O→T)∧(P→N)), ¬U, (S→U) / T
+(A→B), ¬B, (((¬A∧¬B) ∨ C)→(B∨D)) / (D∨¬E)
+((Q∨R)→((S∨L)→¬T)), ((S∨U)→Q), (S∧¬U), (T∨K) / K
+(~C -> ~A) => (A -> C)
+(~C -> ~A), (¬B∨A) => (B -> C)
+((D | ~E) -> (F & ~G)), (~C -> D), ~C => (~G & D)
+(P <-> ~Q), ~~~P => ~~Q
+~C, ((D <-> E) -> ~~C), => ~(D <-> E) 
+(~G ↔ ~(A ↔ F)), ~~G => (A ↔ F)
+(~F & ~G) => ~~~(F || G)
+~(Z || Y), ((~Y & ~Z) -> ~X) => ~~~X
+P, ~~(Q & R) => (P & R)
+(P -> (Q -> R)), P, ~R => ~Q
+(~Q -> ~P) => (P -> ~~Q)
+(~Q -> ~P) => (P -> Q)
+((P & Q) -> R), P, Q => (P -> (Q -> R))
+((P ∧ ¬Q) -> R),¬R, P ⊢ Q
+(A || B), C, ((C & (A || B)) -> ~D), (~E -> D) => ~~E
+A, ((A & B) -> (C & D)), B, (D -> E) => E
+~A, ((~A & ~B) -> (C -> D)), ~B, (D -> E) => (C -> E)
+~(A & B), ((A -> ~B) -> (~C & ~D)), (E || (C || D)) => E
+(A -> (B -> C)), ~(B -> C), (~D || A) => ~D
+(A -> (B -> (C || D))), (B & A), ~D => C
+(~A -> B), (A -> C), ~C, (B -> D) => (D || E)
+((A -> B) & ~C), ((~A -> E) || C), ((~B -> E) -> D) => D
+((C || B) -> ~A), (D || A), B => D
+(A || (B & C)), (A -> D), (D -> E), => (B || E)
+(A <-> B), (C -> ~B), ((D -> E) -> C), A => (A -> (D & ~E))
+(A & (B -> C)), ((A || D) -> ~E), (B || E) => ((A || D) -> C)
+((A || B) -> C), (C -> (A & D)), ((A & D) -> E), A => (A -> E)
+((A -> B) -> C), (C -> ~D), (A || (E || D)) => (E || (B -> A))
+(A -> (B & C)), (D -> ~B), ((C <-> E) -> D), A => (A -> ~(C <-> E))

@@ -1,0 +1,6296 @@
+[
+  {
+    "index": 1,
+    "raw": "Ma, (Ma \u2192 (x)(Px \u2192 Kx)), ((x)(Px \u2192 Kx) \u2192 (\u2203x)Lx), ((\u2203x)Lx \u2192Ta) => Ta",
+    "logic": "FOL",
+    "premises_raw": [
+      "Ma",
+      "(Ma \u2192 (x)(Px \u2192 Kx))",
+      "((x)(Px \u2192 Kx) \u2192 (\u2203x)Lx)",
+      "((\u2203x)Lx \u2192Ta)"
+    ],
+    "conclusion_raw": "Ta",
+    "premises": [
+      "M(a)",
+      "(M(a)\u2192\u2200x(P(x)\u2192K(x)))",
+      "(\u2200x(P(x)\u2192K(x))\u2192\u2203xL(x))",
+      "(\u2203xL(x)\u2192T(a))"
+    ],
+    "conclusion": "T(a)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 2,
+    "raw": "~~Kb, (Lb -> ~Kb) => ~Lb",
+    "logic": "TFL",
+    "premises_raw": [
+      "~~Kb",
+      "(Lb -> ~Kb)"
+    ],
+    "conclusion_raw": "~Lb",
+    "premises": [
+      "\u00ac\u00acA",
+      "(B\u2192\u00acA)"
+    ],
+    "conclusion": "\u00acB",
+    "atom_map": {
+      "Kb": "A",
+      "Lb": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 3,
+    "raw": "((Nd & Pd) -> Om), (~Bc -> (Nd & Pd)), ~Om => ~~Bc",
+    "logic": "TFL",
+    "premises_raw": [
+      "((Nd & Pd) -> Om)",
+      "(~Bc -> (Nd & Pd))",
+      "~Om"
+    ],
+    "conclusion_raw": "~~Bc",
+    "premises": [
+      "((A\u2227B)\u2192C)",
+      "(\u00acD\u2192(A\u2227B))",
+      "\u00acC"
+    ],
+    "conclusion": "\u00ac\u00acD",
+    "atom_map": {
+      "Nd": "A",
+      "Pd": "B",
+      "Om": "C",
+      "Bc": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 4,
+    "raw": "(~Qrb \u2192 ~Ne), ~Qrb => (~Ne || Ka)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~Qrb \u2192 ~Ne)",
+      "~Qrb"
+    ],
+    "conclusion_raw": "(~Ne || Ka)",
+    "premises": [
+      "(\u00acA\u2192\u00acB)",
+      "\u00acA"
+    ],
+    "conclusion": "(\u00acB\u2228C)",
+    "atom_map": {
+      "Qrb": "A",
+      "Ne": "B",
+      "Ka": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 5,
+    "raw": "(Ct -> (Ts -> Hs)), ~(Ts -> Hs), (~Va || Ct) => ~Va",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Ct -> (Ts -> Hs))",
+      "~(Ts -> Hs)",
+      "(~Va || Ct)"
+    ],
+    "conclusion_raw": "~Va",
+    "premises": [
+      "(A\u2192(B\u2192C))",
+      "\u00ac(B\u2192C)",
+      "(\u00acD\u2228A)"
+    ],
+    "conclusion": "\u00acD",
+    "atom_map": {
+      "Ct": "A",
+      "Ts": "B",
+      "Hs": "C",
+      "Va": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 6,
+    "raw": "(Ba -> (Gkl -> Da)), (~Ba -> Rm), ~(Gkl -> Da) => Rm",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Ba -> (Gkl -> Da))",
+      "(~Ba -> Rm)",
+      "~(Gkl -> Da)"
+    ],
+    "conclusion_raw": "Rm",
+    "premises": [
+      "(A\u2192(B\u2192C))",
+      "(\u00acA\u2192D)",
+      "\u00ac(B\u2192C)"
+    ],
+    "conclusion": "D",
+    "atom_map": {
+      "Ba": "A",
+      "Gkl": "B",
+      "Da": "C",
+      "Rm": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 7,
+    "raw": "(Ba -> (Gkl -> Da)), (~Ba -> Rm), ~(Gkl -> Da) => Rm",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Ba -> (Gkl -> Da))",
+      "(~Ba -> Rm)",
+      "~(Gkl -> Da)"
+    ],
+    "conclusion_raw": "Rm",
+    "premises": [
+      "(A\u2192(B\u2192C))",
+      "(\u00acA\u2192D)",
+      "\u00ac(B\u2192C)"
+    ],
+    "conclusion": "D",
+    "atom_map": {
+      "Ba": "A",
+      "Gkl": "B",
+      "Da": "C",
+      "Rm": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 8,
+    "raw": "(((\u2203x)Bx & (y)Zy)->Qa), (\u2203x)Bx, (Qa -> (Ci & Ce)), (y)Zy => (Ci & Ce)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(((\u2203x)Bx & (y)Zy)->Qa)",
+      "(\u2203x)Bx",
+      "(Qa -> (Ci & Ce))",
+      "(y)Zy"
+    ],
+    "conclusion_raw": "(Ci & Ce)",
+    "premises": [
+      "((\u2203xB(x)\u2227\u2200yZ(y))\u2192Q(a))",
+      "\u2203xB(x)",
+      "(Q(a)\u2192(C(i)\u2227C(e)))",
+      "\u2200yZ(y)"
+    ],
+    "conclusion": "(C(i)\u2227C(e))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 9,
+    "raw": "(~Nr || Gr), (~Nr -> Et), (Gr -> ~Hs), ((Et || ~Hs) -> (Nq -> Ga)), ~Ga => ~Nq",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~Nr || Gr)",
+      "(~Nr -> Et)",
+      "(Gr -> ~Hs)",
+      "((Et || ~Hs) -> (Nq -> Ga))",
+      "~Ga"
+    ],
+    "conclusion_raw": "~Nq",
+    "premises": [
+      "(\u00acA\u2228B)",
+      "(\u00acA\u2192C)",
+      "(B\u2192\u00acD)",
+      "((C\u2228\u00acD)\u2192(E\u2192F))",
+      "\u00acF"
+    ],
+    "conclusion": "\u00acE",
+    "atom_map": {
+      "Nr": "A",
+      "Gr": "B",
+      "Et": "C",
+      "Hs": "D",
+      "Nq": "E",
+      "Ga": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 10,
+    "raw": "((~Vc & ~Ke) -> (Be -> Ke)), ~Vc, (Ke -> Vc) => ~Be",
+    "logic": "TFL",
+    "premises_raw": [
+      "((~Vc & ~Ke) -> (Be -> Ke))",
+      "~Vc",
+      "(Ke -> Vc)"
+    ],
+    "conclusion_raw": "~Be",
+    "premises": [
+      "((\u00acA\u2227\u00acB)\u2192(C\u2192B))",
+      "\u00acA",
+      "(B\u2192A)"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "Vc": "A",
+      "Ke": "B",
+      "Be": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 11,
+    "raw": "(~Dq & ~~Ba), ((~Dq & Rb) -> ~Ar), (~Ba || Rb) => ~Ar",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~Dq & ~~Ba)",
+      "((~Dq & Rb) -> ~Ar)",
+      "(~Ba || Rb)"
+    ],
+    "conclusion_raw": "~Ar",
+    "premises": [
+      "(\u00acA\u2227\u00ac\u00acB)",
+      "((\u00acA\u2227C)\u2192\u00acD)",
+      "(\u00acB\u2228C)"
+    ],
+    "conclusion": "\u00acD",
+    "atom_map": {
+      "Dq": "A",
+      "Ba": "B",
+      "Rb": "C",
+      "Ar": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 12,
+    "raw": "(Fa -> Am), (~Ja & ~Kb), (Hn -> (Ga -> Fa)), (~Kb -> (~Ja -> Hn)) => (Ga -> Am)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Fa -> Am)",
+      "(~Ja & ~Kb)",
+      "(Hn -> (Ga -> Fa))",
+      "(~Kb -> (~Ja -> Hn))"
+    ],
+    "conclusion_raw": "(Ga -> Am)",
+    "premises": [
+      "(A\u2192B)",
+      "(\u00acC\u2227\u00acD)",
+      "(E\u2192(F\u2192A))",
+      "(\u00acD\u2192(\u00acC\u2192E))"
+    ],
+    "conclusion": "(F\u2192B)",
+    "atom_map": {
+      "Fa": "A",
+      "Am": "B",
+      "Ja": "C",
+      "Kb": "D",
+      "Hn": "E",
+      "Ga": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 13,
+    "raw": "(Rk ->Db), (Bt -> Rk), ((Bt -> Db) -> (Es || Fe)), ~Es => Fe",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Rk ->Db)",
+      "(Bt -> Rk)",
+      "((Bt -> Db) -> (Es || Fe))",
+      "~Es"
+    ],
+    "conclusion_raw": "Fe",
+    "premises": [
+      "(A\u2192B)",
+      "(C\u2192A)",
+      "((C\u2192B)\u2192(D\u2228E))",
+      "\u00acD"
+    ],
+    "conclusion": "E",
+    "atom_map": {
+      "Rk": "A",
+      "Db": "B",
+      "Bt": "C",
+      "Es": "D",
+      "Fe": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 14,
+    "raw": "~(Rm || Sa), (~(Tcb & Va) -> (Rm || Sa)), (~~(Tcb & Va) -> Wa) => (Wa || ~Rm)",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(Rm || Sa)",
+      "(~(Tcb & Va) -> (Rm || Sa))",
+      "(~~(Tcb & Va) -> Wa)"
+    ],
+    "conclusion_raw": "(Wa || ~Rm)",
+    "premises": [
+      "\u00ac(A\u2228B)",
+      "(\u00ac(C\u2227D)\u2192(A\u2228B))",
+      "(\u00ac\u00ac(C\u2227D)\u2192E)"
+    ],
+    "conclusion": "(E\u2228\u00acA)",
+    "atom_map": {
+      "Rm": "A",
+      "Sa": "B",
+      "Tcb": "C",
+      "Va": "D",
+      "Wa": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 15,
+    "raw": "((Ad || Gd) -> (z)Mza), ((z)Mza -> (Bf -> Fd)), (Ad & Bf) => Fd",
+    "logic": "FOL",
+    "premises_raw": [
+      "((Ad || Gd) -> (z)Mza)",
+      "((z)Mza -> (Bf -> Fd))",
+      "(Ad & Bf)"
+    ],
+    "conclusion_raw": "Fd",
+    "premises": [
+      "((A(d)\u2228G(d))\u2192\u2200zM(z,a))",
+      "(\u2200zM(z,a)\u2192(B(f)\u2192F(d)))",
+      "(A(d)\u2227B(f))"
+    ],
+    "conclusion": "F(d)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 16,
+    "raw": "((\u2203x)Dx -> Wd), ((Ga -> Wd) -> (Vat & ~Tcb)), (Ga -> (\u2203x)Dx), (Qb -> Tcb) => ~Qb",
+    "logic": "FOL",
+    "premises_raw": [
+      "((\u2203x)Dx -> Wd)",
+      "((Ga -> Wd) -> (Vat & ~Tcb))",
+      "(Ga -> (\u2203x)Dx)",
+      "(Qb -> Tcb)"
+    ],
+    "conclusion_raw": "~Qb",
+    "premises": [
+      "(\u2203xD(x)\u2192W(d))",
+      "((G(a)\u2192W(d))\u2192(V(a,e)\u2227\u00acT(c,b)))",
+      "(G(a)\u2192\u2203xD(x))",
+      "(Q(b)\u2192T(c,b))"
+    ],
+    "conclusion": "\u00acQ(b)",
+    "atom_map": {},
+    "constant_map": {
+      "t": "e"
+    }
+  },
+  {
+    "index": 17,
+    "raw": "((~Nb & Md) -> (w)Qw), (~Om -> Md), (~Om & ~Nb) => ((w)Qw || Sk)",
+    "logic": "FOL",
+    "premises_raw": [
+      "((~Nb & Md) -> (w)Qw)",
+      "(~Om -> Md)",
+      "(~Om & ~Nb)"
+    ],
+    "conclusion_raw": "((w)Qw || Sk)",
+    "premises": [
+      "((\u00acN(b)\u2227M(d))\u2192\u2200wQ(w))",
+      "(\u00acO(m)\u2192M(d))",
+      "(\u00acO(m)\u2227\u00acN(b))"
+    ],
+    "conclusion": "(\u2200wQ(w)\u2228S(k))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 18,
+    "raw": "(x)Px, ((x)Px -> Al), (Al -> (Eb || Fb)), ~Eb => Fb",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)Px",
+      "((x)Px -> Al)",
+      "(Al -> (Eb || Fb))",
+      "~Eb"
+    ],
+    "conclusion_raw": "Fb",
+    "premises": [
+      "\u2200xP(x)",
+      "(\u2200xP(x)\u2192A(l))",
+      "(A(l)\u2192(E(b)\u2228F(b)))",
+      "\u00acE(b)"
+    ],
+    "conclusion": "F(b)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 19,
+    "raw": "(Pa || Qa), ((Qa & ~Rg) -> Sb), (Rg -> Pa), ~Pa => Sb",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Pa || Qa)",
+      "((Qa & ~Rg) -> Sb)",
+      "(Rg -> Pa)",
+      "~Pa"
+    ],
+    "conclusion_raw": "Sb",
+    "premises": [
+      "(A\u2228B)",
+      "((B\u2227\u00acC)\u2192D)",
+      "(C\u2192A)",
+      "\u00acA"
+    ],
+    "conclusion": "D",
+    "atom_map": {
+      "Pa": "A",
+      "Qa": "B",
+      "Rg": "C",
+      "Sb": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 20,
+    "raw": "((Mp || Np) -> ~Sc), (Tf -> (Mp || Np)), (~Sc -> ~(Mp || Np)) => (Tf -> ~(Mp || Np))",
+    "logic": "TFL",
+    "premises_raw": [
+      "((Mp || Np) -> ~Sc)",
+      "(Tf -> (Mp || Np))",
+      "(~Sc -> ~(Mp || Np))"
+    ],
+    "conclusion_raw": "(Tf -> ~(Mp || Np))",
+    "premises": [
+      "((A\u2228B)\u2192\u00acC)",
+      "(D\u2192(A\u2228B))",
+      "(\u00acC\u2192\u00ac(A\u2228B))"
+    ],
+    "conclusion": "(D\u2192\u00ac(A\u2228B))",
+    "atom_map": {
+      "Mp": "A",
+      "Np": "B",
+      "Sc": "C",
+      "Tf": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 21,
+    "raw": "(Ka || (Lt || St)), ~(Ka || Lt) => St",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Ka || (Lt || St))",
+      "~(Ka || Lt)"
+    ],
+    "conclusion_raw": "St",
+    "premises": [
+      "(A\u2228(B\u2228C))",
+      "\u00ac(A\u2228B)"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "Ka": "A",
+      "Lt": "B",
+      "St": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 22,
+    "raw": "((Ad || Bq) || Ct), ~Ad => (Ct || Bq)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((Ad || Bq) || Ct)",
+      "~Ad"
+    ],
+    "conclusion_raw": "(Ct || Bq)",
+    "premises": [
+      "((A\u2228B)\u2228C)",
+      "\u00acA"
+    ],
+    "conclusion": "(C\u2228B)",
+    "atom_map": {
+      "Ad": "A",
+      "Bq": "B",
+      "Ct": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 23,
+    "raw": "~(~Ba \u2192 An), (Cab \u2192 (~An \u2192 Ba)) => ~Cab",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(~Ba \u2192 An)",
+      "(Cab \u2192 (~An \u2192 Ba))"
+    ],
+    "conclusion_raw": "~Cab",
+    "premises": [
+      "\u00ac(\u00acA\u2192B)",
+      "(C\u2192(\u00acB\u2192A))"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "Ba": "A",
+      "An": "B",
+      "Cab": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 24,
+    "raw": "(Bd \u2192 Ec), (~Fe || Gm), ((Bd & Cm) & Da), ((Da & Cm) \u2192 Fe) => (Ec & Gm)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Bd \u2192 Ec)",
+      "(~Fe || Gm)",
+      "((Bd & Cm) & Da)",
+      "((Da & Cm) \u2192 Fe)"
+    ],
+    "conclusion_raw": "(Ec & Gm)",
+    "premises": [
+      "(A\u2192B)",
+      "(\u00acC\u2228D)",
+      "((A\u2227E)\u2227F)",
+      "((F\u2227E)\u2192C)"
+    ],
+    "conclusion": "(B\u2227D)",
+    "atom_map": {
+      "Bd": "A",
+      "Ec": "B",
+      "Fe": "C",
+      "Gm": "D",
+      "Cm": "E",
+      "Da": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 25,
+    "raw": "((Ga | Ha) \u2192 (Ja | Ka)) => (~(Ja | Ka) \u2192 ~(Ha | Ga))",
+    "logic": "TFL",
+    "premises_raw": [
+      "((Ga | Ha) \u2192 (Ja | Ka))"
+    ],
+    "conclusion_raw": "(~(Ja | Ka) \u2192 ~(Ha | Ga))",
+    "premises": [
+      "((A\u2228B)\u2192(C\u2228D))"
+    ],
+    "conclusion": "(\u00ac(C\u2228D)\u2192\u00ac(B\u2228A))",
+    "atom_map": {
+      "Ga": "A",
+      "Ha": "B",
+      "Ja": "C",
+      "Ka": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 26,
+    "raw": "((Wp & ~Ca) \u2228 (Ka & Qd)), ((~Ca & Wp) \u2192 Ulm), ((Ka & Qd) \u2192 Ta) => (Ulm \u2228 Ta)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((Wp & ~Ca) \u2228 (Ka & Qd))",
+      "((~Ca & Wp) \u2192 Ulm)",
+      "((Ka & Qd) \u2192 Ta)"
+    ],
+    "conclusion_raw": "(Ulm \u2228 Ta)",
+    "premises": [
+      "((A\u2227\u00acB)\u2228(C\u2227D))",
+      "((\u00acB\u2227A)\u2192E)",
+      "((C\u2227D)\u2192F)"
+    ],
+    "conclusion": "(E\u2228F)",
+    "atom_map": {
+      "Wp": "A",
+      "Ca": "B",
+      "Ka": "C",
+      "Qd": "D",
+      "Ulm": "E",
+      "Ta": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 27,
+    "raw": "((~(Sd & Tb) \u2228 ~~Km) & (Tb & Sd)) => Km",
+    "logic": "TFL",
+    "premises_raw": [
+      "((~(Sd & Tb) \u2228 ~~Km) & (Tb & Sd))"
+    ],
+    "conclusion_raw": "Km",
+    "premises": [
+      "((\u00ac(A\u2227B)\u2228\u00ac\u00acC)\u2227(B\u2227A))"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "Sd": "A",
+      "Tb": "B",
+      "Km": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 28,
+    "raw": "((Ab & Ca) \u2192 Ba), ((~Ba \u2228 ~Ab) \u2228 Dab), (Ca & Ab) => ~~(Dab \u2228 Pab)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((Ab & Ca) \u2192 Ba)",
+      "((~Ba \u2228 ~Ab) \u2228 Dab)",
+      "(Ca & Ab)"
+    ],
+    "conclusion_raw": "~~(Dab \u2228 Pab)",
+    "premises": [
+      "((A\u2227B)\u2192C)",
+      "((\u00acC\u2228\u00acA)\u2228D)",
+      "(B\u2227A)"
+    ],
+    "conclusion": "\u00ac\u00ac(D\u2228E)",
+    "atom_map": {
+      "Ab": "A",
+      "Ca": "B",
+      "Ba": "C",
+      "Dab": "D",
+      "Pab": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 29,
+    "raw": "(~Ak & ((Ak | Bk) | Ct)) => (Bk | Ct)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~Ak & ((Ak | Bk) | Ct))"
+    ],
+    "conclusion_raw": "(Bk | Ct)",
+    "premises": [
+      "(\u00acA\u2227((A\u2228B)\u2228C))"
+    ],
+    "conclusion": "(B\u2228C)",
+    "atom_map": {
+      "Ak": "A",
+      "Bk": "B",
+      "Ct": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 30,
+    "raw": "(Fa -> (Ga & Ha)), ((Ha & Ga) -> Jm) => (Fa -> Jm)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Fa -> (Ga & Ha))",
+      "((Ha & Ga) -> Jm)"
+    ],
+    "conclusion_raw": "(Fa -> Jm)",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "((C\u2227B)\u2192D)"
+    ],
+    "conclusion": "(A\u2192D)",
+    "atom_map": {
+      "Fa": "A",
+      "Ga": "B",
+      "Ha": "C",
+      "Jm": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 31,
+    "raw": "(x)(Ax & Bx) => ((x)Ax & (x)Bx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Ax & Bx)"
+    ],
+    "conclusion_raw": "((x)Ax & (x)Bx)",
+    "premises": [
+      "\u2200x(A(x)\u2227B(x))"
+    ],
+    "conclusion": "(\u2200xA(x)\u2227\u2200xB(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 32,
+    "raw": "~(x)~Ax, ((\u2203x)Ax \u2192 (x)Bx), (x)((Bx \u2228 Cx) \u2192 Dx) => (x)Dx",
+    "logic": "FOL",
+    "premises_raw": [
+      "~(x)~Ax",
+      "((\u2203x)Ax \u2192 (x)Bx)",
+      "(x)((Bx \u2228 Cx) \u2192 Dx)"
+    ],
+    "conclusion_raw": "(x)Dx",
+    "premises": [
+      "\u00ac\u2200x\u00acA(x)",
+      "(\u2203xA(x)\u2192\u2200xB(x))",
+      "\u2200x((B(x)\u2228C(x))\u2192D(x))"
+    ],
+    "conclusion": "\u2200xD(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 33,
+    "raw": "(~(\u2203x)(Rx || Sx) || (x)Tx), (\u2203x)~Tx => ~(\u2203x)Sx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(~(\u2203x)(Rx || Sx) || (x)Tx)",
+      "(\u2203x)~Tx"
+    ],
+    "conclusion_raw": "~(\u2203x)Sx",
+    "premises": [
+      "(\u00ac\u2203x(R(x)\u2228S(x))\u2228\u2200xT(x))",
+      "\u2203x\u00acT(x)"
+    ],
+    "conclusion": "\u00ac\u2203xS(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 34,
+    "raw": "((x)Ax \u2192 (x)Bx), ~(x)Bx => (\u2203x)~Ax",
+    "logic": "FOL",
+    "premises_raw": [
+      "((x)Ax \u2192 (x)Bx)",
+      "~(x)Bx"
+    ],
+    "conclusion_raw": "(\u2203x)~Ax",
+    "premises": [
+      "(\u2200xA(x)\u2192\u2200xB(x))",
+      "\u00ac\u2200xB(x)"
+    ],
+    "conclusion": "\u2203x\u00acA(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 35,
+    "raw": "~(\u2203y)Cy, ((y)~Cy \u2192 (z)Dz) => Db",
+    "logic": "FOL",
+    "premises_raw": [
+      "~(\u2203y)Cy",
+      "((y)~Cy \u2192 (z)Dz)"
+    ],
+    "conclusion_raw": "Db",
+    "premises": [
+      "\u00ac\u2203yC(y)",
+      "(\u2200y\u00acC(y)\u2192\u2200zD(z))"
+    ],
+    "conclusion": "D(b)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 36,
+    "raw": "~(x)~Fx => (\u2203x)Fx",
+    "logic": "FOL",
+    "premises_raw": [
+      "~(x)~Fx"
+    ],
+    "conclusion_raw": "(\u2203x)Fx",
+    "premises": [
+      "\u00ac\u2200x\u00acF(x)"
+    ],
+    "conclusion": "\u2203xF(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 37,
+    "raw": "((\u2203y)Hy \u2192 (\u2203y)Jy), (y)~Jy => ~Ha",
+    "logic": "FOL",
+    "premises_raw": [
+      "((\u2203y)Hy \u2192 (\u2203y)Jy)",
+      "(y)~Jy"
+    ],
+    "conclusion_raw": "~Ha",
+    "premises": [
+      "(\u2203yH(y)\u2192\u2203yJ(y))",
+      "\u2200y\u00acJ(y)"
+    ],
+    "conclusion": "\u00acH(a)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 38,
+    "raw": "~(\u2203x)~Px, (~(\u2203y)Sy || ~(x)Px) => ~Sd",
+    "logic": "FOL",
+    "premises_raw": [
+      "~(\u2203x)~Px",
+      "(~(\u2203y)Sy || ~(x)Px)"
+    ],
+    "conclusion_raw": "~Sd",
+    "premises": [
+      "\u00ac\u2203x\u00acP(x)",
+      "(\u00ac\u2203yS(y)\u2228\u00ac\u2200xP(x))"
+    ],
+    "conclusion": "\u00acS(d)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 39,
+    "raw": "((x)~Kx || (\u2203x)Lx), (x)~Lx => ~Kb",
+    "logic": "FOL",
+    "premises_raw": [
+      "((x)~Kx || (\u2203x)Lx)",
+      "(x)~Lx"
+    ],
+    "conclusion_raw": "~Kb",
+    "premises": [
+      "(\u2200x\u00acK(x)\u2228\u2203xL(x))",
+      "\u2200x\u00acL(x)"
+    ],
+    "conclusion": "\u00acK(b)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 40,
+    "raw": "(\u2203x)(Kx & (Ax & Sx)), (x)((Ax \u2228 Sx) \u2192 ~Wx) => (\u2203x)(Kx & ~Wx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203x)(Kx & (Ax & Sx))",
+      "(x)((Ax \u2228 Sx) \u2192 ~Wx)"
+    ],
+    "conclusion_raw": "(\u2203x)(Kx & ~Wx)",
+    "premises": [
+      "\u2203x(K(x)\u2227(A(x)\u2227S(x)))",
+      "\u2200x((A(x)\u2228S(x))\u2192\u00acW(x))"
+    ],
+    "conclusion": "\u2203x(K(x)\u2227\u00acW(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 41,
+    "raw": "(x)(Nx -> Dxx), (\u2203x)(Ex & Nx) => (\u2203x)(Ex & Dxx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Nx -> Dxx)",
+      "(\u2203x)(Ex & Nx)"
+    ],
+    "conclusion_raw": "(\u2203x)(Ex & Dxx)",
+    "premises": [
+      "\u2200x(N(x)\u2192D(x,x))",
+      "\u2203x(E(x)\u2227N(x))"
+    ],
+    "conclusion": "\u2203x(E(x)\u2227D(x,x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 42,
+    "raw": "(x)(Ex -> Dxt), (x)(Dxt -> ~Ox) => (x)(Ex -> ~Ox)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Ex -> Dxt)",
+      "(x)(Dxt -> ~Ox)"
+    ],
+    "conclusion_raw": "(x)(Ex -> ~Ox)",
+    "premises": [
+      "\u2200x(E(x)\u2192D(x,a))",
+      "\u2200x(D(x,a)\u2192\u00acO(x))"
+    ],
+    "conclusion": "\u2200x(E(x)\u2192\u00acO(x))",
+    "atom_map": {},
+    "constant_map": {
+      "t": "a"
+    }
+  },
+  {
+    "index": 43,
+    "raw": "(\u2203x)Px, (x)(y)(Lxy <-> Lxx), (x)(Px -> ~Lmx) => ~Lmm",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203x)Px",
+      "(x)(y)(Lxy <-> Lxx)",
+      "(x)(Px -> ~Lmx)"
+    ],
+    "conclusion_raw": "~Lmm",
+    "premises": [
+      "\u2203xP(x)",
+      "\u2200x\u2200y(L(x,y)\u2194L(x,x))",
+      "\u2200x(P(x)\u2192\u00acL(m,x))"
+    ],
+    "conclusion": "\u00acL(m,m)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 44,
+    "raw": "(x)(Px -> ~(y)(Py -> Lxy)) => ~(\u2203x)(Px & (y)(Py -> Lxy))",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Px -> ~(y)(Py -> Lxy))"
+    ],
+    "conclusion_raw": "~(\u2203x)(Px & (y)(Py -> Lxy))",
+    "premises": [
+      "\u2200x(P(x)\u2192\u00ac\u2200y(P(y)\u2192L(x,y)))"
+    ],
+    "conclusion": "\u00ac\u2203x(P(x)\u2227\u2200y(P(y)\u2192L(x,y)))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 45,
+    "raw": "(x)(Px -> ~(\u2203y)Mxy) => ~(\u2203x)(Px & Mxb)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Px -> ~(\u2203y)Mxy)"
+    ],
+    "conclusion_raw": "~(\u2203x)(Px & Mxb)",
+    "premises": [
+      "\u2200x(P(x)\u2192\u00ac\u2203yM(x,y))"
+    ],
+    "conclusion": "\u00ac\u2203x(P(x)\u2227M(x,b))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 46,
+    "raw": "(x)(Kbx -> Gxc), ((\u2203x)Gxc -> (\u2203y)Gcy) => ((\u2203x)Kbx -> (\u2203y)Mxy)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Kbx -> Gxc)",
+      "((\u2203x)Gxc -> (\u2203y)Gcy)"
+    ],
+    "conclusion_raw": "((\u2203x)Kbx -> (\u2203y)Mxy)",
+    "premises": [
+      "\u2200x(K(b,x)\u2192G(x,c))",
+      "(\u2203xG(x,c)\u2192\u2203yG(c,y))"
+    ],
+    "conclusion": "(\u2203xK(b,x)\u2192\u2203yM(x,y))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 47,
+    "raw": "(\u2203y)(x)(Lxy \u2192 Mxy) => ((\u2203x)(y)Lxy \u2192 (\u2203y)(\u2203x)Mxy)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203y)(x)(Lxy \u2192 Mxy)"
+    ],
+    "conclusion_raw": "((\u2203x)(y)Lxy \u2192 (\u2203y)(\u2203x)Mxy)",
+    "premises": [
+      "\u2203y\u2200x(L(x,y)\u2192M(x,y))"
+    ],
+    "conclusion": "(\u2203x\u2200yL(x,y)\u2192\u2203y\u2203xM(x,y))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 48,
+    "raw": "(Na & ~Nb) => ~a = b",
+    "logic": "FOL",
+    "premises_raw": [
+      "(Na & ~Nb)"
+    ],
+    "conclusion_raw": "~a = b",
+    "premises": [
+      "(N(a)\u2227\u00acN(b))"
+    ],
+    "conclusion": "\u00aca=b",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 49,
+    "raw": "(c = d -> e = g), d = c, Fg => Fe",
+    "logic": "FOL",
+    "premises_raw": [
+      "(c = d -> e = g)",
+      "d = c",
+      "Fg"
+    ],
+    "conclusion_raw": "Fe",
+    "premises": [
+      "(c=d\u2192e=g)",
+      "d=c",
+      "F(g)"
+    ],
+    "conclusion": "F(e)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 50,
+    "raw": "((\u2203x)x=a->~b=b)=>~a=b",
+    "logic": "FOL",
+    "premises_raw": [
+      "((\u2203x)x=a->~b=b)"
+    ],
+    "conclusion_raw": "~a=b",
+    "premises": [
+      "(\u2203xx=a\u2192\u00acb=b)"
+    ],
+    "conclusion": "\u00aca=b",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 51,
+    "raw": "(z)(Cz -> Dz), (~Dg & Ca) => ~g=a",
+    "logic": "FOL",
+    "premises_raw": [
+      "(z)(Cz -> Dz)",
+      "(~Dg & Ca)"
+    ],
+    "conclusion_raw": "~g=a",
+    "premises": [
+      "\u2200z(C(z)\u2192D(z))",
+      "(\u00acD(g)\u2227C(a))"
+    ],
+    "conclusion": "\u00acg=a",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 52,
+    "raw": "(~Tjc -> ~Sib), (Tjc -> Ljl), Sib => Ljl",
+    "logic": "FOL",
+    "premises_raw": [
+      "(~Tjc -> ~Sib)",
+      "(Tjc -> Ljl)",
+      "Sib"
+    ],
+    "conclusion_raw": "Ljl",
+    "premises": [
+      "(\u00acT(j,c)\u2192\u00acS(i,b))",
+      "(T(j,c)\u2192L(j,l))",
+      "S(i,b)"
+    ],
+    "conclusion": "L(j,l)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 53,
+    "raw": "(I -> ~S), (~S -> K), ((K & N) -> J), (I & N) => (K & J)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(I -> ~S)",
+      "(~S -> K)",
+      "((K & N) -> J)",
+      "(I & N)"
+    ],
+    "conclusion_raw": "(K & J)",
+    "premises": [
+      "(A\u2192\u00acB)",
+      "(\u00acB\u2192C)",
+      "((C\u2227D)\u2192E)",
+      "(A\u2227D)"
+    ],
+    "conclusion": "(C\u2227E)",
+    "atom_map": {
+      "I": "A",
+      "S": "B",
+      "K": "C",
+      "N": "D",
+      "J": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 54,
+    "raw": "S, G => ((S & G) & S)",
+    "logic": "TFL",
+    "premises_raw": [
+      "S",
+      "G"
+    ],
+    "conclusion_raw": "((S & G) & S)",
+    "premises": [
+      "A",
+      "B"
+    ],
+    "conclusion": "((A\u2227B)\u2227A)",
+    "atom_map": {
+      "S": "A",
+      "G": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 55,
+    "raw": "((S & N) & J)=>(S&J)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((S & N) & J)"
+    ],
+    "conclusion_raw": "(S&J)",
+    "premises": [
+      "((A\u2227B)\u2227C)"
+    ],
+    "conclusion": "(A\u2227C)",
+    "atom_map": {
+      "S": "A",
+      "N": "B",
+      "J": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 56,
+    "raw": "(A->B), (S->~N), (K&S), (~N->(K->G)) => G",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A->B)",
+      "(S->~N)",
+      "(K&S)",
+      "(~N->(K->G))"
+    ],
+    "conclusion_raw": "G",
+    "premises": [
+      "(A\u2192B)",
+      "(C\u2192\u00acD)",
+      "(E\u2227C)",
+      "(\u00acD\u2192(E\u2192F))"
+    ],
+    "conclusion": "F",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "S": "C",
+      "N": "D",
+      "K": "E",
+      "G": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 57,
+    "raw": "(I->~S), (~S->~G), (~S -> J), (J -> R), I => (I -> (~G & R))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(I->~S)",
+      "(~S->~G)",
+      "(~S -> J)",
+      "(J -> R)",
+      "I"
+    ],
+    "conclusion_raw": "(I -> (~G & R))",
+    "premises": [
+      "(A\u2192\u00acB)",
+      "(\u00acB\u2192\u00acC)",
+      "(\u00acB\u2192D)",
+      "(D\u2192E)",
+      "A"
+    ],
+    "conclusion": "(A\u2192(\u00acC\u2227E))",
+    "atom_map": {
+      "I": "A",
+      "S": "B",
+      "G": "C",
+      "J": "D",
+      "R": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 58,
+    "raw": "(~S -> (J&K)), ((N&K)->~J), N, ~S => S",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~S -> (J&K))",
+      "((N&K)->~J)",
+      "N",
+      "~S"
+    ],
+    "conclusion_raw": "S",
+    "premises": [
+      "(\u00acA\u2192(B\u2227C))",
+      "((D\u2227C)\u2192\u00acB)",
+      "D",
+      "\u00acA"
+    ],
+    "conclusion": "A",
+    "atom_map": {
+      "S": "A",
+      "J": "B",
+      "K": "C",
+      "N": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 59,
+    "raw": "S, ((S || N) -> ~K)=>~K",
+    "logic": "TFL",
+    "premises_raw": [
+      "S",
+      "((S || N) -> ~K)"
+    ],
+    "conclusion_raw": "~K",
+    "premises": [
+      "A",
+      "((A\u2228B)\u2192\u00acC)"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "S": "A",
+      "N": "B",
+      "K": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 60,
+    "raw": "(S || N), (S -> F), (N -> F), S, N => F",
+    "logic": "TFL",
+    "premises_raw": [
+      "(S || N)",
+      "(S -> F)",
+      "(N -> F)",
+      "S",
+      "N"
+    ],
+    "conclusion_raw": "F",
+    "premises": [
+      "(A\u2228B)",
+      "(A\u2192C)",
+      "(B\u2192C)",
+      "A",
+      "B"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "S": "A",
+      "N": "B",
+      "F": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 61,
+    "raw": "(E <-> N), (E <-> G), ((S & D) <-> G), N, (S & D) => ((S & D) <-> N)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(E <-> N)",
+      "(E <-> G)",
+      "((S & D) <-> G)",
+      "N",
+      "(S & D)"
+    ],
+    "conclusion_raw": "((S & D) <-> N)",
+    "premises": [
+      "(A\u2194B)",
+      "(A\u2194C)",
+      "((D\u2227E)\u2194C)",
+      "B",
+      "(D\u2227E)"
+    ],
+    "conclusion": "((D\u2227E)\u2194B)",
+    "atom_map": {
+      "E": "A",
+      "N": "B",
+      "G": "C",
+      "S": "D",
+      "D": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 62,
+    "raw": "F, (E & G) => (F & G)",
+    "logic": "TFL",
+    "premises_raw": [
+      "F",
+      "(E & G)"
+    ],
+    "conclusion_raw": "(F & G)",
+    "premises": [
+      "A",
+      "(B\u2227C)"
+    ],
+    "conclusion": "(A\u2227C)",
+    "atom_map": {
+      "F": "A",
+      "E": "B",
+      "G": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 63,
+    "raw": "A, (A -> B) => (B & A)",
+    "logic": "TFL",
+    "premises_raw": [
+      "A",
+      "(A -> B)"
+    ],
+    "conclusion_raw": "(B & A)",
+    "premises": [
+      "A",
+      "(A\u2192B)"
+    ],
+    "conclusion": "(B\u2227A)",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 64,
+    "raw": "(A & E), (B & C), ((A & B) -> D) => (E & D)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & E)",
+      "(B & C)",
+      "((A & B) -> D)"
+    ],
+    "conclusion_raw": "(E & D)",
+    "premises": [
+      "(A\u2227B)",
+      "(C\u2227D)",
+      "((A\u2227C)\u2192E)"
+    ],
+    "conclusion": "(B\u2227E)",
+    "atom_map": {
+      "A": "A",
+      "E": "B",
+      "B": "C",
+      "C": "D",
+      "D": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 65,
+    "raw": "(A & B), ((B & A) -> C), (C -> D) => D",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & B)",
+      "((B & A) -> C)",
+      "(C -> D)"
+    ],
+    "conclusion_raw": "D",
+    "premises": [
+      "(A\u2227B)",
+      "((B\u2227A)\u2192C)",
+      "(C\u2192D)"
+    ],
+    "conclusion": "D",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 66,
+    "raw": "((D & G) & H), ((H & D) -> I), ((I & G) -> J) => J",
+    "logic": "TFL",
+    "premises_raw": [
+      "((D & G) & H)",
+      "((H & D) -> I)",
+      "((I & G) -> J)"
+    ],
+    "conclusion_raw": "J",
+    "premises": [
+      "((A\u2227B)\u2227C)",
+      "((C\u2227A)\u2192D)",
+      "((D\u2227B)\u2192E)"
+    ],
+    "conclusion": "E",
+    "atom_map": {
+      "D": "A",
+      "G": "B",
+      "H": "C",
+      "I": "D",
+      "J": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 67,
+    "raw": "(A->B), (B->C) => (A -> C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A->B)",
+      "(B->C)"
+    ],
+    "conclusion_raw": "(A -> C)",
+    "premises": [
+      "(A\u2192B)",
+      "(B\u2192C)"
+    ],
+    "conclusion": "(A\u2192C)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 68,
+    "raw": "(A -> B), ~B => ~A",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> B)",
+      "~B"
+    ],
+    "conclusion_raw": "~A",
+    "premises": [
+      "(A\u2192B)",
+      "\u00acB"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 69,
+    "raw": "(~F & G), (~C -> D), (D -> F) => C",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~F & G)",
+      "(~C -> D)",
+      "(D -> F)"
+    ],
+    "conclusion_raw": "C",
+    "premises": [
+      "(\u00acA\u2227B)",
+      "(\u00acC\u2192D)",
+      "(D\u2192A)"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "F": "A",
+      "G": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 70,
+    "raw": "(G -> H), ((H & G)->K), (K -> L) => (G -> (K & L))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(G -> H)",
+      "((H & G)->K)",
+      "(K -> L)"
+    ],
+    "conclusion_raw": "(G -> (K & L))",
+    "premises": [
+      "(A\u2192B)",
+      "((B\u2227A)\u2192C)",
+      "(C\u2192D)"
+    ],
+    "conclusion": "(A\u2192(C\u2227D))",
+    "atom_map": {
+      "G": "A",
+      "H": "B",
+      "K": "C",
+      "L": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 71,
+    "raw": "(A -> B), ~B => (A -> C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> B)",
+      "~B"
+    ],
+    "conclusion_raw": "(A -> C)",
+    "premises": [
+      "(A\u2192B)",
+      "\u00acB"
+    ],
+    "conclusion": "(A\u2192C)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 72,
+    "raw": "A, ((A || B) -> C) => C",
+    "logic": "TFL",
+    "premises_raw": [
+      "A",
+      "((A || B) -> C)"
+    ],
+    "conclusion_raw": "C",
+    "premises": [
+      "A",
+      "((A\u2228B)\u2192C)"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 73,
+    "raw": "(T <-> K), (J -> T), (J || K) => T",
+    "logic": "TFL",
+    "premises_raw": [
+      "(T <-> K)",
+      "(J -> T)",
+      "(J || K)"
+    ],
+    "conclusion_raw": "T",
+    "premises": [
+      "(A\u2194B)",
+      "(C\u2192A)",
+      "(C\u2228B)"
+    ],
+    "conclusion": "A",
+    "atom_map": {
+      "T": "A",
+      "K": "B",
+      "J": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 74,
+    "raw": "(A <-> B), (C <-> B) => (A <-> C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A <-> B)",
+      "(C <-> B)"
+    ],
+    "conclusion_raw": "(A <-> C)",
+    "premises": [
+      "(A\u2194B)",
+      "(C\u2194B)"
+    ],
+    "conclusion": "(A\u2194C)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 75,
+    "raw": "((G || H) -> I), (K -> H), K => (K -> (I || (M & N)))",
+    "logic": "TFL",
+    "premises_raw": [
+      "((G || H) -> I)",
+      "(K -> H)",
+      "K"
+    ],
+    "conclusion_raw": "(K -> (I || (M & N)))",
+    "premises": [
+      "((A\u2228B)\u2192C)",
+      "(D\u2192B)",
+      "D"
+    ],
+    "conclusion": "(D\u2192(C\u2228(E\u2227F)))",
+    "atom_map": {
+      "G": "A",
+      "H": "B",
+      "I": "C",
+      "K": "D",
+      "M": "E",
+      "N": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 76,
+    "raw": "(A & K), (A -> (I || J)), ((I & K) -> L), (L <-> J) => (L & A)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & K)",
+      "(A -> (I || J))",
+      "((I & K) -> L)",
+      "(L <-> J)"
+    ],
+    "conclusion_raw": "(L & A)",
+    "premises": [
+      "(A\u2227B)",
+      "(A\u2192(C\u2228D))",
+      "((C\u2227B)\u2192E)",
+      "(E\u2194D)"
+    ],
+    "conclusion": "(E\u2227A)",
+    "atom_map": {
+      "A": "A",
+      "K": "B",
+      "I": "C",
+      "J": "D",
+      "L": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 77,
+    "raw": "(C -> A), (B & D), C => (C -> (A & B))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(C -> A)",
+      "(B & D)",
+      "C"
+    ],
+    "conclusion_raw": "(C -> (A & B))",
+    "premises": [
+      "(A\u2192B)",
+      "(C\u2227D)",
+      "A"
+    ],
+    "conclusion": "(A\u2192(B\u2227C))",
+    "atom_map": {
+      "C": "A",
+      "A": "B",
+      "B": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 78,
+    "raw": "(G & L), ((H || L) <-> K) => (G & K)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(G & L)",
+      "((H || L) <-> K)"
+    ],
+    "conclusion_raw": "(G & K)",
+    "premises": [
+      "(A\u2227B)",
+      "((C\u2228B)\u2194D)"
+    ],
+    "conclusion": "(A\u2227D)",
+    "atom_map": {
+      "G": "A",
+      "L": "B",
+      "H": "C",
+      "K": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 79,
+    "raw": "A, (A -> B), C, D, E => B",
+    "logic": "TFL",
+    "premises_raw": [
+      "A",
+      "(A -> B)",
+      "C",
+      "D",
+      "E"
+    ],
+    "conclusion_raw": "B",
+    "premises": [
+      "A",
+      "(A\u2192B)",
+      "C",
+      "D",
+      "E"
+    ],
+    "conclusion": "B",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 80,
+    "raw": "(F & G), (H <-> F) => (G & H)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(F & G)",
+      "(H <-> F)"
+    ],
+    "conclusion_raw": "(G & H)",
+    "premises": [
+      "(A\u2227B)",
+      "(C\u2194A)"
+    ],
+    "conclusion": "(B\u2227C)",
+    "atom_map": {
+      "F": "A",
+      "G": "B",
+      "H": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 81,
+    "raw": "(A & (B & C)), ((A & B) -> D) => (C & D)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & (B & C))",
+      "((A & B) -> D)"
+    ],
+    "conclusion_raw": "(C & D)",
+    "premises": [
+      "(A\u2227(B\u2227C))",
+      "((A\u2227B)\u2192D)"
+    ],
+    "conclusion": "(C\u2227D)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 82,
+    "raw": "(F -> K), (F -> (G & J)), ((K & J) -> H), F => (F & (G & H))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(F -> K)",
+      "(F -> (G & J))",
+      "((K & J) -> H)",
+      "F"
+    ],
+    "conclusion_raw": "(F & (G & H))",
+    "premises": [
+      "(A\u2192B)",
+      "(A\u2192(C\u2227D))",
+      "((B\u2227D)\u2192E)",
+      "A"
+    ],
+    "conclusion": "(A\u2227(C\u2227E))",
+    "atom_map": {
+      "F": "A",
+      "K": "B",
+      "G": "C",
+      "J": "D",
+      "H": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 83,
+    "raw": "(~L -> (G & C)), (D -> (~L & J)), (G -> ~J) => ~D",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~L -> (G & C))",
+      "(D -> (~L & J))",
+      "(G -> ~J)"
+    ],
+    "conclusion_raw": "~D",
+    "premises": [
+      "(\u00acA\u2192(B\u2227C))",
+      "(D\u2192(\u00acA\u2227E))",
+      "(B\u2192\u00acE)"
+    ],
+    "conclusion": "\u00acD",
+    "atom_map": {
+      "L": "A",
+      "G": "B",
+      "C": "C",
+      "D": "D",
+      "J": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 84,
+    "raw": "(C -> E), ((G -> I) <-> (A & E)), (A & C) => ((A & C) -> (G -> I))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(C -> E)",
+      "((G -> I) <-> (A & E))",
+      "(A & C)"
+    ],
+    "conclusion_raw": "((A & C) -> (G -> I))",
+    "premises": [
+      "(A\u2192B)",
+      "((C\u2192D)\u2194(E\u2227B))",
+      "(E\u2227A)"
+    ],
+    "conclusion": "((E\u2227A)\u2192(C\u2192D))",
+    "atom_map": {
+      "C": "A",
+      "E": "B",
+      "G": "C",
+      "I": "D",
+      "A": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 85,
+    "raw": "(A -> (D || F)), (G <-> ~D), (F -> ~G), A => (A -> ~G)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (D || F))",
+      "(G <-> ~D)",
+      "(F -> ~G)",
+      "A"
+    ],
+    "conclusion_raw": "(A -> ~G)",
+    "premises": [
+      "(A\u2192(B\u2228C))",
+      "(D\u2194\u00acB)",
+      "(C\u2192\u00acD)",
+      "A"
+    ],
+    "conclusion": "(A\u2192\u00acD)",
+    "atom_map": {
+      "A": "A",
+      "D": "B",
+      "F": "C",
+      "G": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 86,
+    "raw": "((A & D) -> E), (E -> (A -> D)), A => (A -> (D <-> E))",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A & D) -> E)",
+      "(E -> (A -> D))",
+      "A"
+    ],
+    "conclusion_raw": "(A -> (D <-> E))",
+    "premises": [
+      "((A\u2227B)\u2192C)",
+      "(C\u2192(A\u2192B))",
+      "A"
+    ],
+    "conclusion": "(A\u2192(B\u2194C))",
+    "atom_map": {
+      "A": "A",
+      "D": "B",
+      "E": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 87,
+    "raw": "(C || ~B), ((~A || B) & ~C) => ~A",
+    "logic": "TFL",
+    "premises_raw": [
+      "(C || ~B)",
+      "((~A || B) & ~C)"
+    ],
+    "conclusion_raw": "~A",
+    "premises": [
+      "(A\u2228\u00acB)",
+      "((\u00acC\u2228B)\u2227\u00acA)"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "C": "A",
+      "B": "B",
+      "A": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 88,
+    "raw": "(J -> L), (K -> J), (L -> M) => (~M -> ~K)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(J -> L)",
+      "(K -> J)",
+      "(L -> M)"
+    ],
+    "conclusion_raw": "(~M -> ~K)",
+    "premises": [
+      "(A\u2192B)",
+      "(C\u2192A)",
+      "(B\u2192D)"
+    ],
+    "conclusion": "(\u00acD\u2192\u00acC)",
+    "atom_map": {
+      "J": "A",
+      "L": "B",
+      "K": "C",
+      "M": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 89,
+    "raw": "((G || H) & ~J), ((~I -> J) & (H -> ~I)) => G",
+    "logic": "TFL",
+    "premises_raw": [
+      "((G || H) & ~J)",
+      "((~I -> J) & (H -> ~I))"
+    ],
+    "conclusion_raw": "G",
+    "premises": [
+      "((A\u2228B)\u2227\u00acC)",
+      "((\u00acD\u2192C)\u2227(B\u2192\u00acD))"
+    ],
+    "conclusion": "A",
+    "atom_map": {
+      "G": "A",
+      "H": "B",
+      "J": "C",
+      "I": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 90,
+    "raw": "(K -> C), (H -> (S || T)), (S -> K), H => (H -> (C || T))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(K -> C)",
+      "(H -> (S || T))",
+      "(S -> K)",
+      "H"
+    ],
+    "conclusion_raw": "(H -> (C || T))",
+    "premises": [
+      "(A\u2192B)",
+      "(C\u2192(D\u2228E))",
+      "(D\u2192A)",
+      "C"
+    ],
+    "conclusion": "(C\u2192(B\u2228E))",
+    "atom_map": {
+      "K": "A",
+      "C": "B",
+      "H": "C",
+      "S": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 91,
+    "raw": "((A & B) -> C), (C -> D), ~(D || E) => (~A || ~B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A & B) -> C)",
+      "(C -> D)",
+      "~(D || E)"
+    ],
+    "conclusion_raw": "(~A || ~B)",
+    "premises": [
+      "((A\u2227B)\u2192C)",
+      "(C\u2192D)",
+      "\u00ac(D\u2228E)"
+    ],
+    "conclusion": "(\u00acA\u2228\u00acB)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 92,
+    "raw": "~C => ~(B & C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "~C"
+    ],
+    "conclusion_raw": "~(B & C)",
+    "premises": [
+      "\u00acA"
+    ],
+    "conclusion": "\u00ac(B\u2227A)",
+    "atom_map": {
+      "C": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 93,
+    "raw": "(Da -> (Bc & Cc)), Da => (Bc & Cc)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(Da -> (Bc & Cc))",
+      "Da"
+    ],
+    "conclusion_raw": "(Bc & Cc)",
+    "premises": [
+      "(D(a)\u2192(B(c)\u2227C(c)))",
+      "D(a)"
+    ],
+    "conclusion": "(B(c)\u2227C(c))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 94,
+    "raw": "((x)Dx -> (Bc & Cc)), (x)Dx => (Bc & Cc)",
+    "logic": "FOL",
+    "premises_raw": [
+      "((x)Dx -> (Bc & Cc))",
+      "(x)Dx"
+    ],
+    "conclusion_raw": "(Bc & Cc)",
+    "premises": [
+      "(\u2200xD(x)\u2192(B(c)\u2227C(c)))",
+      "\u2200xD(x)"
+    ],
+    "conclusion": "(B(c)\u2227C(c))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 95,
+    "raw": "(Da -> (\u2203y)(By & Cy)), Da => (\u2203y)(By & Cy)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(Da -> (\u2203y)(By & Cy))",
+      "Da"
+    ],
+    "conclusion_raw": "(\u2203y)(By & Cy)",
+    "premises": [
+      "(D(a)\u2192\u2203y(B(y)\u2227C(y)))",
+      "D(a)"
+    ],
+    "conclusion": "\u2203y(B(y)\u2227C(y))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 96,
+    "raw": "((x)Dx -> (\u2203y)(By & Cy)), (x)Dx => (\u2203y)(By & Cy)",
+    "logic": "FOL",
+    "premises_raw": [
+      "((x)Dx -> (\u2203y)(By & Cy))",
+      "(x)Dx"
+    ],
+    "conclusion_raw": "(\u2203y)(By & Cy)",
+    "premises": [
+      "(\u2200xD(x)\u2192\u2203y(B(y)\u2227C(y)))",
+      "\u2200xD(x)"
+    ],
+    "conclusion": "\u2203y(B(y)\u2227C(y))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 97,
+    "raw": "(x)(Gx -> Mx), Ge => Me",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Gx -> Mx)",
+      "Ge"
+    ],
+    "conclusion_raw": "Me",
+    "premises": [
+      "\u2200x(G(x)\u2192M(x))",
+      "G(e)"
+    ],
+    "conclusion": "M(e)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 98,
+    "raw": "(x)(Gx -> Mx), (y)(My -> Ly), Ge => Le",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Gx -> Mx)",
+      "(y)(My -> Ly)",
+      "Ge"
+    ],
+    "conclusion_raw": "Le",
+    "premises": [
+      "\u2200x(G(x)\u2192M(x))",
+      "\u2200y(M(y)\u2192L(y))",
+      "G(e)"
+    ],
+    "conclusion": "L(e)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 99,
+    "raw": "(x)(Gx -> Mx), (z)Gz=>(x)Mx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Gx -> Mx)",
+      "(z)Gz"
+    ],
+    "conclusion_raw": "(x)Mx",
+    "premises": [
+      "\u2200x(G(x)\u2192M(x))",
+      "\u2200zG(z)"
+    ],
+    "conclusion": "\u2200xM(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 100,
+    "raw": "(w)(Gw -> Mw), (\u2203y)(Gy & Ay), (Gf & Af) => (\u2203z)(Az & Mz)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(w)(Gw -> Mw)",
+      "(\u2203y)(Gy & Ay)",
+      "(Gf & Af)"
+    ],
+    "conclusion_raw": "(\u2203z)(Az & Mz)",
+    "premises": [
+      "\u2200w(G(w)\u2192M(w))",
+      "\u2203y(G(y)\u2227A(y))",
+      "(G(f)\u2227A(f))"
+    ],
+    "conclusion": "\u2203z(A(z)\u2227M(z))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 101,
+    "raw": "(\u2203x)Gx, (z)(Gz -> Mz), (\u2203y)(My -> Ge) =>Ge",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203x)Gx",
+      "(z)(Gz -> Mz)",
+      "(\u2203y)(My -> Ge)"
+    ],
+    "conclusion_raw": "Ge",
+    "premises": [
+      "\u2203xG(x)",
+      "\u2200z(G(z)\u2192M(z))",
+      "\u2203y(M(y)\u2192G(e))"
+    ],
+    "conclusion": "G(e)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 102,
+    "raw": "(z)(Kz->Jz), Kn => Jn",
+    "logic": "FOL",
+    "premises_raw": [
+      "(z)(Kz->Jz)",
+      "Kn"
+    ],
+    "conclusion_raw": "Jn",
+    "premises": [
+      "\u2200z(K(z)\u2192J(z))",
+      "K(n)"
+    ],
+    "conclusion": "J(n)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 103,
+    "raw": "(y)Gy,(z)(Gz->Hz)=>(\u2203x)Hx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(y)Gy",
+      "(z)(Gz->Hz)"
+    ],
+    "conclusion_raw": "(\u2203x)Hx",
+    "premises": [
+      "\u2200yG(y)",
+      "\u2200z(G(z)\u2192H(z))"
+    ],
+    "conclusion": "\u2203xH(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 104,
+    "raw": "(w)(Dw\u2194Cw), (x)Cx=>((x)Cx -> (\u2203x)Dx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(w)(Dw\u2194Cw)",
+      "(x)Cx"
+    ],
+    "conclusion_raw": "((x)Cx -> (\u2203x)Dx)",
+    "premises": [
+      "\u2200w(D(w)\u2194C(w))",
+      "\u2200xC(x)"
+    ],
+    "conclusion": "(\u2200xC(x)\u2192\u2203xD(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 105,
+    "raw": "(x)(Mx->Bx), ~Bc=>~Mc",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Mx->Bx)",
+      "~Bc"
+    ],
+    "conclusion_raw": "~Mc",
+    "premises": [
+      "\u2200x(M(x)\u2192B(x))",
+      "\u00acB(c)"
+    ],
+    "conclusion": "\u00acM(c)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 106,
+    "raw": "Fa, (x)(Mx<->Gx), (x)(Fx->Gx) => (\u2203z)(Mz&Gz)",
+    "logic": "FOL",
+    "premises_raw": [
+      "Fa",
+      "(x)(Mx<->Gx)",
+      "(x)(Fx->Gx)"
+    ],
+    "conclusion_raw": "(\u2203z)(Mz&Gz)",
+    "premises": [
+      "F(a)",
+      "\u2200x(M(x)\u2194G(x))",
+      "\u2200x(F(x)\u2192G(x))"
+    ],
+    "conclusion": "\u2203z(M(z)\u2227G(z))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 107,
+    "raw": "(y)My, (z)(Kz<->Mz) => (z)Kz",
+    "logic": "FOL",
+    "premises_raw": [
+      "(y)My",
+      "(z)(Kz<->Mz)"
+    ],
+    "conclusion_raw": "(z)Kz",
+    "premises": [
+      "\u2200yM(y)",
+      "\u2200z(K(z)\u2194M(z))"
+    ],
+    "conclusion": "\u2200zK(z)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 108,
+    "raw": "(\u2203x)Fx, (x)(Fx->Gx) => (\u2203x)Gx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203x)Fx",
+      "(x)(Fx->Gx)"
+    ],
+    "conclusion_raw": "(\u2203x)Gx",
+    "premises": [
+      "\u2203xF(x)",
+      "\u2200x(F(x)\u2192G(x))"
+    ],
+    "conclusion": "\u2203xG(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 109,
+    "raw": "(x)(Ax -> Bx), (\u2203x)Ax => ((\u2203x)Ax->(\u2203x)Bx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Ax -> Bx)",
+      "(\u2203x)Ax"
+    ],
+    "conclusion_raw": "((\u2203x)Ax->(\u2203x)Bx)",
+    "premises": [
+      "\u2200x(A(x)\u2192B(x))",
+      "\u2203xA(x)"
+    ],
+    "conclusion": "(\u2203xA(x)\u2192\u2203xB(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 110,
+    "raw": "(x)Cx, (x)(Cx -> (Dx & Ex)) => ((\u2203x)Dx & (y)Ey)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)Cx",
+      "(x)(Cx -> (Dx & Ex))"
+    ],
+    "conclusion_raw": "((\u2203x)Dx & (y)Ey)",
+    "premises": [
+      "\u2200xC(x)",
+      "\u2200x(C(x)\u2192(D(x)\u2227E(x)))"
+    ],
+    "conclusion": "(\u2203xD(x)\u2227\u2200yE(y))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 111,
+    "raw": "(\u2203x)Cx, (x)(Cx -> (Dx & Ex)) => ((\u2203x)Dx & (\u2203x)Ex)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203x)Cx",
+      "(x)(Cx -> (Dx & Ex))"
+    ],
+    "conclusion_raw": "((\u2203x)Dx & (\u2203x)Ex)",
+    "premises": [
+      "\u2203xC(x)",
+      "\u2200x(C(x)\u2192(D(x)\u2227E(x)))"
+    ],
+    "conclusion": "(\u2203xD(x)\u2227\u2203xE(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 112,
+    "raw": "Fe, (z)(Fz -> Gz) => (\u2203x)(Fx&Gx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "Fe",
+      "(z)(Fz -> Gz)"
+    ],
+    "conclusion_raw": "(\u2203x)(Fx&Gx)",
+    "premises": [
+      "F(e)",
+      "\u2200z(F(z)\u2192G(z))"
+    ],
+    "conclusion": "\u2203x(F(x)\u2227G(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 113,
+    "raw": "(x)(y)Cxy, => (y)(\u2203x)Cxy",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(y)Cxy"
+    ],
+    "conclusion_raw": "(y)(\u2203x)Cxy",
+    "premises": [
+      "\u2200x\u2200yC(x,y)"
+    ],
+    "conclusion": "\u2200y\u2203xC(x,y)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 114,
+    "raw": "(w)(x)(y)(z)Fwxyzxw => (x)(y)Fxyxxyx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(w)(x)(y)(z)Fwxyzxw"
+    ],
+    "conclusion_raw": "(x)(y)Fxyxxyx",
+    "premises": [
+      "\u2200w\u2200x\u2200y\u2200zF(w,x,y,z,x,w)"
+    ],
+    "conclusion": "\u2200x\u2200yF(x,y,x,x,y,x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 115,
+    "raw": "(x)Mx, (y)~Dyy => (x)(~Dxx & Mx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)Mx",
+      "(y)~Dyy"
+    ],
+    "conclusion_raw": "(x)(~Dxx & Mx)",
+    "premises": [
+      "\u2200xM(x)",
+      "\u2200y\u00acD(y,y)"
+    ],
+    "conclusion": "\u2200x(\u00acD(x,x)\u2227M(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 116,
+    "raw": "(x)Mx, (y)~Dyy => (\u2203x)(y)(~Dxx & My)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)Mx",
+      "(y)~Dyy"
+    ],
+    "conclusion_raw": "(\u2203x)(y)(~Dxx & My)",
+    "premises": [
+      "\u2200xM(x)",
+      "\u2200y\u00acD(y,y)"
+    ],
+    "conclusion": "\u2203x\u2200y(\u00acD(x,x)\u2227M(y))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 117,
+    "raw": "(x)(Mx -> Wx), (x)~Wx => (z)~Mz",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Mx -> Wx)",
+      "(x)~Wx"
+    ],
+    "conclusion_raw": "(z)~Mz",
+    "premises": [
+      "\u2200x(M(x)\u2192W(x))",
+      "\u2200x\u00acW(x)"
+    ],
+    "conclusion": "\u2200z\u00acM(z)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 118,
+    "raw": "(\u2203y)(x)Lxy=>(x)(\u2203y)Lxy",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203y)(x)Lxy"
+    ],
+    "conclusion_raw": "(x)(\u2203y)Lxy",
+    "premises": [
+      "\u2203y\u2200xL(x,y)"
+    ],
+    "conclusion": "\u2200x\u2203yL(x,y)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 119,
+    "raw": "(\u2203y)(x)Lyx=>(x)(\u2203y)Lyx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203y)(x)Lyx"
+    ],
+    "conclusion_raw": "(x)(\u2203y)Lyx",
+    "premises": [
+      "\u2203y\u2200xL(y,x)"
+    ],
+    "conclusion": "\u2200x\u2203yL(y,x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 120,
+    "raw": "(x)~Mx, ((\u2203y)Jy->(\u2203x)Mx)=>(y)~Jy",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)~Mx",
+      "((\u2203y)Jy->(\u2203x)Mx)"
+    ],
+    "conclusion_raw": "(y)~Jy",
+    "premises": [
+      "\u2200x\u00acM(x)",
+      "(\u2203yJ(y)\u2192\u2203xM(x))"
+    ],
+    "conclusion": "\u2200y\u00acJ(y)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 121,
+    "raw": "P, (P -> Q) => (P & Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "P",
+      "(P -> Q)"
+    ],
+    "conclusion_raw": "(P & Q)",
+    "premises": [
+      "A",
+      "(A\u2192B)"
+    ],
+    "conclusion": "(A\u2227B)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 122,
+    "raw": "((P & Q) -> R), (Q -> P), Q => R",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) -> R)",
+      "(Q -> P)",
+      "Q"
+    ],
+    "conclusion_raw": "R",
+    "premises": [
+      "((A\u2227B)\u2192C)",
+      "(B\u2192A)",
+      "B"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 123,
+    "raw": "(P -> Q), (Q -> R), P => (P -> (Q & R))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> Q)",
+      "(Q -> R)",
+      "P"
+    ],
+    "conclusion_raw": "(P -> (Q & R))",
+    "premises": [
+      "(A\u2192B)",
+      "(B\u2192C)",
+      "A"
+    ],
+    "conclusion": "(A\u2192(B\u2227C))",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 124,
+    "raw": "P, Q => (Q -> P)",
+    "logic": "TFL",
+    "premises_raw": [
+      "P",
+      "Q"
+    ],
+    "conclusion_raw": "(Q -> P)",
+    "premises": [
+      "A",
+      "B"
+    ],
+    "conclusion": "(B\u2192A)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 125,
+    "raw": "(P -> Q), ~Q => ~P",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> Q)",
+      "~Q"
+    ],
+    "conclusion_raw": "~P",
+    "premises": [
+      "(A\u2192B)",
+      "\u00acB"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "P": "A",
+      "Q": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 126,
+    "raw": "(P -> (Q -> R)) => (Q -> (P -> R))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> (Q -> R))"
+    ],
+    "conclusion_raw": "(Q -> (P -> R))",
+    "premises": [
+      "(A\u2192(B\u2192C))"
+    ],
+    "conclusion": "(B\u2192(A\u2192C))",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 127,
+    "raw": "(P || (Q & R)) => (P || Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P || (Q & R))"
+    ],
+    "conclusion_raw": "(P || Q)",
+    "premises": [
+      "(A\u2228(B\u2227C))"
+    ],
+    "conclusion": "(A\u2228B)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 128,
+    "raw": "((L & M) -> ~P), (I -> P), M, I => ~L",
+    "logic": "TFL",
+    "premises_raw": [
+      "((L & M) -> ~P)",
+      "(I -> P)",
+      "M",
+      "I"
+    ],
+    "conclusion_raw": "~L",
+    "premises": [
+      "((A\u2227B)\u2192\u00acC)",
+      "(D\u2192C)",
+      "B",
+      "D"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "L": "A",
+      "M": "B",
+      "P": "C",
+      "I": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 129,
+    "raw": "(P || Q), ~P => Q",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P || Q)",
+      "~P"
+    ],
+    "conclusion_raw": "Q",
+    "premises": [
+      "(A\u2228B)",
+      "\u00acA"
+    ],
+    "conclusion": "B",
+    "atom_map": {
+      "P": "A",
+      "Q": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 130,
+    "raw": "(A || B), (A -> C), (~D -> ~B) => (C || D)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A || B)",
+      "(A -> C)",
+      "(~D -> ~B)"
+    ],
+    "conclusion_raw": "(C || D)",
+    "premises": [
+      "(A\u2228B)",
+      "(A\u2192C)",
+      "(\u00acD\u2192\u00acB)"
+    ],
+    "conclusion": "(C\u2228D)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 131,
+    "raw": "Pa, Qa => (\u2203x)(Px & Qx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "Pa",
+      "Qa"
+    ],
+    "conclusion_raw": "(\u2203x)(Px & Qx)",
+    "premises": [
+      "P(a)",
+      "Q(a)"
+    ],
+    "conclusion": "\u2203x(P(x)\u2227Q(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 132,
+    "raw": "(x)(Px -> Qx), Pa => Qa",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Px -> Qx)",
+      "Pa"
+    ],
+    "conclusion_raw": "Qa",
+    "premises": [
+      "\u2200x(P(x)\u2192Q(x))",
+      "P(a)"
+    ],
+    "conclusion": "Q(a)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 133,
+    "raw": "(x)(Px -> Qx), (x)(Qx -> Rx) => (x)(Px -> Rx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Px -> Qx)",
+      "(x)(Qx -> Rx)"
+    ],
+    "conclusion_raw": "(x)(Px -> Rx)",
+    "premises": [
+      "\u2200x(P(x)\u2192Q(x))",
+      "\u2200x(Q(x)\u2192R(x))"
+    ],
+    "conclusion": "\u2200x(P(x)\u2192R(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 134,
+    "raw": "(\u2203x)(y)Pxy=>(y)(\u2203x)Pxy",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203x)(y)Pxy"
+    ],
+    "conclusion_raw": "(y)(\u2203x)Pxy",
+    "premises": [
+      "\u2203x\u2200yP(x,y)"
+    ],
+    "conclusion": "\u2200y\u2203xP(x,y)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 135,
+    "raw": "(A -> B), A => B",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> B)",
+      "A"
+    ],
+    "conclusion_raw": "B",
+    "premises": [
+      "(A\u2192B)",
+      "A"
+    ],
+    "conclusion": "B",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 136,
+    "raw": "(P -> ~Q), Q => ~P",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> ~Q)",
+      "Q"
+    ],
+    "conclusion_raw": "~P",
+    "premises": [
+      "(A\u2192\u00acB)",
+      "B"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "P": "A",
+      "Q": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 137,
+    "raw": "(P | Q), ~Q, (~R -> ~P) => (~Q & R)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P | Q)",
+      "~Q",
+      "(~R -> ~P)"
+    ],
+    "conclusion_raw": "(~Q & R)",
+    "premises": [
+      "(A\u2228B)",
+      "\u00acB",
+      "(\u00acC\u2192\u00acA)"
+    ],
+    "conclusion": "(\u00acB\u2227C)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 138,
+    "raw": "(M & (~N -> ~M)) => ((N & M) | ~M)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(M & (~N -> ~M))"
+    ],
+    "conclusion_raw": "((N & M) | ~M)",
+    "premises": [
+      "(A\u2227(\u00acB\u2192\u00acA))"
+    ],
+    "conclusion": "((B\u2227A)\u2228\u00acA)",
+    "atom_map": {
+      "M": "A",
+      "N": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 139,
+    "raw": "P, (P -> (Q & ~R)), (~P | (~S & T)), ((T & ~S) -> ~U) => ~U",
+    "logic": "TFL",
+    "premises_raw": [
+      "P",
+      "(P -> (Q & ~R))",
+      "(~P | (~S & T))",
+      "((T & ~S) -> ~U)"
+    ],
+    "conclusion_raw": "~U",
+    "premises": [
+      "A",
+      "(A\u2192(B\u2227\u00acC))",
+      "(\u00acA\u2228(\u00acD\u2227E))",
+      "((E\u2227\u00acD)\u2192\u00acF)"
+    ],
+    "conclusion": "\u00acF",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E",
+      "U": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 140,
+    "raw": "((P & Q) | (R & S)), ~(P & Q), (T -> ~(R & S)) => ~T",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) | (R & S))",
+      "~(P & Q)",
+      "(T -> ~(R & S))"
+    ],
+    "conclusion_raw": "~T",
+    "premises": [
+      "((A\u2227B)\u2228(C\u2227D))",
+      "\u00ac(A\u2227B)",
+      "(E\u2192\u00ac(C\u2227D))"
+    ],
+    "conclusion": "\u00acE",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 141,
+    "raw": "(A & B), ~B => Q",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & B)",
+      "~B"
+    ],
+    "conclusion_raw": "Q",
+    "premises": [
+      "(A\u2227B)",
+      "\u00acB"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "Q": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 142,
+    "raw": "(A -> (B & (C & D))), A, ((C & D) -> E) => (A & E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B & (C & D)))",
+      "A",
+      "((C & D) -> E)"
+    ],
+    "conclusion_raw": "(A & E)",
+    "premises": [
+      "(A\u2192(B\u2227(C\u2227D)))",
+      "A",
+      "((C\u2227D)\u2192E)"
+    ],
+    "conclusion": "(A\u2227E)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 143,
+    "raw": "(P -> Q), (Q->R), (Q->S), (S -> T) => (P->T)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> Q)",
+      "(Q->R)",
+      "(Q->S)",
+      "(S -> T)"
+    ],
+    "conclusion_raw": "(P->T)",
+    "premises": [
+      "(A\u2192B)",
+      "(B\u2192C)",
+      "(B\u2192D)",
+      "(D\u2192E)"
+    ],
+    "conclusion": "(A\u2192E)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 144,
+    "raw": "(A | ~B), ~A, (C -> B) => ((~C & ~A) | Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A | ~B)",
+      "~A",
+      "(C -> B)"
+    ],
+    "conclusion_raw": "((~C & ~A) | Q)",
+    "premises": [
+      "(A\u2228\u00acB)",
+      "\u00acA",
+      "(C\u2192B)"
+    ],
+    "conclusion": "((\u00acC\u2227\u00acA)\u2228D)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "Q": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 145,
+    "raw": "(A -> B) => (~A | B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> B)"
+    ],
+    "conclusion_raw": "(~A | B)",
+    "premises": [
+      "(A\u2192B)"
+    ],
+    "conclusion": "(\u00acA\u2228B)",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 146,
+    "raw": "~(A -> B) => (A & ~B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(A -> B)"
+    ],
+    "conclusion_raw": "(A & ~B)",
+    "premises": [
+      "\u00ac(A\u2192B)"
+    ],
+    "conclusion": "(A\u2227\u00acB)",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 147,
+    "raw": "(A & (B & ~C)), (~C -> ~D) => (A & ~D)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & (B & ~C))",
+      "(~C -> ~D)"
+    ],
+    "conclusion_raw": "(A & ~D)",
+    "premises": [
+      "(A\u2227(B\u2227\u00acC))",
+      "(\u00acC\u2192\u00acD)"
+    ],
+    "conclusion": "(A\u2227\u00acD)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 148,
+    "raw": "(A -> B), (B -> A) => (A <-> B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> B)",
+      "(B -> A)"
+    ],
+    "conclusion_raw": "(A <-> B)",
+    "premises": [
+      "(A\u2192B)",
+      "(B\u2192A)"
+    ],
+    "conclusion": "(A\u2194B)",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 149,
+    "raw": "A, ~A => Z",
+    "logic": "TFL",
+    "premises_raw": [
+      "A",
+      "~A"
+    ],
+    "conclusion_raw": "Z",
+    "premises": [
+      "A",
+      "\u00acA"
+    ],
+    "conclusion": "B",
+    "atom_map": {
+      "A": "A",
+      "Z": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 150,
+    "raw": "(A <-> B) => ((A -> B) & (B -> A))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A <-> B)"
+    ],
+    "conclusion_raw": "((A -> B) & (B -> A))",
+    "premises": [
+      "(A\u2194B)"
+    ],
+    "conclusion": "((A\u2192B)\u2227(B\u2192A))",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 151,
+    "raw": "(A <-> B) => (((A -> B) & (B -> A)) | (A & (B & (C & D))))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A <-> B)"
+    ],
+    "conclusion_raw": "(((A -> B) & (B -> A)) | (A & (B & (C & D))))",
+    "premises": [
+      "(A\u2194B)"
+    ],
+    "conclusion": "(((A\u2192B)\u2227(B\u2192A))\u2228(A\u2227(B\u2227(C\u2227D))))",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 152,
+    "raw": "(A & B) => ~(~A | ~B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & B)"
+    ],
+    "conclusion_raw": "~(~A | ~B)",
+    "premises": [
+      "(A\u2227B)"
+    ],
+    "conclusion": "\u00ac(\u00acA\u2228\u00acB)",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 153,
+    "raw": "((A & B) -> (A & C)), B, ~C, (~A -> C) => (A & C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A & B) -> (A & C))",
+      "B",
+      "~C",
+      "(~A -> C)"
+    ],
+    "conclusion_raw": "(A & C)",
+    "premises": [
+      "((A\u2227B)\u2192(A\u2227C))",
+      "B",
+      "\u00acC",
+      "(\u00acA\u2192C)"
+    ],
+    "conclusion": "(A\u2227C)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 154,
+    "raw": "(~P -> ~Q), ((C -> D) & E), (~E | C), (Q -> ~D) => ~Q",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~P -> ~Q)",
+      "((C -> D) & E)",
+      "(~E | C)",
+      "(Q -> ~D)"
+    ],
+    "conclusion_raw": "~Q",
+    "premises": [
+      "(\u00acA\u2192\u00acB)",
+      "((C\u2192D)\u2227E)",
+      "(\u00acE\u2228C)",
+      "(B\u2192\u00acD)"
+    ],
+    "conclusion": "\u00acB",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 155,
+    "raw": "((A | B) & (A | C)), ~C, (A -> B), (B -> ~D), (~E -> D), (~E | (~F | ~G)), F => (~G | H)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A | B) & (A | C))",
+      "~C",
+      "(A -> B)",
+      "(B -> ~D)",
+      "(~E -> D)",
+      "(~E | (~F | ~G))",
+      "F"
+    ],
+    "conclusion_raw": "(~G | H)",
+    "premises": [
+      "((A\u2228B)\u2227(A\u2228C))",
+      "\u00acC",
+      "(A\u2192B)",
+      "(B\u2192\u00acD)",
+      "(\u00acE\u2192D)",
+      "(\u00acE\u2228(\u00acF\u2228\u00acG))",
+      "F"
+    ],
+    "conclusion": "(\u00acG\u2228H)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E",
+      "F": "F",
+      "G": "G",
+      "H": "H"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 156,
+    "raw": "D, ((D & E) -> ~F), (F | G), (G -> ((A -> B) -> C)), (E & ~H) => (((A -> B) -> C) | P)",
+    "logic": "TFL",
+    "premises_raw": [
+      "D",
+      "((D & E) -> ~F)",
+      "(F | G)",
+      "(G -> ((A -> B) -> C))",
+      "(E & ~H)"
+    ],
+    "conclusion_raw": "(((A -> B) -> C) | P)",
+    "premises": [
+      "A",
+      "((A\u2227B)\u2192\u00acC)",
+      "(C\u2228D)",
+      "(D\u2192((E\u2192F)\u2192G))",
+      "(B\u2227\u00acH)"
+    ],
+    "conclusion": "(((E\u2192F)\u2192G)\u2228I)",
+    "atom_map": {
+      "D": "A",
+      "E": "B",
+      "F": "C",
+      "G": "D",
+      "A": "E",
+      "B": "F",
+      "C": "G",
+      "H": "H",
+      "P": "I"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 157,
+    "raw": "(G -> H), ((A & B) <-> (C & D)), (~Q -> ~C), (D -> ((A & B) & C)), (F -> G), D => ((F -> H) & Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(G -> H)",
+      "((A & B) <-> (C & D))",
+      "(~Q -> ~C)",
+      "(D -> ((A & B) & C))",
+      "(F -> G)",
+      "D"
+    ],
+    "conclusion_raw": "((F -> H) & Q)",
+    "premises": [
+      "(A\u2192B)",
+      "((C\u2227D)\u2194(E\u2227F))",
+      "(\u00acG\u2192\u00acE)",
+      "(F\u2192((C\u2227D)\u2227E))",
+      "(H\u2192A)",
+      "F"
+    ],
+    "conclusion": "((H\u2192B)\u2227G)",
+    "atom_map": {
+      "G": "A",
+      "H": "B",
+      "A": "C",
+      "B": "D",
+      "C": "E",
+      "D": "F",
+      "Q": "G",
+      "F": "H"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 158,
+    "raw": "((P & Q) & R), (S & T) => (Q & S)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) & R)",
+      "(S & T)"
+    ],
+    "conclusion_raw": "(Q & S)",
+    "premises": [
+      "((A\u2227B)\u2227C)",
+      "(D\u2227E)"
+    ],
+    "conclusion": "(B\u2227D)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 159,
+    "raw": "(Q & P), R => (P & (R & Q))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Q & P)",
+      "R"
+    ],
+    "conclusion_raw": "(P & (R & Q))",
+    "premises": [
+      "(A\u2227B)",
+      "C"
+    ],
+    "conclusion": "(B\u2227(C\u2227A))",
+    "atom_map": {
+      "Q": "A",
+      "P": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 160,
+    "raw": "((P & Q) -> (R -> S)), (A & ~(R -> S)) => (~P | ~Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) -> (R -> S))",
+      "(A & ~(R -> S))"
+    ],
+    "conclusion_raw": "(~P | ~Q)",
+    "premises": [
+      "((A\u2227B)\u2192(C\u2192D))",
+      "(E\u2227\u00ac(C\u2192D))"
+    ],
+    "conclusion": "(\u00acA\u2228\u00acB)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "A": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 161,
+    "raw": "(A -> (B -> (C -> (D -> E)))), (~G & ~F), (~F -> A) => ((B -> (C -> (D -> E))) & ~G)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B -> (C -> (D -> E))))",
+      "(~G & ~F)",
+      "(~F -> A)"
+    ],
+    "conclusion_raw": "((B -> (C -> (D -> E))) & ~G)",
+    "premises": [
+      "(A\u2192(B\u2192(C\u2192(D\u2192E))))",
+      "(\u00acF\u2227\u00acG)",
+      "(\u00acG\u2192A)"
+    ],
+    "conclusion": "((B\u2192(C\u2192(D\u2192E)))\u2227\u00acF)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E",
+      "G": "F",
+      "F": "G"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 162,
+    "raw": "(P & (Q & R)) => ((R & P) & Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P & (Q & R))"
+    ],
+    "conclusion_raw": "((R & P) & Q)",
+    "premises": [
+      "(A\u2227(B\u2227C))"
+    ],
+    "conclusion": "((C\u2227A)\u2227B)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 163,
+    "raw": "((P & Q) | (X -> Y)), ~(P & Q), ~Y => ~X",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) | (X -> Y))",
+      "~(P & Q)",
+      "~Y"
+    ],
+    "conclusion_raw": "~X",
+    "premises": [
+      "((A\u2227B)\u2228(C\u2192D))",
+      "\u00ac(A\u2227B)",
+      "\u00acD"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "X": "C",
+      "Y": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 164,
+    "raw": "(~X -> (Y -> ~Z)), (~M -> (~Z -> X)), (~M & ~X) => ~Y",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~X -> (Y -> ~Z))",
+      "(~M -> (~Z -> X))",
+      "(~M & ~X)"
+    ],
+    "conclusion_raw": "~Y",
+    "premises": [
+      "(\u00acA\u2192(B\u2192\u00acC))",
+      "(\u00acD\u2192(\u00acC\u2192A))",
+      "(\u00acD\u2227\u00acA)"
+    ],
+    "conclusion": "\u00acB",
+    "atom_map": {
+      "X": "A",
+      "Y": "B",
+      "Z": "C",
+      "M": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 165,
+    "raw": "(~B -> ~A), ~B => (~A | (K <-> C))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~B -> ~A)",
+      "~B"
+    ],
+    "conclusion_raw": "(~A | (K <-> C))",
+    "premises": [
+      "(\u00acA\u2192\u00acB)",
+      "\u00acA"
+    ],
+    "conclusion": "(\u00acB\u2228(C\u2194D))",
+    "atom_map": {
+      "B": "A",
+      "A": "B",
+      "K": "C",
+      "C": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 166,
+    "raw": "(C -> (D & M)), (~C -> ~H), H => (D & M)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(C -> (D & M))",
+      "(~C -> ~H)",
+      "H"
+    ],
+    "conclusion_raw": "(D & M)",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "(\u00acA\u2192\u00acD)",
+      "D"
+    ],
+    "conclusion": "(B\u2227C)",
+    "atom_map": {
+      "C": "A",
+      "D": "B",
+      "M": "C",
+      "H": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 167,
+    "raw": "(A -> ~(~C | ~D)), ~(C & D) => ~A",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> ~(~C | ~D))",
+      "~(C & D)"
+    ],
+    "conclusion_raw": "~A",
+    "premises": [
+      "(A\u2192\u00ac(\u00acB\u2228\u00acC))",
+      "\u00ac(B\u2227C)"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "A": "A",
+      "C": "B",
+      "D": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 168,
+    "raw": "(B | (C -> D)), (~Q -> (C & ~D)), (~D -> ~B), (~D & ~A) => ((Q & ~A) -> ~B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(B | (C -> D))",
+      "(~Q -> (C & ~D))",
+      "(~D -> ~B)",
+      "(~D & ~A)"
+    ],
+    "conclusion_raw": "((Q & ~A) -> ~B)",
+    "premises": [
+      "(A\u2228(B\u2192C))",
+      "(\u00acD\u2192(B\u2227\u00acC))",
+      "(\u00acC\u2192\u00acA)",
+      "(\u00acC\u2227\u00acE)"
+    ],
+    "conclusion": "((D\u2227\u00acE)\u2192\u00acA)",
+    "atom_map": {
+      "B": "A",
+      "C": "B",
+      "D": "C",
+      "Q": "D",
+      "A": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 169,
+    "raw": "~(A <-> B) => ~((A->B) & (B->A))",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(A <-> B)"
+    ],
+    "conclusion_raw": "~((A->B) & (B->A))",
+    "premises": [
+      "\u00ac(A\u2194B)"
+    ],
+    "conclusion": "\u00ac((A\u2192B)\u2227(B\u2192A))",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 170,
+    "raw": "~((A->B) & (B->A)) => ~(A <-> B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "~((A->B) & (B->A))"
+    ],
+    "conclusion_raw": "~(A <-> B)",
+    "premises": [
+      "\u00ac((A\u2192B)\u2227(B\u2192A))"
+    ],
+    "conclusion": "\u00ac(A\u2194B)",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 171,
+    "raw": "(A | B), (A -> C), (B -> D) => (C | D)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A | B)",
+      "(A -> C)",
+      "(B -> D)"
+    ],
+    "conclusion_raw": "(C | D)",
+    "premises": [
+      "(A\u2228B)",
+      "(A\u2192C)",
+      "(B\u2192D)"
+    ],
+    "conclusion": "(C\u2228D)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 172,
+    "raw": "(P -> Q) => (~Q -> ~P)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> Q)"
+    ],
+    "conclusion_raw": "(~Q -> ~P)",
+    "premises": [
+      "(A\u2192B)"
+    ],
+    "conclusion": "(\u00acB\u2192\u00acA)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 173,
+    "raw": "(~Q | ~S), (P->Q), (R->S) => (~P | ~R)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~Q | ~S)",
+      "(P->Q)",
+      "(R->S)"
+    ],
+    "conclusion_raw": "(~P | ~R)",
+    "premises": [
+      "(\u00acA\u2228\u00acB)",
+      "(C\u2192A)",
+      "(D\u2192B)"
+    ],
+    "conclusion": "(\u00acC\u2228\u00acD)",
+    "atom_map": {
+      "Q": "A",
+      "S": "B",
+      "P": "C",
+      "R": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 174,
+    "raw": "(P -> (Q | R)), (~S -> ~Q), (~U -> ~R), P => (P & (S | U))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> (Q | R))",
+      "(~S -> ~Q)",
+      "(~U -> ~R)",
+      "P"
+    ],
+    "conclusion_raw": "(P & (S | U))",
+    "premises": [
+      "(A\u2192(B\u2228C))",
+      "(\u00acD\u2192\u00acB)",
+      "(\u00acE\u2192\u00acC)",
+      "A"
+    ],
+    "conclusion": "(A\u2227(D\u2228E))",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "U": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 175,
+    "raw": "(A -> (B & C)), ((B | D) -> E), A => (A -> E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B & C))",
+      "((B | D) -> E)",
+      "A"
+    ],
+    "conclusion_raw": "(A -> E)",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "((B\u2228D)\u2192E)",
+      "A"
+    ],
+    "conclusion": "(A\u2192E)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 176,
+    "raw": "(A -> (B & C)), ((B | D) -> E), A => (~E -> ~A)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B & C))",
+      "((B | D) -> E)",
+      "A"
+    ],
+    "conclusion_raw": "(~E -> ~A)",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "((B\u2228D)\u2192E)",
+      "A"
+    ],
+    "conclusion": "(\u00acE\u2192\u00acA)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 177,
+    "raw": "(A -> (B & C)), ((B | D) -> E), A => ~(A & ~E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B & C))",
+      "((B | D) -> E)",
+      "A"
+    ],
+    "conclusion_raw": "~(A & ~E)",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "((B\u2228D)\u2192E)",
+      "A"
+    ],
+    "conclusion": "\u00ac(A\u2227\u00acE)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 178,
+    "raw": "(A -> (B & C)), ((B | D) -> E), A => (~A | E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B & C))",
+      "((B | D) -> E)",
+      "A"
+    ],
+    "conclusion_raw": "(~A | E)",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "((B\u2228D)\u2192E)",
+      "A"
+    ],
+    "conclusion": "(\u00acA\u2228E)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 179,
+    "raw": "(F & (G || H)), (F > ~H) / (G || E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(F & (G || H))",
+      "(F > ~H)"
+    ],
+    "conclusion_raw": "(G || E)",
+    "premises": [
+      "(A\u2227(B\u2228C))",
+      "(A\u2192\u00acC)"
+    ],
+    "conclusion": "(B\u2228D)",
+    "atom_map": {
+      "F": "A",
+      "G": "B",
+      "H": "C",
+      "E": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 180,
+    "raw": "(A -> (B & C)), ((B | D) -> E), A => ~~(~A | E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B & C))",
+      "((B | D) -> E)",
+      "A"
+    ],
+    "conclusion_raw": "~~(~A | E)",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "((B\u2228D)\u2192E)",
+      "A"
+    ],
+    "conclusion": "\u00ac\u00ac(\u00acA\u2228E)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 181,
+    "raw": "(A | (B & C)), ~(B & C), => ~~A",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A | (B & C))",
+      "~(B & C)"
+    ],
+    "conclusion_raw": "~~A",
+    "premises": [
+      "(A\u2228(B\u2227C))",
+      "\u00ac(B\u2227C)"
+    ],
+    "conclusion": "\u00ac\u00acA",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 182,
+    "raw": "(A | ~(B & C)), (B & C) / ~~A",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A | ~(B & C))",
+      "(B & C)"
+    ],
+    "conclusion_raw": "~~A",
+    "premises": [
+      "(A\u2228\u00ac(B\u2227C))",
+      "(B\u2227C)"
+    ],
+    "conclusion": "\u00ac\u00acA",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 183,
+    "raw": "(A & ~~B), (B -> C), => (A -> C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & ~~B)",
+      "(B -> C)"
+    ],
+    "conclusion_raw": "(A -> C)",
+    "premises": [
+      "(A\u2227\u00ac\u00acB)",
+      "(B\u2192C)"
+    ],
+    "conclusion": "(A\u2192C)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 184,
+    "raw": "(~~A -> ~~~B), ~~~~B => (~A & B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~~A -> ~~~B)",
+      "~~~~B"
+    ],
+    "conclusion_raw": "(~A & B)",
+    "premises": [
+      "(\u00ac\u00acA\u2192\u00ac\u00ac\u00acB)",
+      "\u00ac\u00ac\u00ac\u00acB"
+    ],
+    "conclusion": "(\u00acA\u2227B)",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 185,
+    "raw": "(P > ~(Q || R)), (~~S > ~~T), ~T, (~S > (U & P)) => ((~R > U) & P)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P > ~(Q || R))",
+      "(~~S > ~~T)",
+      "~T",
+      "(~S > (U & P))"
+    ],
+    "conclusion_raw": "((~R > U) & P)",
+    "premises": [
+      "(A\u2192\u00ac(B\u2228C))",
+      "(\u00ac\u00acD\u2192\u00ac\u00acE)",
+      "\u00acE",
+      "(\u00acD\u2192(F\u2227A))"
+    ],
+    "conclusion": "((\u00acC\u2192F)\u2227A)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E",
+      "U": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 186,
+    "raw": "((P & Q) > R), (P > Q), P / R",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) > R)",
+      "(P > Q)",
+      "P"
+    ],
+    "conclusion_raw": "R",
+    "premises": [
+      "((A\u2227B)\u2192C)",
+      "(A\u2192B)",
+      "A"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 187,
+    "raw": "Pac, Qbc => (\u2203x)(Pax & Qbx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "Pac",
+      "Qbc"
+    ],
+    "conclusion_raw": "(\u2203x)(Pax & Qbx)",
+    "premises": [
+      "P(a,c)",
+      "Q(b,c)"
+    ],
+    "conclusion": "\u2203x(P(a,x)\u2227Q(b,x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 188,
+    "raw": "~Dga, Fgbcdefghij => (\u2203x)(~Dxa & Fxbcdefghij)",
+    "logic": "FOL",
+    "premises_raw": [
+      "~Dga",
+      "Fgbcdefghij"
+    ],
+    "conclusion_raw": "(\u2203x)(~Dxa & Fxbcdefghij)",
+    "premises": [
+      "\u00acD(g,a)",
+      "F(g,b,c,d,e,f,g,h,i,j)"
+    ],
+    "conclusion": "\u2203x(\u00acD(x,a)\u2227F(x,b,c,d,e,f,g,h,i,j))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 189,
+    "raw": "~Bea, ~Ped, Febcq, Ge, ~Gh => (\u2203x)((~Bxa & ~Pxd) & (Fxbcq & Gx))",
+    "logic": "FOL",
+    "premises_raw": [
+      "~Bea",
+      "~Ped",
+      "Febcq",
+      "Ge",
+      "~Gh"
+    ],
+    "conclusion_raw": "(\u2203x)((~Bxa & ~Pxd) & (Fxbcq & Gx))",
+    "premises": [
+      "\u00acB(e,a)",
+      "\u00acP(e,d)",
+      "F(e,b,c,q)",
+      "G(e)",
+      "\u00acG(h)"
+    ],
+    "conclusion": "\u2203x((\u00acB(x,a)\u2227\u00acP(x,d))\u2227(F(x,b,c,q)\u2227G(x)))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 190,
+    "raw": "Aa, Ba, Cc, Dc => ((\u2203x)(Ax & Bx) & (\u2203y)(Cy & Dy))",
+    "logic": "FOL",
+    "premises_raw": [
+      "Aa",
+      "Ba",
+      "Cc",
+      "Dc"
+    ],
+    "conclusion_raw": "((\u2203x)(Ax & Bx) & (\u2203y)(Cy & Dy))",
+    "premises": [
+      "A(a)",
+      "B(a)",
+      "C(c)",
+      "D(c)"
+    ],
+    "conclusion": "(\u2203x(A(x)\u2227B(x))\u2227\u2203y(C(y)\u2227D(y)))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 191,
+    "raw": "(z)(Zzss -> Cz), (Zsss & Dst), (y)(~Dyt | Ay) => (\u2203x)(Ax & Cx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(z)(Zzss -> Cz)",
+      "(Zsss & Dst)",
+      "(y)(~Dyt | Ay)"
+    ],
+    "conclusion_raw": "(\u2203x)(Ax & Cx)",
+    "premises": [
+      "\u2200z(Z(z,a,a)\u2192C(z))",
+      "(Z(a,a,a)\u2227D(a,b))",
+      "\u2200y(\u00acD(y,b)\u2228A(y))"
+    ],
+    "conclusion": "\u2203x(A(x)\u2227C(x))",
+    "atom_map": {},
+    "constant_map": {
+      "s": "a",
+      "t": "b"
+    }
+  },
+  {
+    "index": 192,
+    "raw": "Hab, (Hab -> (z)(Jz -> Kz)), ((z)(Jz -> Kz) -> (\u2203y)Py), ((\u2203y)Py -> Bb) => Bb",
+    "logic": "FOL",
+    "premises_raw": [
+      "Hab",
+      "(Hab -> (z)(Jz -> Kz))",
+      "((z)(Jz -> Kz) -> (\u2203y)Py)",
+      "((\u2203y)Py -> Bb)"
+    ],
+    "conclusion_raw": "Bb",
+    "premises": [
+      "H(a,b)",
+      "(H(a,b)\u2192\u2200z(J(z)\u2192K(z)))",
+      "(\u2200z(J(z)\u2192K(z))\u2192\u2203yP(y))",
+      "(\u2203yP(y)\u2192B(b))"
+    ],
+    "conclusion": "B(b)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 193,
+    "raw": "(y)(~Vy -> By), (x)(Fxr -> ~Bx), Fir, ~Vi => ~Bi",
+    "logic": "FOL",
+    "premises_raw": [
+      "(y)(~Vy -> By)",
+      "(x)(Fxr -> ~Bx)",
+      "Fir",
+      "~Vi"
+    ],
+    "conclusion_raw": "~Bi",
+    "premises": [
+      "\u2200y(\u00acV(y)\u2192B(y))",
+      "\u2200x(F(x,r)\u2192\u00acB(x))",
+      "F(i,r)",
+      "\u00acV(i)"
+    ],
+    "conclusion": "\u00acB(i)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 194,
+    "raw": "(y)(~Vy -> By), (x)~(Fxr & Bx), Fir, ~Vi => ~Bi",
+    "logic": "FOL",
+    "premises_raw": [
+      "(y)(~Vy -> By)",
+      "(x)~(Fxr & Bx)",
+      "Fir",
+      "~Vi"
+    ],
+    "conclusion_raw": "~Bi",
+    "premises": [
+      "\u2200y(\u00acV(y)\u2192B(y))",
+      "\u2200x\u00ac(F(x,r)\u2227B(x))",
+      "F(i,r)",
+      "\u00acV(i)"
+    ],
+    "conclusion": "\u00acB(i)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 195,
+    "raw": "(z)(Mz <-> Nz), (Ma & Bb) => (\u2203x)Nx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(z)(Mz <-> Nz)",
+      "(Ma & Bb)"
+    ],
+    "conclusion_raw": "(\u2203x)Nx",
+    "premises": [
+      "\u2200z(M(z)\u2194N(z))",
+      "(M(a)\u2227B(b))"
+    ],
+    "conclusion": "\u2203xN(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 196,
+    "raw": "(x)(Rx | Cx), (\u2203x)~Rx => (\u2203x)Cx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Rx | Cx)",
+      "(\u2203x)~Rx"
+    ],
+    "conclusion_raw": "(\u2203x)Cx",
+    "premises": [
+      "\u2200x(R(x)\u2228C(x))",
+      "\u2203x\u00acR(x)"
+    ],
+    "conclusion": "\u2203xC(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 197,
+    "raw": "Pa, Qa, (\u2203x)(Px | Qx), (x)(Px -> Kx), (x)(Qx -> Kx) => (\u2203x)Kx",
+    "logic": "FOL",
+    "premises_raw": [
+      "Pa",
+      "Qa",
+      "(\u2203x)(Px | Qx)",
+      "(x)(Px -> Kx)",
+      "(x)(Qx -> Kx)"
+    ],
+    "conclusion_raw": "(\u2203x)Kx",
+    "premises": [
+      "P(a)",
+      "Q(a)",
+      "\u2203x(P(x)\u2228Q(x))",
+      "\u2200x(P(x)\u2192K(x))",
+      "\u2200x(Q(x)\u2192K(x))"
+    ],
+    "conclusion": "\u2203xK(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 198,
+    "raw": "(x)(Cx -> ~Bx), (\u2203x)Bx, Bd, Cd => (\u2203x)~Cx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Cx -> ~Bx)",
+      "(\u2203x)Bx",
+      "Bd",
+      "Cd"
+    ],
+    "conclusion_raw": "(\u2203x)~Cx",
+    "premises": [
+      "\u2200x(C(x)\u2192\u00acB(x))",
+      "\u2203xB(x)",
+      "B(d)",
+      "C(d)"
+    ],
+    "conclusion": "\u2203x\u00acC(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 199,
+    "raw": "(x)(Rx | Cx), (x)(Cx -> Sx), ~Ra => ((\u2203x)(~Rx & Sx) | Fbc)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Rx | Cx)",
+      "(x)(Cx -> Sx)",
+      "~Ra"
+    ],
+    "conclusion_raw": "((\u2203x)(~Rx & Sx) | Fbc)",
+    "premises": [
+      "\u2200x(R(x)\u2228C(x))",
+      "\u2200x(C(x)\u2192S(x))",
+      "\u00acR(a)"
+    ],
+    "conclusion": "(\u2203x(\u00acR(x)\u2227S(x))\u2228F(b,c))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 200,
+    "raw": "(x)(Px|Qx), (Pa->Ja), (Qa->Ka)=>(Ja|Ka)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Px|Qx)",
+      "(Pa->Ja)",
+      "(Qa->Ka)"
+    ],
+    "conclusion_raw": "(Ja|Ka)",
+    "premises": [
+      "\u2200x(P(x)\u2228Q(x))",
+      "(P(a)\u2192J(a))",
+      "(Q(a)\u2192K(a))"
+    ],
+    "conclusion": "(J(a)\u2228K(a))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 201,
+    "raw": "(Cd <> (\u2203x)Fax), ~Cd / ~Far",
+    "logic": "FOL",
+    "premises_raw": [
+      "(Cd <> (\u2203x)Fax)",
+      "~Cd"
+    ],
+    "conclusion_raw": "~Far",
+    "premises": [
+      "(C(d)\u2194\u2203xF(a,x))",
+      "\u00acC(d)"
+    ],
+    "conclusion": "\u00acF(a,r)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 202,
+    "raw": "(~Ljr -> Cjr), ~Cjr / Ljr",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~Ljr -> Cjr)",
+      "~Cjr"
+    ],
+    "conclusion_raw": "Ljr",
+    "premises": [
+      "(\u00acA\u2192B)",
+      "\u00acB"
+    ],
+    "conclusion": "A",
+    "atom_map": {
+      "Ljr": "A",
+      "Cjr": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 203,
+    "raw": "(~~Pa -> ~~Qa), ~~~Qa / ~~~Pa",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~~Pa -> ~~Qa)",
+      "~~~Qa"
+    ],
+    "conclusion_raw": "~~~Pa",
+    "premises": [
+      "(\u00ac\u00acA\u2192\u00ac\u00acB)",
+      "\u00ac\u00ac\u00acB"
+    ],
+    "conclusion": "\u00ac\u00ac\u00acA",
+    "atom_map": {
+      "Pa": "A",
+      "Qa": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 204,
+    "raw": "(Pa -> Qa), ~~~Qa / ~~~Pa",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Pa -> Qa)",
+      "~~~Qa"
+    ],
+    "conclusion_raw": "~~~Pa",
+    "premises": [
+      "(A\u2192B)",
+      "\u00ac\u00ac\u00acB"
+    ],
+    "conclusion": "\u00ac\u00ac\u00acA",
+    "atom_map": {
+      "Pa": "A",
+      "Qa": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 205,
+    "raw": "(Pas > ~Psa), (Ba > ~Pas), (Pas | Ba) => (~Pas || ~Psa)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Pas > ~Psa)",
+      "(Ba > ~Pas)",
+      "(Pas | Ba)"
+    ],
+    "conclusion_raw": "(~Pas || ~Psa)",
+    "premises": [
+      "(A\u2192\u00acB)",
+      "(C\u2192\u00acA)",
+      "(A\u2228C)"
+    ],
+    "conclusion": "(\u00acA\u2228\u00acB)",
+    "atom_map": {
+      "Pas": "A",
+      "Psa": "B",
+      "Ba": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 206,
+    "raw": "(\u2203x)(Lx & Tx), (z)(Tz & Dz) / (\u2203y)(Ly & Dy)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203x)(Lx & Tx)",
+      "(z)(Tz & Dz)"
+    ],
+    "conclusion_raw": "(\u2203y)(Ly & Dy)",
+    "premises": [
+      "\u2203x(L(x)\u2227T(x))",
+      "\u2200z(T(z)\u2227D(z))"
+    ],
+    "conclusion": "\u2203y(L(y)\u2227D(y))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 207,
+    "raw": "(x)(Cx > Dx), (x)((\u2203y)(Dy & Exy) > Fx), (\u2203x)(Gx & (\u2203y)(Cy & Exy)) / (\u2203x)(Gx & Fx)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Cx > Dx)",
+      "(x)((\u2203y)(Dy & Exy) > Fx)",
+      "(\u2203x)(Gx & (\u2203y)(Cy & Exy))"
+    ],
+    "conclusion_raw": "(\u2203x)(Gx & Fx)",
+    "premises": [
+      "\u2200x(C(x)\u2192D(x))",
+      "\u2200x(\u2203y(D(y)\u2227E(x,y))\u2192F(x))",
+      "\u2203x(G(x)\u2227\u2203y(C(y)\u2227E(x,y)))"
+    ],
+    "conclusion": "\u2203x(G(x)\u2227F(x))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 208,
+    "raw": "(A -> B), A \u2234 B",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> B)",
+      "A"
+    ],
+    "conclusion_raw": "B",
+    "premises": [
+      "(A\u2192B)",
+      "A"
+    ],
+    "conclusion": "B",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 209,
+    "raw": "(A -> B), ~B \u2234 ~A",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> B)",
+      "~B"
+    ],
+    "conclusion_raw": "~A",
+    "premises": [
+      "(A\u2192B)",
+      "\u00acB"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 210,
+    "raw": "X, (P -> (Q & R)), W, ~(Q & R), (~P -> ~S), ((~S & W) -> (T & ~U)), (~U -> ~V) \u2234 ((~V & X) & ~S)",
+    "logic": "TFL",
+    "premises_raw": [
+      "X",
+      "(P -> (Q & R))",
+      "W",
+      "~(Q & R)",
+      "(~P -> ~S)",
+      "((~S & W) -> (T & ~U))",
+      "(~U -> ~V)"
+    ],
+    "conclusion_raw": "((~V & X) & ~S)",
+    "premises": [
+      "A",
+      "(B\u2192(C\u2227D))",
+      "E",
+      "\u00ac(C\u2227D)",
+      "(\u00acB\u2192\u00acF)",
+      "((\u00acF\u2227E)\u2192(G\u2227\u00acH))",
+      "(\u00acH\u2192\u00acI)"
+    ],
+    "conclusion": "((\u00acI\u2227A)\u2227\u00acF)",
+    "atom_map": {
+      "X": "A",
+      "P": "B",
+      "Q": "C",
+      "R": "D",
+      "W": "E",
+      "S": "F",
+      "T": "G",
+      "U": "H",
+      "V": "I"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 211,
+    "raw": "(C & ~(D -> ~E)), (A -> (D -> ~E)) \u2234 (~A & C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(C & ~(D -> ~E))",
+      "(A -> (D -> ~E))"
+    ],
+    "conclusion_raw": "(~A & C)",
+    "premises": [
+      "(A\u2227\u00ac(B\u2192\u00acC))",
+      "(D\u2192(B\u2192\u00acC))"
+    ],
+    "conclusion": "(\u00acD\u2227A)",
+    "atom_map": {
+      "C": "A",
+      "D": "B",
+      "E": "C",
+      "A": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 212,
+    "raw": "((P & Q) & (R & S)) \u2234 ((S & Q) & (R & P))",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) & (R & S))"
+    ],
+    "conclusion_raw": "((S & Q) & (R & P))",
+    "premises": [
+      "((A\u2227B)\u2227(C\u2227D))"
+    ],
+    "conclusion": "((D\u2227B)\u2227(C\u2227A))",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 213,
+    "raw": "((\u00acR \u2228 \u00acF) \u2192 (~S & ~L)), (~S \u2192 T), \u00acT \u2234 R",
+    "logic": "TFL",
+    "premises_raw": [
+      "((\u00acR \u2228 \u00acF) \u2192 (~S & ~L))",
+      "(~S \u2192 T)",
+      "\u00acT"
+    ],
+    "conclusion_raw": "R",
+    "premises": [
+      "((\u00acA\u2228\u00acB)\u2192(\u00acC\u2227\u00acD))",
+      "(\u00acC\u2192E)",
+      "\u00acE"
+    ],
+    "conclusion": "A",
+    "atom_map": {
+      "R": "A",
+      "F": "B",
+      "S": "C",
+      "L": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 214,
+    "raw": "(P -> Q), (R \u2228 ~Q), (~P -> (S \u2228 T)), (~R & ~T) \u2234 S",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> Q)",
+      "(R \u2228 ~Q)",
+      "(~P -> (S \u2228 T))",
+      "(~R & ~T)"
+    ],
+    "conclusion_raw": "S",
+    "premises": [
+      "(A\u2192B)",
+      "(C\u2228\u00acB)",
+      "(\u00acA\u2192(D\u2228E))",
+      "(\u00acC\u2227\u00acE)"
+    ],
+    "conclusion": "D",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 215,
+    "raw": "(R -> (~Q || S)), ((U & T) || (~S & Q)), (~U || ~T) => ~R",
+    "logic": "TFL",
+    "premises_raw": [
+      "(R -> (~Q || S))",
+      "((U & T) || (~S & Q))",
+      "(~U || ~T)"
+    ],
+    "conclusion_raw": "~R",
+    "premises": [
+      "(A\u2192(\u00acB\u2228C))",
+      "((D\u2227E)\u2228(\u00acC\u2227B))",
+      "(\u00acD\u2228\u00acE)"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "R": "A",
+      "Q": "B",
+      "S": "C",
+      "U": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 216,
+    "raw": "(A & ~B), (B \u2228 C), (C \u2192 (D \u2192 ~E)), E \u2234 ~D",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & ~B)",
+      "(B \u2228 C)",
+      "(C \u2192 (D \u2192 ~E))",
+      "E"
+    ],
+    "conclusion_raw": "~D",
+    "premises": [
+      "(A\u2227\u00acB)",
+      "(B\u2228C)",
+      "(C\u2192(D\u2192\u00acE))",
+      "E"
+    ],
+    "conclusion": "\u00acD",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 217,
+    "raw": "(C \u2192 (D & M)), (~C \u2192 ~H), H \u2234 (~D \u2192 ~M)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(C \u2192 (D & M))",
+      "(~C \u2192 ~H)",
+      "H"
+    ],
+    "conclusion_raw": "(~D \u2192 ~M)",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "(\u00acA\u2192\u00acD)",
+      "D"
+    ],
+    "conclusion": "(\u00acB\u2192\u00acC)",
+    "atom_map": {
+      "C": "A",
+      "D": "B",
+      "M": "C",
+      "H": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 218,
+    "raw": "~(C & D), (~C \u2192 S), (~D \u2192 T) \u2234 (S \u2228 T)",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(C & D)",
+      "(~C \u2192 S)",
+      "(~D \u2192 T)"
+    ],
+    "conclusion_raw": "(S \u2228 T)",
+    "premises": [
+      "\u00ac(A\u2227B)",
+      "(\u00acA\u2192C)",
+      "(\u00acB\u2192D)"
+    ],
+    "conclusion": "(C\u2228D)",
+    "atom_map": {
+      "C": "A",
+      "D": "B",
+      "S": "C",
+      "T": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 219,
+    "raw": "~(~A \u2228 B) \u2234 A",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(~A \u2228 B)"
+    ],
+    "conclusion_raw": "A",
+    "premises": [
+      "\u00ac(\u00acA\u2228B)"
+    ],
+    "conclusion": "A",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 220,
+    "raw": "(P \u2194 Q), (~(P \u2228 Q) \u2192 ~R), ~Q \u2234 ~R",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P \u2194 Q)",
+      "(~(P \u2228 Q) \u2192 ~R)",
+      "~Q"
+    ],
+    "conclusion_raw": "~R",
+    "premises": [
+      "(A\u2194B)",
+      "(\u00ac(A\u2228B)\u2192\u00acC)",
+      "\u00acB"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 221,
+    "raw": "(L -> K), (K -> ~C), (C || D), ~D => ~L",
+    "logic": "TFL",
+    "premises_raw": [
+      "(L -> K)",
+      "(K -> ~C)",
+      "(C || D)",
+      "~D"
+    ],
+    "conclusion_raw": "~L",
+    "premises": [
+      "(A\u2192B)",
+      "(B\u2192\u00acC)",
+      "(C\u2228D)",
+      "\u00acD"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "L": "A",
+      "K": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 222,
+    "raw": "(~I <-> A), ((F & H) || ~I), ~(A || B) => (F & ~B)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~I <-> A)",
+      "((F & H) || ~I)",
+      "~(A || B)"
+    ],
+    "conclusion_raw": "(F & ~B)",
+    "premises": [
+      "(\u00acA\u2194B)",
+      "((C\u2227D)\u2228\u00acA)",
+      "\u00ac(B\u2228E)"
+    ],
+    "conclusion": "(C\u2227\u00acE)",
+    "atom_map": {
+      "I": "A",
+      "A": "B",
+      "F": "C",
+      "H": "D",
+      "B": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 223,
+    "raw": "(D -> ~B), (~C -> B), (~D -> ~C) => (D <-> C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(D -> ~B)",
+      "(~C -> B)",
+      "(~D -> ~C)"
+    ],
+    "conclusion_raw": "(D <-> C)",
+    "premises": [
+      "(A\u2192\u00acB)",
+      "(\u00acC\u2192B)",
+      "(\u00acA\u2192\u00acC)"
+    ],
+    "conclusion": "(A\u2194C)",
+    "atom_map": {
+      "D": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 224,
+    "raw": "((A & C) -> B), ((~B || ~A) || D), (C & A) => ~~(D || P)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A & C) -> B)",
+      "((~B || ~A) || D)",
+      "(C & A)"
+    ],
+    "conclusion_raw": "~~(D || P)",
+    "premises": [
+      "((A\u2227B)\u2192C)",
+      "((\u00acC\u2228\u00acA)\u2228D)",
+      "(B\u2227A)"
+    ],
+    "conclusion": "\u00ac\u00ac(D\u2228E)",
+    "atom_map": {
+      "A": "A",
+      "C": "B",
+      "B": "C",
+      "D": "D",
+      "P": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 225,
+    "raw": "(R -> B), (~(R & ~B) -> J) => J",
+    "logic": "TFL",
+    "premises_raw": [
+      "(R -> B)",
+      "(~(R & ~B) -> J)"
+    ],
+    "conclusion_raw": "J",
+    "premises": [
+      "(A\u2192B)",
+      "(\u00ac(A\u2227\u00acB)\u2192C)"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "R": "A",
+      "B": "B",
+      "J": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 226,
+    "raw": "~(C || D), (D <-> (E || F)), (~A -> (C || F)) => A",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(C || D)",
+      "(D <-> (E || F))",
+      "(~A -> (C || F))"
+    ],
+    "conclusion_raw": "A",
+    "premises": [
+      "\u00ac(A\u2228B)",
+      "(B\u2194(C\u2228D))",
+      "(\u00acE\u2192(A\u2228D))"
+    ],
+    "conclusion": "E",
+    "atom_map": {
+      "C": "A",
+      "D": "B",
+      "E": "C",
+      "F": "D",
+      "A": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 227,
+    "raw": "~(J & T), ~(~T || E) => ~(J || E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(J & T)",
+      "~(~T || E)"
+    ],
+    "conclusion_raw": "~(J || E)",
+    "premises": [
+      "\u00ac(A\u2227B)",
+      "\u00ac(\u00acB\u2228C)"
+    ],
+    "conclusion": "\u00ac(A\u2228C)",
+    "atom_map": {
+      "J": "A",
+      "T": "B",
+      "E": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 228,
+    "raw": "(x)Px => (Pa & Pb)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)Px"
+    ],
+    "conclusion_raw": "(Pa & Pb)",
+    "premises": [
+      "\u2200xP(x)"
+    ],
+    "conclusion": "(P(a)\u2227P(b))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 229,
+    "raw": "(x)(Px || Qx), (x)~Px => (x)Qx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Px || Qx)",
+      "(x)~Px"
+    ],
+    "conclusion_raw": "(x)Qx",
+    "premises": [
+      "\u2200x(P(x)\u2228Q(x))",
+      "\u2200x\u00acP(x)"
+    ],
+    "conclusion": "\u2200xQ(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 230,
+    "raw": "(x)(Px || Qx), (x)~Px => (\u2203x)Qx",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Px || Qx)",
+      "(x)~Px"
+    ],
+    "conclusion_raw": "(\u2203x)Qx",
+    "premises": [
+      "\u2200x(P(x)\u2228Q(x))",
+      "\u2200x\u00acP(x)"
+    ],
+    "conclusion": "\u2203xQ(x)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 231,
+    "raw": "(A & B) => (B & A)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & B)"
+    ],
+    "conclusion_raw": "(B & A)",
+    "premises": [
+      "(A\u2227B)"
+    ],
+    "conclusion": "(B\u2227A)",
+    "atom_map": {
+      "A": "A",
+      "B": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 232,
+    "raw": "((P & Q) & R), (S & T) => (Q & S)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) & R)",
+      "(S & T)"
+    ],
+    "conclusion_raw": "(Q & S)",
+    "premises": [
+      "((A\u2227B)\u2227C)",
+      "(D\u2227E)"
+    ],
+    "conclusion": "(B\u2227D)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 233,
+    "raw": "(x)(y)Pxy => (\u2203z)Paz",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(y)Pxy"
+    ],
+    "conclusion_raw": "(\u2203z)Paz",
+    "premises": [
+      "\u2200x\u2200yP(x,y)"
+    ],
+    "conclusion": "\u2203zP(a,z)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 234,
+    "raw": "(\u2203z)(Qz & Rz), ((\u2203z)Qz -> Rc) => Rc",
+    "logic": "FOL",
+    "premises_raw": [
+      "(\u2203z)(Qz & Rz)",
+      "((\u2203z)Qz -> Rc)"
+    ],
+    "conclusion_raw": "Rc",
+    "premises": [
+      "\u2203z(Q(z)\u2227R(z))",
+      "(\u2203zQ(z)\u2192R(c))"
+    ],
+    "conclusion": "R(c)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 235,
+    "raw": "(x)(y)(z)(w)Pxyzw => Pabcd",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(y)(z)(w)Pxyzw"
+    ],
+    "conclusion_raw": "Pabcd",
+    "premises": [
+      "\u2200x\u2200y\u2200z\u2200wP(x,y,z,w)"
+    ],
+    "conclusion": "P(a,b,c,d)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 236,
+    "raw": "(P -> (Q & R)), ~(Q & R), (P || (S <-> T)), U => (U & (T -> S))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> (Q & R))",
+      "~(Q & R)",
+      "(P || (S <-> T))",
+      "U"
+    ],
+    "conclusion_raw": "(U & (T -> S))",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "\u00ac(B\u2227C)",
+      "(A\u2228(D\u2194E))",
+      "F"
+    ],
+    "conclusion": "(F\u2227(E\u2192D))",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E",
+      "U": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 237,
+    "raw": "(U <-> V), ((V -> U) -> (R -> (S -> T))), ~(S -> T) => ~R",
+    "logic": "TFL",
+    "premises_raw": [
+      "(U <-> V)",
+      "((V -> U) -> (R -> (S -> T)))",
+      "~(S -> T)"
+    ],
+    "conclusion_raw": "~R",
+    "premises": [
+      "(A\u2194B)",
+      "((B\u2192A)\u2192(C\u2192(D\u2192E)))",
+      "\u00ac(D\u2192E)"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "U": "A",
+      "V": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 238,
+    "raw": "((U <-> V) <-> (W <-> X)) => (((U <-> V) -> (W <-> X)) | Y)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((U <-> V) <-> (W <-> X))"
+    ],
+    "conclusion_raw": "(((U <-> V) -> (W <-> X)) | Y)",
+    "premises": [
+      "((A\u2194B)\u2194(C\u2194D))"
+    ],
+    "conclusion": "(((A\u2194B)\u2192(C\u2194D))\u2228E)",
+    "atom_map": {
+      "U": "A",
+      "V": "B",
+      "W": "C",
+      "X": "D",
+      "Y": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 239,
+    "raw": "P, Q, R, S, (T || ~R) => ((T & (P & (Q & R))) | Z)",
+    "logic": "TFL",
+    "premises_raw": [
+      "P",
+      "Q",
+      "R",
+      "S",
+      "(T || ~R)"
+    ],
+    "conclusion_raw": "((T & (P & (Q & R))) | Z)",
+    "premises": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "(E\u2228\u00acC)"
+    ],
+    "conclusion": "((E\u2227(A\u2227(B\u2227C)))\u2228F)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "T": "E",
+      "Z": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 240,
+    "raw": "(~(P || Q) || R), ~~~R, => (~P & ~Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~(P || Q) || R)",
+      "~~~R"
+    ],
+    "conclusion_raw": "(~P & ~Q)",
+    "premises": [
+      "(\u00ac(A\u2228B)\u2228C)",
+      "\u00ac\u00ac\u00acC"
+    ],
+    "conclusion": "(\u00acA\u2227\u00acB)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 241,
+    "raw": "(~D -> (A -> ~B)), ((C & D) <-> E), ~E, ~~C, A => ~B",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~D -> (A -> ~B))",
+      "((C & D) <-> E)",
+      "~E",
+      "~~C",
+      "A"
+    ],
+    "conclusion_raw": "~B",
+    "premises": [
+      "(\u00acA\u2192(B\u2192\u00acC))",
+      "((D\u2227A)\u2194E)",
+      "\u00acE",
+      "\u00ac\u00acD",
+      "B"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "D": "A",
+      "A": "B",
+      "B": "C",
+      "C": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 242,
+    "raw": "((C || D) & (~E || ~F)), ~D, (~F -> ~C) => ~E",
+    "logic": "TFL",
+    "premises_raw": [
+      "((C || D) & (~E || ~F))",
+      "~D",
+      "(~F -> ~C)"
+    ],
+    "conclusion_raw": "~E",
+    "premises": [
+      "((A\u2228B)\u2227(\u00acC\u2228\u00acD))",
+      "\u00acB",
+      "(\u00acD\u2192\u00acA)"
+    ],
+    "conclusion": "\u00acC",
+    "atom_map": {
+      "C": "A",
+      "D": "B",
+      "E": "C",
+      "F": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 243,
+    "raw": "((T -> ~Q) & (R -> S)), ~S, (~~R || ~T), (U <-> ~T) => U",
+    "logic": "TFL",
+    "premises_raw": [
+      "((T -> ~Q) & (R -> S))",
+      "~S",
+      "(~~R || ~T)",
+      "(U <-> ~T)"
+    ],
+    "conclusion_raw": "U",
+    "premises": [
+      "((A\u2192\u00acB)\u2227(C\u2192D))",
+      "\u00acD",
+      "(\u00ac\u00acC\u2228\u00acA)",
+      "(E\u2194\u00acA)"
+    ],
+    "conclusion": "E",
+    "atom_map": {
+      "T": "A",
+      "Q": "B",
+      "R": "C",
+      "S": "D",
+      "U": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 244,
+    "raw": "(x)(Px -> (Qx & Rx)), Pa => ((Qa & Ra) & Pa)",
+    "logic": "FOL",
+    "premises_raw": [
+      "(x)(Px -> (Qx & Rx))",
+      "Pa"
+    ],
+    "conclusion_raw": "((Qa & Ra) & Pa)",
+    "premises": [
+      "\u2200x(P(x)\u2192(Q(x)\u2227R(x)))",
+      "P(a)"
+    ],
+    "conclusion": "((Q(a)\u2227R(a))\u2227P(a))",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 245,
+    "raw": "(Pa -> (\u2203y)Dy), ((x)Qx || ~(\u2203y)Dy), ~(x)Qx => ~Pa",
+    "logic": "FOL",
+    "premises_raw": [
+      "(Pa -> (\u2203y)Dy)",
+      "((x)Qx || ~(\u2203y)Dy)",
+      "~(x)Qx"
+    ],
+    "conclusion_raw": "~Pa",
+    "premises": [
+      "(P(a)\u2192\u2203yD(y))",
+      "(\u2200xQ(x)\u2228\u00ac\u2203yD(y))",
+      "\u00ac\u2200xQ(x)"
+    ],
+    "conclusion": "\u00acP(a)",
+    "atom_map": {},
+    "constant_map": {}
+  },
+  {
+    "index": 246,
+    "raw": "(M -> A), (A -> K), (M || N), (K -> C), ~C => N",
+    "logic": "TFL",
+    "premises_raw": [
+      "(M -> A)",
+      "(A -> K)",
+      "(M || N)",
+      "(K -> C)",
+      "~C"
+    ],
+    "conclusion_raw": "N",
+    "premises": [
+      "(A\u2192B)",
+      "(B\u2192C)",
+      "(A\u2228D)",
+      "(C\u2192E)",
+      "\u00acE"
+    ],
+    "conclusion": "D",
+    "atom_map": {
+      "M": "A",
+      "A": "B",
+      "K": "C",
+      "N": "D",
+      "C": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 247,
+    "raw": "(E\u2192(G\u2227A)), (\u00acF\u2192\u00acA), (\u00acW\u2192\u00acG), ((W\u2227F)\u2192\u00acS), S => \u00acE",
+    "logic": "TFL",
+    "premises_raw": [
+      "(E\u2192(G\u2227A))",
+      "(\u00acF\u2192\u00acA)",
+      "(\u00acW\u2192\u00acG)",
+      "((W\u2227F)\u2192\u00acS)",
+      "S"
+    ],
+    "conclusion_raw": "\u00acE",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "(\u00acD\u2192\u00acC)",
+      "(\u00acE\u2192\u00acB)",
+      "((E\u2227D)\u2192\u00acF)",
+      "F"
+    ],
+    "conclusion": "\u00acA",
+    "atom_map": {
+      "E": "A",
+      "G": "B",
+      "A": "C",
+      "F": "D",
+      "W": "E",
+      "S": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 248,
+    "raw": "(~P -> ~Q), (~F & Q), (~P || (S || T)) => (S || T)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~P -> ~Q)",
+      "(~F & Q)",
+      "(~P || (S || T))"
+    ],
+    "conclusion_raw": "(S || T)",
+    "premises": [
+      "(\u00acA\u2192\u00acB)",
+      "(\u00acC\u2227B)",
+      "(\u00acA\u2228(D\u2228E))"
+    ],
+    "conclusion": "(D\u2228E)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "F": "C",
+      "S": "D",
+      "T": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 249,
+    "raw": "(~S -> ~T), ~~T => ~~~~S",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~S -> ~T)",
+      "~~T"
+    ],
+    "conclusion_raw": "~~~~S",
+    "premises": [
+      "(\u00acA\u2192\u00acB)",
+      "\u00ac\u00acB"
+    ],
+    "conclusion": "\u00ac\u00ac\u00ac\u00acA",
+    "atom_map": {
+      "S": "A",
+      "T": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 250,
+    "raw": "((A & B) & C) => (C & (A & B))",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A & B) & C)"
+    ],
+    "conclusion_raw": "(C & (A & B))",
+    "premises": [
+      "((A\u2227B)\u2227C)"
+    ],
+    "conclusion": "(C\u2227(A\u2227B))",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 251,
+    "raw": "(A\u2192C), (D\u2228(A\u2227B)), \u00acD / C",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A\u2192C)",
+      "(D\u2228(A\u2227B))",
+      "\u00acD"
+    ],
+    "conclusion_raw": "C",
+    "premises": [
+      "(A\u2192B)",
+      "(C\u2228(A\u2227D))",
+      "\u00acC"
+    ],
+    "conclusion": "B",
+    "atom_map": {
+      "A": "A",
+      "C": "B",
+      "D": "C",
+      "B": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 252,
+    "raw": "(I\u2192J), (J\u2228(I\u2228K)), (J\u2192M), \u00acM, (K\u2192\u00acN) / \u00acN",
+    "logic": "TFL",
+    "premises_raw": [
+      "(I\u2192J)",
+      "(J\u2228(I\u2228K))",
+      "(J\u2192M)",
+      "\u00acM",
+      "(K\u2192\u00acN)"
+    ],
+    "conclusion_raw": "\u00acN",
+    "premises": [
+      "(A\u2192B)",
+      "(B\u2228(A\u2228C))",
+      "(B\u2192D)",
+      "\u00acD",
+      "(C\u2192\u00acE)"
+    ],
+    "conclusion": "\u00acE",
+    "atom_map": {
+      "I": "A",
+      "J": "B",
+      "K": "C",
+      "M": "D",
+      "N": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 253,
+    "raw": "(A\u2192C), (C\u2192(A\u2194B)), \u00acB, (\u00acD\u2192(D\u2228\u00ac(A\u2194B))), (D\u2192B) / (\u00acA\u2227\u00acB)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A\u2192C)",
+      "(C\u2192(A\u2194B))",
+      "\u00acB",
+      "(\u00acD\u2192(D\u2228\u00ac(A\u2194B)))",
+      "(D\u2192B)"
+    ],
+    "conclusion_raw": "(\u00acA\u2227\u00acB)",
+    "premises": [
+      "(A\u2192B)",
+      "(B\u2192(A\u2194C))",
+      "\u00acC",
+      "(\u00acD\u2192(D\u2228\u00ac(A\u2194C)))",
+      "(D\u2192C)"
+    ],
+    "conclusion": "(\u00acA\u2227\u00acC)",
+    "atom_map": {
+      "A": "A",
+      "C": "B",
+      "B": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 254,
+    "raw": "(A\u2192B), ((A\u2227B)\u2192(\u00ac\u00acC\u2227\u00acD)), (\u00acE\u2192\u00acC), A, (\u00ac\u00acE\u2192F) / (F\u2228(\u00acA\u2194\u00acB))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A\u2192B)",
+      "((A\u2227B)\u2192(\u00ac\u00acC\u2227\u00acD))",
+      "(\u00acE\u2192\u00acC)",
+      "A",
+      "(\u00ac\u00acE\u2192F)"
+    ],
+    "conclusion_raw": "(F\u2228(\u00acA\u2194\u00acB))",
+    "premises": [
+      "(A\u2192B)",
+      "((A\u2227B)\u2192(\u00ac\u00acC\u2227\u00acD))",
+      "(\u00acE\u2192\u00acC)",
+      "A",
+      "(\u00ac\u00acE\u2192F)"
+    ],
+    "conclusion": "(F\u2228(\u00acA\u2194\u00acB))",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E",
+      "F": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 255,
+    "raw": "((A\u2228B)\u2227C), (A\u2192D), (B\u2192E), (E\u2192F) / (D\u2228F)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A\u2228B)\u2227C)",
+      "(A\u2192D)",
+      "(B\u2192E)",
+      "(E\u2192F)"
+    ],
+    "conclusion_raw": "(D\u2228F)",
+    "premises": [
+      "((A\u2228B)\u2227C)",
+      "(A\u2192D)",
+      "(B\u2192E)",
+      "(E\u2192F)"
+    ],
+    "conclusion": "(D\u2228F)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E",
+      "F": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 256,
+    "raw": "(Q\u2192(V \u2228R)), (T\u2192\u00acU), \u00acV, (T \u2228Q), (\u00acU\u2192V) / R",
+    "logic": "TFL",
+    "premises_raw": [
+      "(Q\u2192(V \u2228R))",
+      "(T\u2192\u00acU)",
+      "\u00acV",
+      "(T \u2228Q)",
+      "(\u00acU\u2192V)"
+    ],
+    "conclusion_raw": "R",
+    "premises": [
+      "(A\u2192(B\u2228C))",
+      "(D\u2192\u00acE)",
+      "\u00acB",
+      "(D\u2228A)",
+      "(\u00acE\u2192B)"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "Q": "A",
+      "V": "B",
+      "R": "C",
+      "T": "D",
+      "U": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 257,
+    "raw": "(\u00acS\u2192(N\u2228O)), ((N\u2192U)\u2227(P\u2192T)), ((O\u2192T)\u2227(P\u2192N)), \u00acU, (S\u2192U) / T",
+    "logic": "TFL",
+    "premises_raw": [
+      "(\u00acS\u2192(N\u2228O))",
+      "((N\u2192U)\u2227(P\u2192T))",
+      "((O\u2192T)\u2227(P\u2192N))",
+      "\u00acU",
+      "(S\u2192U)"
+    ],
+    "conclusion_raw": "T",
+    "premises": [
+      "(\u00acA\u2192(B\u2228C))",
+      "((B\u2192D)\u2227(E\u2192F))",
+      "((C\u2192F)\u2227(E\u2192B))",
+      "\u00acD",
+      "(A\u2192D)"
+    ],
+    "conclusion": "F",
+    "atom_map": {
+      "S": "A",
+      "N": "B",
+      "O": "C",
+      "U": "D",
+      "P": "E",
+      "T": "F"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 258,
+    "raw": "(A\u2192B), \u00acB, (((\u00acA\u2227\u00acB) \u2228 C)\u2192(B\u2228D)) / (D\u2228\u00acE)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A\u2192B)",
+      "\u00acB",
+      "(((\u00acA\u2227\u00acB) \u2228 C)\u2192(B\u2228D))"
+    ],
+    "conclusion_raw": "(D\u2228\u00acE)",
+    "premises": [
+      "(A\u2192B)",
+      "\u00acB",
+      "(((\u00acA\u2227\u00acB)\u2228C)\u2192(B\u2228D))"
+    ],
+    "conclusion": "(D\u2228\u00acE)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 259,
+    "raw": "((Q\u2228R)\u2192((S\u2228L)\u2192\u00acT)), ((S\u2228U)\u2192Q), (S\u2227\u00acU), (T\u2228K) / K",
+    "logic": "TFL",
+    "premises_raw": [
+      "((Q\u2228R)\u2192((S\u2228L)\u2192\u00acT))",
+      "((S\u2228U)\u2192Q)",
+      "(S\u2227\u00acU)",
+      "(T\u2228K)"
+    ],
+    "conclusion_raw": "K",
+    "premises": [
+      "((A\u2228B)\u2192((C\u2228D)\u2192\u00acE))",
+      "((C\u2228F)\u2192A)",
+      "(C\u2227\u00acF)",
+      "(E\u2228G)"
+    ],
+    "conclusion": "G",
+    "atom_map": {
+      "Q": "A",
+      "R": "B",
+      "S": "C",
+      "L": "D",
+      "T": "E",
+      "U": "F",
+      "K": "G"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 260,
+    "raw": "(~C -> ~A) => (A -> C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~C -> ~A)"
+    ],
+    "conclusion_raw": "(A -> C)",
+    "premises": [
+      "(\u00acA\u2192\u00acB)"
+    ],
+    "conclusion": "(B\u2192A)",
+    "atom_map": {
+      "C": "A",
+      "A": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 261,
+    "raw": "(~C -> ~A), (\u00acB\u2228A) => (B -> C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~C -> ~A)",
+      "(\u00acB\u2228A)"
+    ],
+    "conclusion_raw": "(B -> C)",
+    "premises": [
+      "(\u00acA\u2192\u00acB)",
+      "(\u00acC\u2228B)"
+    ],
+    "conclusion": "(C\u2192A)",
+    "atom_map": {
+      "C": "A",
+      "A": "B",
+      "B": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 262,
+    "raw": "((D | ~E) -> (F & ~G)), (~C -> D), ~C => (~G & D)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((D | ~E) -> (F & ~G))",
+      "(~C -> D)",
+      "~C"
+    ],
+    "conclusion_raw": "(~G & D)",
+    "premises": [
+      "((A\u2228\u00acB)\u2192(C\u2227\u00acD))",
+      "(\u00acE\u2192A)",
+      "\u00acE"
+    ],
+    "conclusion": "(\u00acD\u2227A)",
+    "atom_map": {
+      "D": "A",
+      "E": "B",
+      "F": "C",
+      "G": "D",
+      "C": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 263,
+    "raw": "(P <-> ~Q), ~~~P => ~~Q",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P <-> ~Q)",
+      "~~~P"
+    ],
+    "conclusion_raw": "~~Q",
+    "premises": [
+      "(A\u2194\u00acB)",
+      "\u00ac\u00ac\u00acA"
+    ],
+    "conclusion": "\u00ac\u00acB",
+    "atom_map": {
+      "P": "A",
+      "Q": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 264,
+    "raw": "~C, ((D <-> E) -> ~~C), => ~(D <-> E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "~C",
+      "((D <-> E) -> ~~C)"
+    ],
+    "conclusion_raw": "~(D <-> E)",
+    "premises": [
+      "\u00acA",
+      "((B\u2194C)\u2192\u00ac\u00acA)"
+    ],
+    "conclusion": "\u00ac(B\u2194C)",
+    "atom_map": {
+      "C": "A",
+      "D": "B",
+      "E": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 265,
+    "raw": "(~G \u2194 ~(A \u2194 F)), ~~G => (A \u2194 F)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~G \u2194 ~(A \u2194 F))",
+      "~~G"
+    ],
+    "conclusion_raw": "(A \u2194 F)",
+    "premises": [
+      "(\u00acA\u2194\u00ac(B\u2194C))",
+      "\u00ac\u00acA"
+    ],
+    "conclusion": "(B\u2194C)",
+    "atom_map": {
+      "G": "A",
+      "A": "B",
+      "F": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 266,
+    "raw": "(~F & ~G) => ~~~(F || G)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~F & ~G)"
+    ],
+    "conclusion_raw": "~~~(F || G)",
+    "premises": [
+      "(\u00acA\u2227\u00acB)"
+    ],
+    "conclusion": "\u00ac\u00ac\u00ac(A\u2228B)",
+    "atom_map": {
+      "F": "A",
+      "G": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 267,
+    "raw": "~(Z || Y), ((~Y & ~Z) -> ~X) => ~~~X",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(Z || Y)",
+      "((~Y & ~Z) -> ~X)"
+    ],
+    "conclusion_raw": "~~~X",
+    "premises": [
+      "\u00ac(A\u2228B)",
+      "((\u00acB\u2227\u00acA)\u2192\u00acC)"
+    ],
+    "conclusion": "\u00ac\u00ac\u00acC",
+    "atom_map": {
+      "Z": "A",
+      "Y": "B",
+      "X": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 268,
+    "raw": "P, ~~(Q & R) => (P & R)",
+    "logic": "TFL",
+    "premises_raw": [
+      "P",
+      "~~(Q & R)"
+    ],
+    "conclusion_raw": "(P & R)",
+    "premises": [
+      "A",
+      "\u00ac\u00ac(B\u2227C)"
+    ],
+    "conclusion": "(A\u2227C)",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 269,
+    "raw": "(P -> (Q -> R)), P, ~R => ~Q",
+    "logic": "TFL",
+    "premises_raw": [
+      "(P -> (Q -> R))",
+      "P",
+      "~R"
+    ],
+    "conclusion_raw": "~Q",
+    "premises": [
+      "(A\u2192(B\u2192C))",
+      "A",
+      "\u00acC"
+    ],
+    "conclusion": "\u00acB",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 270,
+    "raw": "(~Q -> ~P) => (P -> ~~Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~Q -> ~P)"
+    ],
+    "conclusion_raw": "(P -> ~~Q)",
+    "premises": [
+      "(\u00acA\u2192\u00acB)"
+    ],
+    "conclusion": "(B\u2192\u00ac\u00acA)",
+    "atom_map": {
+      "Q": "A",
+      "P": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 271,
+    "raw": "(~Q -> ~P) => (P -> Q)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~Q -> ~P)"
+    ],
+    "conclusion_raw": "(P -> Q)",
+    "premises": [
+      "(\u00acA\u2192\u00acB)"
+    ],
+    "conclusion": "(B\u2192A)",
+    "atom_map": {
+      "Q": "A",
+      "P": "B"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 272,
+    "raw": "((P & Q) -> R), P, Q => (P -> (Q -> R))",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P & Q) -> R)",
+      "P",
+      "Q"
+    ],
+    "conclusion_raw": "(P -> (Q -> R))",
+    "premises": [
+      "((A\u2227B)\u2192C)",
+      "A",
+      "B"
+    ],
+    "conclusion": "(A\u2192(B\u2192C))",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 273,
+    "raw": "((P \u2227 \u00acQ) -> R),\u00acR, P \u22a2 Q",
+    "logic": "TFL",
+    "premises_raw": [
+      "((P \u2227 \u00acQ) -> R)",
+      "\u00acR",
+      "P"
+    ],
+    "conclusion_raw": "Q",
+    "premises": [
+      "((A\u2227\u00acB)\u2192C)",
+      "\u00acC",
+      "A"
+    ],
+    "conclusion": "B",
+    "atom_map": {
+      "P": "A",
+      "Q": "B",
+      "R": "C"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 274,
+    "raw": "(A || B), C, ((C & (A || B)) -> ~D), (~E -> D) => ~~E",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A || B)",
+      "C",
+      "((C & (A || B)) -> ~D)",
+      "(~E -> D)"
+    ],
+    "conclusion_raw": "~~E",
+    "premises": [
+      "(A\u2228B)",
+      "C",
+      "((C\u2227(A\u2228B))\u2192\u00acD)",
+      "(\u00acE\u2192D)"
+    ],
+    "conclusion": "\u00ac\u00acE",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 275,
+    "raw": "A, ((A & B) -> (C & D)), B, (D -> E) => E",
+    "logic": "TFL",
+    "premises_raw": [
+      "A",
+      "((A & B) -> (C & D))",
+      "B",
+      "(D -> E)"
+    ],
+    "conclusion_raw": "E",
+    "premises": [
+      "A",
+      "((A\u2227B)\u2192(C\u2227D))",
+      "B",
+      "(D\u2192E)"
+    ],
+    "conclusion": "E",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 276,
+    "raw": "~A, ((~A & ~B) -> (C -> D)), ~B, (D -> E) => (C -> E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "~A",
+      "((~A & ~B) -> (C -> D))",
+      "~B",
+      "(D -> E)"
+    ],
+    "conclusion_raw": "(C -> E)",
+    "premises": [
+      "\u00acA",
+      "((\u00acA\u2227\u00acB)\u2192(C\u2192D))",
+      "\u00acB",
+      "(D\u2192E)"
+    ],
+    "conclusion": "(C\u2192E)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 277,
+    "raw": "~(A & B), ((A -> ~B) -> (~C & ~D)), (E || (C || D)) => E",
+    "logic": "TFL",
+    "premises_raw": [
+      "~(A & B)",
+      "((A -> ~B) -> (~C & ~D))",
+      "(E || (C || D))"
+    ],
+    "conclusion_raw": "E",
+    "premises": [
+      "\u00ac(A\u2227B)",
+      "((A\u2192\u00acB)\u2192(\u00acC\u2227\u00acD))",
+      "(E\u2228(C\u2228D))"
+    ],
+    "conclusion": "E",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 278,
+    "raw": "(A -> (B -> C)), ~(B -> C), (~D || A) => ~D",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B -> C))",
+      "~(B -> C)",
+      "(~D || A)"
+    ],
+    "conclusion_raw": "~D",
+    "premises": [
+      "(A\u2192(B\u2192C))",
+      "\u00ac(B\u2192C)",
+      "(\u00acD\u2228A)"
+    ],
+    "conclusion": "\u00acD",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 279,
+    "raw": "(A -> (B -> (C || D))), (B & A), ~D => C",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B -> (C || D)))",
+      "(B & A)",
+      "~D"
+    ],
+    "conclusion_raw": "C",
+    "premises": [
+      "(A\u2192(B\u2192(C\u2228D)))",
+      "(B\u2227A)",
+      "\u00acD"
+    ],
+    "conclusion": "C",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 280,
+    "raw": "(~A -> B), (A -> C), ~C, (B -> D) => (D || E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(~A -> B)",
+      "(A -> C)",
+      "~C",
+      "(B -> D)"
+    ],
+    "conclusion_raw": "(D || E)",
+    "premises": [
+      "(\u00acA\u2192B)",
+      "(A\u2192C)",
+      "\u00acC",
+      "(B\u2192D)"
+    ],
+    "conclusion": "(D\u2228E)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 281,
+    "raw": "((A -> B) & ~C), ((~A -> E) || C), ((~B -> E) -> D) => D",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A -> B) & ~C)",
+      "((~A -> E) || C)",
+      "((~B -> E) -> D)"
+    ],
+    "conclusion_raw": "D",
+    "premises": [
+      "((A\u2192B)\u2227\u00acC)",
+      "((\u00acA\u2192D)\u2228C)",
+      "((\u00acB\u2192D)\u2192E)"
+    ],
+    "conclusion": "E",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "E": "D",
+      "D": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 282,
+    "raw": "((C || B) -> ~A), (D || A), B => D",
+    "logic": "TFL",
+    "premises_raw": [
+      "((C || B) -> ~A)",
+      "(D || A)",
+      "B"
+    ],
+    "conclusion_raw": "D",
+    "premises": [
+      "((A\u2228B)\u2192\u00acC)",
+      "(D\u2228C)",
+      "B"
+    ],
+    "conclusion": "D",
+    "atom_map": {
+      "C": "A",
+      "B": "B",
+      "A": "C",
+      "D": "D"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 283,
+    "raw": "(A || (B & C)), (A -> D), (D -> E), => (B || E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A || (B & C))",
+      "(A -> D)",
+      "(D -> E)"
+    ],
+    "conclusion_raw": "(B || E)",
+    "premises": [
+      "(A\u2228(B\u2227C))",
+      "(A\u2192D)",
+      "(D\u2192E)"
+    ],
+    "conclusion": "(B\u2228E)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 284,
+    "raw": "(A <-> B), (C -> ~B), ((D -> E) -> C), A => (A -> (D & ~E))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A <-> B)",
+      "(C -> ~B)",
+      "((D -> E) -> C)",
+      "A"
+    ],
+    "conclusion_raw": "(A -> (D & ~E))",
+    "premises": [
+      "(A\u2194B)",
+      "(C\u2192\u00acB)",
+      "((D\u2192E)\u2192C)",
+      "A"
+    ],
+    "conclusion": "(A\u2192(D\u2227\u00acE))",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 285,
+    "raw": "(A & (B -> C)), ((A || D) -> ~E), (B || E) => ((A || D) -> C)",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A & (B -> C))",
+      "((A || D) -> ~E)",
+      "(B || E)"
+    ],
+    "conclusion_raw": "((A || D) -> C)",
+    "premises": [
+      "(A\u2227(B\u2192C))",
+      "((A\u2228D)\u2192\u00acE)",
+      "(B\u2228E)"
+    ],
+    "conclusion": "((A\u2228D)\u2192C)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 286,
+    "raw": "((A || B) -> C), (C -> (A & D)), ((A & D) -> E), A => (A -> E)",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A || B) -> C)",
+      "(C -> (A & D))",
+      "((A & D) -> E)",
+      "A"
+    ],
+    "conclusion_raw": "(A -> E)",
+    "premises": [
+      "((A\u2228B)\u2192C)",
+      "(C\u2192(A\u2227D))",
+      "((A\u2227D)\u2192E)",
+      "A"
+    ],
+    "conclusion": "(A\u2192E)",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 287,
+    "raw": "((A -> B) -> C), (C -> ~D), (A || (E || D)) => (E || (B -> A))",
+    "logic": "TFL",
+    "premises_raw": [
+      "((A -> B) -> C)",
+      "(C -> ~D)",
+      "(A || (E || D))"
+    ],
+    "conclusion_raw": "(E || (B -> A))",
+    "premises": [
+      "((A\u2192B)\u2192C)",
+      "(C\u2192\u00acD)",
+      "(A\u2228(E\u2228D))"
+    ],
+    "conclusion": "(E\u2228(B\u2192A))",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  },
+  {
+    "index": 288,
+    "raw": "(A -> (B & C)), (D -> ~B), ((C <-> E) -> D), A => (A -> ~(C <-> E))",
+    "logic": "TFL",
+    "premises_raw": [
+      "(A -> (B & C))",
+      "(D -> ~B)",
+      "((C <-> E) -> D)",
+      "A"
+    ],
+    "conclusion_raw": "(A -> ~(C <-> E))",
+    "premises": [
+      "(A\u2192(B\u2227C))",
+      "(D\u2192\u00acB)",
+      "((C\u2194E)\u2192D)",
+      "A"
+    ],
+    "conclusion": "(A\u2192\u00ac(C\u2194E))",
+    "atom_map": {
+      "A": "A",
+      "B": "B",
+      "C": "C",
+      "D": "D",
+      "E": "E"
+    },
+    "constant_map": {}
+  }
+]
