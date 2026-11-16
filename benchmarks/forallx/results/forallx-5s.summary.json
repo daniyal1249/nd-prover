@@ -1,0 +1,450 @@
+[
+  {
+    "group": "all",
+    "cases": 112,
+    "solved": 110,
+    "success_percent": 98.21428571428571,
+    "total_case_seconds": 46.06091250048485,
+    "failures": 2,
+    "timeouts": 0,
+    "input_errors": 0,
+    "errors": 0,
+    "rule_constraints_met_solved": 102,
+    "comparison": {
+      "pairs": 110,
+      "proof_lines": {
+        "generated_mean": 7.990909090909091,
+        "official_mean": 8.781818181818181,
+        "mean_difference": -0.7909090909090909,
+        "lower": 26,
+        "equal": 82,
+        "higher": 2
+      },
+      "generated_lines": {
+        "generated_mean": 6.5,
+        "official_mean": 7.290909090909091,
+        "mean_difference": -0.7909090909090909,
+        "lower": 26,
+        "equal": 82,
+        "higher": 2
+      },
+      "assumptions": {
+        "generated_mean": 1.3272727272727274,
+        "official_mean": 1.5636363636363637,
+        "mean_difference": -0.23636363636363636,
+        "lower": 18,
+        "equal": 90,
+        "higher": 2
+      },
+      "distinct_rules": {
+        "generated_mean": 3.9,
+        "official_mean": 4.290909090909091,
+        "mean_difference": -0.39090909090909093,
+        "lower": 20,
+        "equal": 88,
+        "higher": 2
+      },
+      "max_subproof_depth": {
+        "generated_mean": 1.0545454545454545,
+        "official_mean": 1.2363636363636363,
+        "mean_difference": -0.18181818181818182,
+        "lower": 15,
+        "equal": 94,
+        "higher": 1
+      },
+      "subproof_count": {
+        "generated_mean": 1.3272727272727274,
+        "official_mean": 1.5636363636363637,
+        "mean_difference": -0.23636363636363636,
+        "lower": 18,
+        "equal": 90,
+        "higher": 2
+      },
+      "median_line_ratio": 1.0
+    }
+  },
+  {
+    "group": "FOL",
+    "cases": 51,
+    "solved": 49,
+    "success_percent": 96.07843137254902,
+    "total_case_seconds": 45.87151130026905,
+    "failures": 2,
+    "timeouts": 0,
+    "input_errors": 0,
+    "errors": 0,
+    "rule_constraints_met_solved": 47,
+    "comparison": {
+      "pairs": 49,
+      "proof_lines": {
+        "generated_mean": 8.122448979591837,
+        "official_mean": 8.53061224489796,
+        "mean_difference": -0.40816326530612246,
+        "lower": 5,
+        "equal": 44,
+        "higher": 0
+      },
+      "generated_lines": {
+        "generated_mean": 6.387755102040816,
+        "official_mean": 6.795918367346939,
+        "mean_difference": -0.40816326530612246,
+        "lower": 5,
+        "equal": 44,
+        "higher": 0
+      },
+      "assumptions": {
+        "generated_mean": 1.0408163265306123,
+        "official_mean": 1.1428571428571428,
+        "mean_difference": -0.10204081632653061,
+        "lower": 4,
+        "equal": 45,
+        "higher": 0
+      },
+      "distinct_rules": {
+        "generated_mean": 4.224489795918367,
+        "official_mean": 4.469387755102041,
+        "mean_difference": -0.24489795918367346,
+        "lower": 5,
+        "equal": 44,
+        "higher": 0
+      },
+      "max_subproof_depth": {
+        "generated_mean": 0.9591836734693877,
+        "official_mean": 1.0408163265306123,
+        "mean_difference": -0.08163265306122448,
+        "lower": 3,
+        "equal": 46,
+        "higher": 0
+      },
+      "subproof_count": {
+        "generated_mean": 1.0408163265306123,
+        "official_mean": 1.1428571428571428,
+        "mean_difference": -0.10204081632653061,
+        "lower": 4,
+        "equal": 45,
+        "higher": 0
+      },
+      "median_line_ratio": 1.0
+    }
+  },
+  {
+    "group": "K",
+    "cases": 10,
+    "solved": 10,
+    "success_percent": 100.0,
+    "total_case_seconds": 0.018989299947861582,
+    "failures": 0,
+    "timeouts": 0,
+    "input_errors": 0,
+    "errors": 0,
+    "rule_constraints_met_solved": 6,
+    "comparison": {
+      "pairs": 10,
+      "proof_lines": {
+        "generated_mean": 6.3,
+        "official_mean": 8.6,
+        "mean_difference": -2.3,
+        "lower": 4,
+        "equal": 6,
+        "higher": 0
+      },
+      "generated_lines": {
+        "generated_mean": 5.3,
+        "official_mean": 7.6,
+        "mean_difference": -2.3,
+        "lower": 4,
+        "equal": 6,
+        "higher": 0
+      },
+      "assumptions": {
+        "generated_mean": 1.3,
+        "official_mean": 2.0,
+        "mean_difference": -0.7,
+        "lower": 4,
+        "equal": 6,
+        "higher": 0
+      },
+      "distinct_rules": {
+        "generated_mean": 2.7,
+        "official_mean": 4.1,
+        "mean_difference": -1.4,
+        "lower": 4,
+        "equal": 6,
+        "higher": 0
+      },
+      "max_subproof_depth": {
+        "generated_mean": 0.8,
+        "official_mean": 1.5,
+        "mean_difference": -0.7,
+        "lower": 4,
+        "equal": 6,
+        "higher": 0
+      },
+      "subproof_count": {
+        "generated_mean": 1.3,
+        "official_mean": 2.0,
+        "mean_difference": -0.7,
+        "lower": 4,
+        "equal": 6,
+        "higher": 0
+      },
+      "median_line_ratio": 1.0
+    }
+  },
+  {
+    "group": "S4",
+    "cases": 3,
+    "solved": 3,
+    "success_percent": 100.0,
+    "total_case_seconds": 0.049443700059782714,
+    "failures": 0,
+    "timeouts": 0,
+    "input_errors": 0,
+    "errors": 0,
+    "rule_constraints_met_solved": 3,
+    "comparison": {
+      "pairs": 3,
+      "proof_lines": {
+        "generated_mean": 11.333333333333334,
+        "official_mean": 11.333333333333334,
+        "mean_difference": 0.0,
+        "lower": 0,
+        "equal": 3,
+        "higher": 0
+      },
+      "generated_lines": {
+        "generated_mean": 9.666666666666666,
+        "official_mean": 9.666666666666666,
+        "mean_difference": 0.0,
+        "lower": 0,
+        "equal": 3,
+        "higher": 0
+      },
+      "assumptions": {
+        "generated_mean": 2.0,
+        "official_mean": 2.0,
+        "mean_difference": 0.0,
+        "lower": 0,
+        "equal": 3,
+        "higher": 0
+      },
+      "distinct_rules": {
+        "generated_mean": 4.333333333333333,
+        "official_mean": 4.333333333333333,
+        "mean_difference": 0.0,
+        "lower": 0,
+        "equal": 3,
+        "higher": 0
+      },
+      "max_subproof_depth": {
+        "generated_mean": 2.0,
+        "official_mean": 2.0,
+        "mean_difference": 0.0,
+        "lower": 0,
+        "equal": 3,
+        "higher": 0
+      },
+      "subproof_count": {
+        "generated_mean": 2.0,
+        "official_mean": 2.0,
+        "mean_difference": 0.0,
+        "lower": 0,
+        "equal": 3,
+        "higher": 0
+      },
+      "median_line_ratio": 1.0
+    }
+  },
+  {
+    "group": "S5",
+    "cases": 2,
+    "solved": 2,
+    "success_percent": 100.0,
+    "total_case_seconds": 0.013249900017399341,
+    "failures": 0,
+    "timeouts": 0,
+    "input_errors": 0,
+    "errors": 0,
+    "rule_constraints_met_solved": 2,
+    "comparison": {
+      "pairs": 2,
+      "proof_lines": {
+        "generated_mean": 10.0,
+        "official_mean": 13.5,
+        "mean_difference": -3.5,
+        "lower": 1,
+        "equal": 1,
+        "higher": 0
+      },
+      "generated_lines": {
+        "generated_mean": 8.5,
+        "official_mean": 12.0,
+        "mean_difference": -3.5,
+        "lower": 1,
+        "equal": 1,
+        "higher": 0
+      },
+      "assumptions": {
+        "generated_mean": 1.5,
+        "official_mean": 2.5,
+        "mean_difference": -1.0,
+        "lower": 1,
+        "equal": 1,
+        "higher": 0
+      },
+      "distinct_rules": {
+        "generated_mean": 5.0,
+        "official_mean": 5.5,
+        "mean_difference": -0.5,
+        "lower": 1,
+        "equal": 1,
+        "higher": 0
+      },
+      "max_subproof_depth": {
+        "generated_mean": 1.5,
+        "official_mean": 2.5,
+        "mean_difference": -1.0,
+        "lower": 1,
+        "equal": 1,
+        "higher": 0
+      },
+      "subproof_count": {
+        "generated_mean": 1.5,
+        "official_mean": 2.5,
+        "mean_difference": -1.0,
+        "lower": 1,
+        "equal": 1,
+        "higher": 0
+      },
+      "median_line_ratio": 0.7941176470588236
+    }
+  },
+  {
+    "group": "T",
+    "cases": 2,
+    "solved": 2,
+    "success_percent": 100.0,
+    "total_case_seconds": 0.02857869997387752,
+    "failures": 0,
+    "timeouts": 0,
+    "input_errors": 0,
+    "errors": 0,
+    "rule_constraints_met_solved": 2,
+    "comparison": {
+      "pairs": 2,
+      "proof_lines": {
+        "generated_mean": 10.0,
+        "official_mean": 8.5,
+        "mean_difference": 1.5,
+        "lower": 0,
+        "equal": 1,
+        "higher": 1
+      },
+      "generated_lines": {
+        "generated_mean": 9.5,
+        "official_mean": 8.0,
+        "mean_difference": 1.5,
+        "lower": 0,
+        "equal": 1,
+        "higher": 1
+      },
+      "assumptions": {
+        "generated_mean": 1.0,
+        "official_mean": 1.5,
+        "mean_difference": -0.5,
+        "lower": 1,
+        "equal": 1,
+        "higher": 0
+      },
+      "distinct_rules": {
+        "generated_mean": 6.0,
+        "official_mean": 5.0,
+        "mean_difference": 1.0,
+        "lower": 0,
+        "equal": 1,
+        "higher": 1
+      },
+      "max_subproof_depth": {
+        "generated_mean": 1.0,
+        "official_mean": 1.0,
+        "mean_difference": 0.0,
+        "lower": 0,
+        "equal": 2,
+        "higher": 0
+      },
+      "subproof_count": {
+        "generated_mean": 1.0,
+        "official_mean": 1.5,
+        "mean_difference": -0.5,
+        "lower": 1,
+        "equal": 1,
+        "higher": 0
+      },
+      "median_line_ratio": 1.1363636363636362
+    }
+  },
+  {
+    "group": "TFL",
+    "cases": 44,
+    "solved": 44,
+    "success_percent": 100.0,
+    "total_case_seconds": 0.07913960021687672,
+    "failures": 0,
+    "timeouts": 0,
+    "input_errors": 0,
+    "errors": 0,
+    "rule_constraints_met_solved": 42,
+    "comparison": {
+      "pairs": 44,
+      "proof_lines": {
+        "generated_mean": 7.818181818181818,
+        "official_mean": 8.727272727272727,
+        "mean_difference": -0.9090909090909091,
+        "lower": 16,
+        "equal": 27,
+        "higher": 1
+      },
+      "generated_lines": {
+        "generated_mean": 6.454545454545454,
+        "official_mean": 7.363636363636363,
+        "mean_difference": -0.9090909090909091,
+        "lower": 16,
+        "equal": 27,
+        "higher": 1
+      },
+      "assumptions": {
+        "generated_mean": 1.6136363636363635,
+        "official_mean": 1.8636363636363635,
+        "mean_difference": -0.25,
+        "lower": 8,
+        "equal": 34,
+        "higher": 2
+      },
+      "distinct_rules": {
+        "generated_mean": 3.6363636363636362,
+        "official_mean": 4.045454545454546,
+        "mean_difference": -0.4090909090909091,
+        "lower": 10,
+        "equal": 33,
+        "higher": 1
+      },
+      "max_subproof_depth": {
+        "generated_mean": 1.1363636363636365,
+        "official_mean": 1.2954545454545454,
+        "mean_difference": -0.1590909090909091,
+        "lower": 7,
+        "equal": 36,
+        "higher": 1
+      },
+      "subproof_count": {
+        "generated_mean": 1.6136363636363635,
+        "official_mean": 1.8636363636363635,
+        "mean_difference": -0.25,
+        "lower": 8,
+        "equal": 34,
+        "higher": 2
+      },
+      "median_line_ratio": 1.0
+    }
+  }
+]

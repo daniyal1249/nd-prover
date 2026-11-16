@@ -1,0 +1,945 @@
+[
+  {
+    "case_id": "forallx:17B:1",
+    "logic": "TFL",
+    "premises": [
+      "P \u2227 S",
+      "S \u2192 R"
+    ],
+    "conclusion": "R \u2228 E"
+  },
+  {
+    "case_id": "forallx:17B:2",
+    "logic": "TFL",
+    "premises": [
+      "A \u2192 D"
+    ],
+    "conclusion": "(A \u2227 B) \u2192 (D \u2228 E)"
+  },
+  {
+    "case_id": "forallx:17B:3",
+    "logic": "TFL",
+    "premises": [
+      "\u00acL \u2192 (J \u2228 L)",
+      "\u00acL"
+    ],
+    "conclusion": "J"
+  },
+  {
+    "case_id": "forallx:17C:1",
+    "logic": "TFL",
+    "premises": [
+      "J \u2192 \u00acJ"
+    ],
+    "conclusion": "\u00acJ"
+  },
+  {
+    "case_id": "forallx:17C:2",
+    "logic": "TFL",
+    "premises": [
+      "Q \u2192 (Q \u2227 \u00acQ)"
+    ],
+    "conclusion": "\u00acQ"
+  },
+  {
+    "case_id": "forallx:17C:3",
+    "logic": "TFL",
+    "premises": [
+      "A \u2192 (B \u2192 C)"
+    ],
+    "conclusion": "(A \u2227 B) \u2192 C"
+  },
+  {
+    "case_id": "forallx:17C:4",
+    "logic": "TFL",
+    "premises": [
+      "K \u2227 L"
+    ],
+    "conclusion": "K \u2194 L"
+  },
+  {
+    "case_id": "forallx:17C:5",
+    "logic": "TFL",
+    "premises": [
+      "(C \u2227 D) \u2228 E"
+    ],
+    "conclusion": "E \u2228 D"
+  },
+  {
+    "case_id": "forallx:17C:6",
+    "logic": "TFL",
+    "premises": [
+      "A \u2194 B",
+      "B \u2194 C"
+    ],
+    "conclusion": "A \u2194 C"
+  },
+  {
+    "case_id": "forallx:17C:7",
+    "logic": "TFL",
+    "premises": [
+      "\u00acF \u2192 G",
+      "F \u2192 H"
+    ],
+    "conclusion": "G \u2228 H"
+  },
+  {
+    "case_id": "forallx:17C:8",
+    "logic": "TFL",
+    "premises": [
+      "(Z \u2227 K) \u2228 (K \u2227 M)",
+      "K \u2192 D"
+    ],
+    "conclusion": "D"
+  },
+  {
+    "case_id": "forallx:17C:9",
+    "logic": "TFL",
+    "premises": [
+      "P \u2227 (Q \u2228 R)",
+      "P \u2192 \u00acR"
+    ],
+    "conclusion": "Q \u2228 E"
+  },
+  {
+    "case_id": "forallx:17C:10",
+    "logic": "TFL",
+    "premises": [
+      "S \u2194 T"
+    ],
+    "conclusion": "S \u2194 (T \u2228 S)"
+  },
+  {
+    "case_id": "forallx:17C:11",
+    "logic": "TFL",
+    "premises": [
+      "\u00ac(P \u2192 Q)"
+    ],
+    "conclusion": "\u00acQ"
+  },
+  {
+    "case_id": "forallx:17C:12",
+    "logic": "TFL",
+    "premises": [
+      "\u00ac(P \u2192 Q)"
+    ],
+    "conclusion": "P"
+  },
+  {
+    "case_id": "forallx:19A:1",
+    "logic": "TFL",
+    "premises": [
+      "W \u2192 \u00acB",
+      "A \u2227 W",
+      "B \u2228 (J \u2227 K)"
+    ],
+    "conclusion": "K"
+  },
+  {
+    "case_id": "forallx:19A:2",
+    "logic": "TFL",
+    "premises": [
+      "L \u2194 \u00acO",
+      "L \u2228 \u00acO"
+    ],
+    "conclusion": "L"
+  },
+  {
+    "case_id": "forallx:19A:3",
+    "logic": "TFL",
+    "premises": [
+      "Z \u2192 (C \u2227 \u00acN)",
+      "\u00acZ \u2192 (N \u2227 \u00acC)"
+    ],
+    "conclusion": "N \u2228 C"
+  },
+  {
+    "case_id": "forallx:19B:1",
+    "logic": "TFL",
+    "premises": [
+      "E \u2228 F",
+      "F \u2228 G",
+      "\u00acF"
+    ],
+    "conclusion": "E \u2227 G"
+  },
+  {
+    "case_id": "forallx:19B:2",
+    "logic": "TFL",
+    "premises": [
+      "M \u2228 (N \u2192 M)"
+    ],
+    "conclusion": "\u00acM \u2192 \u00acN"
+  },
+  {
+    "case_id": "forallx:19B:3",
+    "logic": "TFL",
+    "premises": [
+      "(M \u2228 N) \u2227 (O \u2228 P)",
+      "N \u2192 P",
+      "\u00acP"
+    ],
+    "conclusion": "M \u2227 O"
+  },
+  {
+    "case_id": "forallx:19B:4",
+    "logic": "TFL",
+    "premises": [
+      "(X \u2227 Y) \u2228 (X \u2227 Z)",
+      "\u00ac(X \u2227 D)",
+      "D \u2228 M"
+    ],
+    "conclusion": "M"
+  },
+  {
+    "case_id": "forallx:20A:1",
+    "logic": "TFL",
+    "premises": [],
+    "conclusion": "O \u2192 O"
+  },
+  {
+    "case_id": "forallx:20A:2",
+    "logic": "TFL",
+    "premises": [],
+    "conclusion": "N \u2228 \u00acN"
+  },
+  {
+    "case_id": "forallx:20A:3",
+    "logic": "TFL",
+    "premises": [],
+    "conclusion": "J \u2194 (J \u2228 (L \u2227 \u00acL))"
+  },
+  {
+    "case_id": "forallx:20A:4",
+    "logic": "TFL",
+    "premises": [],
+    "conclusion": "((A \u2192 B) \u2192 A) \u2192 A"
+  },
+  {
+    "case_id": "forallx:20B:1",
+    "logic": "TFL",
+    "premises": [
+      "C \u2192 (E \u2227 G)",
+      "\u00acC \u2192 G"
+    ],
+    "conclusion": "G"
+  },
+  {
+    "case_id": "forallx:20B:2",
+    "logic": "TFL",
+    "premises": [
+      "M \u2227 (\u00acN \u2192 \u00acM)"
+    ],
+    "conclusion": "(N \u2227 M) \u2228 \u00acM"
+  },
+  {
+    "case_id": "forallx:20B:3",
+    "logic": "TFL",
+    "premises": [
+      "(Z \u2227 K) \u2194 (Y \u2227 M)",
+      "D \u2227 (D \u2192 M)"
+    ],
+    "conclusion": "Y \u2192 Z"
+  },
+  {
+    "case_id": "forallx:20B:4",
+    "logic": "TFL",
+    "premises": [
+      "(W \u2228 X) \u2228 (Y \u2228 Z)",
+      "X \u2192 Y",
+      "\u00acZ"
+    ],
+    "conclusion": "W \u2228 Y"
+  },
+  {
+    "case_id": "forallx:20C:1",
+    "logic": "TFL",
+    "premises": [
+      "R \u2194 E"
+    ],
+    "conclusion": "E \u2194 R"
+  },
+  {
+    "case_id": "forallx:20C:2",
+    "logic": "TFL",
+    "premises": [
+      "E \u2194 R"
+    ],
+    "conclusion": "R \u2194 E"
+  },
+  {
+    "case_id": "forallx:20C:3",
+    "logic": "TFL",
+    "premises": [
+      "G"
+    ],
+    "conclusion": "\u00ac\u00ac\u00ac\u00acG"
+  },
+  {
+    "case_id": "forallx:20C:4",
+    "logic": "TFL",
+    "premises": [
+      "\u00ac\u00ac\u00ac\u00acG"
+    ],
+    "conclusion": "G"
+  },
+  {
+    "case_id": "forallx:20C:5",
+    "logic": "TFL",
+    "premises": [
+      "T \u2192 S"
+    ],
+    "conclusion": "\u00acS \u2192 \u00acT"
+  },
+  {
+    "case_id": "forallx:20C:6",
+    "logic": "TFL",
+    "premises": [
+      "\u00acS \u2192 \u00acT"
+    ],
+    "conclusion": "T \u2192 S"
+  },
+  {
+    "case_id": "forallx:20C:7",
+    "logic": "TFL",
+    "premises": [
+      "U \u2192 I"
+    ],
+    "conclusion": "\u00ac(U \u2227 \u00acI)"
+  },
+  {
+    "case_id": "forallx:20C:8",
+    "logic": "TFL",
+    "premises": [
+      "\u00ac(U \u2227 \u00acI)"
+    ],
+    "conclusion": "U \u2192 I"
+  },
+  {
+    "case_id": "forallx:20C:9",
+    "logic": "TFL",
+    "premises": [
+      "C \u2227 \u00acD"
+    ],
+    "conclusion": "\u00ac(C \u2192 D)"
+  },
+  {
+    "case_id": "forallx:20C:10",
+    "logic": "TFL",
+    "premises": [
+      "\u00ac(C \u2192 D)"
+    ],
+    "conclusion": "C \u2227 \u00acD"
+  },
+  {
+    "case_id": "forallx:20C:11",
+    "logic": "TFL",
+    "premises": [
+      "\u00acG \u2194 H"
+    ],
+    "conclusion": "\u00ac(G \u2194 H)"
+  },
+  {
+    "case_id": "forallx:20C:12",
+    "logic": "TFL",
+    "premises": [
+      "\u00ac(G \u2194 H)"
+    ],
+    "conclusion": "\u00acG \u2194 H"
+  },
+  {
+    "case_id": "forallx:21A:1",
+    "logic": "TFL",
+    "premises": [
+      "\u00acA \u2227 \u00acB"
+    ],
+    "conclusion": "\u00ac(A \u2228 B)"
+  },
+  {
+    "case_id": "forallx:21A:2",
+    "logic": "TFL",
+    "premises": [
+      "\u00ac(A \u2228 B)"
+    ],
+    "conclusion": "\u00acA \u2227 \u00acB"
+  },
+  {
+    "case_id": "forallx:36B:1",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x \u2203y (R(x,y) \u2228 R(y,x))",
+      "\u2200x \u00acR(m,x)"
+    ],
+    "conclusion": "\u2203x R(x,m)"
+  },
+  {
+    "case_id": "forallx:36B:2",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (\u2203y L(x,y) \u2192 \u2200z L(z,x))",
+      "L(a,b)"
+    ],
+    "conclusion": "\u2200x L(x,x)"
+  },
+  {
+    "case_id": "forallx:36B:3",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (J(x) \u2192 K(x))",
+      "\u2203x \u2200y L(x,y)",
+      "\u2200x J(x)"
+    ],
+    "conclusion": "\u2203x (K(x) \u2227 L(x,x))"
+  },
+  {
+    "case_id": "forallx:36C:1",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (G(x) \u2192 F(x))",
+      "\u2200x (H(x) \u2192 G(x))"
+    ],
+    "conclusion": "\u2200x (H(x) \u2192 F(x))"
+  },
+  {
+    "case_id": "forallx:36C:2",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (G(x) \u2192 \u00acF(x))",
+      "\u2203x (H(x) \u2227 G(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 \u00acF(x))"
+  },
+  {
+    "case_id": "forallx:36D:1",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x H(x)",
+      "\u2200x (G(x) \u2192 F(x))",
+      "\u2200x (H(x) \u2192 G(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 F(x))"
+  },
+  {
+    "case_id": "forallx:36D:2",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x H(x)",
+      "\u2200x (F(x) \u2192 \u00acG(x))",
+      "\u2200x (H(x) \u2192 G(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 \u00acF(x))"
+  },
+  {
+    "case_id": "forallx:36D:3",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x H(x)",
+      "\u2200x (F(x) \u2192 G(x))",
+      "\u2200x (H(x) \u2192 \u00acG(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 \u00acF(x))"
+  },
+  {
+    "case_id": "forallx:36D:5",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x H(x)",
+      "\u2200x (F(x) \u2192 G(x))",
+      "\u2200x (G(x) \u2192 \u00acH(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 \u00acF(x))"
+  },
+  {
+    "case_id": "forallx:36D:6",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x G(x)",
+      "\u2200x (F(x) \u2192 \u00acG(x))",
+      "\u2200x (G(x) \u2192 H(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 \u00acF(x))"
+  },
+  {
+    "case_id": "forallx:36D:7",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x F(x)",
+      "\u2200x (F(x) \u2192 G(x))",
+      "\u2200x (G(x) \u2192 H(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 F(x))"
+  },
+  {
+    "case_id": "forallx:36E:1",
+    "logic": "FOL",
+    "premises": [],
+    "conclusion": "\u2200x F(x) \u2192 \u2200y (F(y) \u2227 F(y))"
+  },
+  {
+    "case_id": "forallx:36E:2",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (A(x) \u2192 B(x))",
+      "\u2203x A(x)"
+    ],
+    "conclusion": "\u2203x B(x)"
+  },
+  {
+    "case_id": "forallx:36E:3",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (M(x) \u2194 N(x))",
+      "M(a) \u2227 \u2203x R(x,a)"
+    ],
+    "conclusion": "\u2203x N(x)"
+  },
+  {
+    "case_id": "forallx:36E:4",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x \u2200y G(x,y)"
+    ],
+    "conclusion": "\u2203x G(x,x)"
+  },
+  {
+    "case_id": "forallx:36E:5",
+    "logic": "FOL",
+    "premises": [],
+    "conclusion": "\u2200x R(x,x) \u2192 \u2203x \u2203y R(x,y)"
+  },
+  {
+    "case_id": "forallx:36E:6",
+    "logic": "FOL",
+    "premises": [],
+    "conclusion": "\u2200y \u2203x (Q(y) \u2192 Q(x))"
+  },
+  {
+    "case_id": "forallx:36E:7",
+    "logic": "FOL",
+    "premises": [
+      "N(a) \u2192 \u2200x (M(x) \u2194 M(a))",
+      "M(a)",
+      "\u00acM(b)"
+    ],
+    "conclusion": "\u00acN(a)"
+  },
+  {
+    "case_id": "forallx:36E:8",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x \u2200y (G(x,y) \u2192 G(y,x))"
+    ],
+    "conclusion": "\u2200x \u2200y (G(x,y) \u2194 G(y,x))"
+  },
+  {
+    "case_id": "forallx:36E:9",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (\u00acM(x) \u2228 L(j,x))",
+      "\u2200x (B(x) \u2192 L(j,x))",
+      "\u2200x (M(x) \u2228 B(x))"
+    ],
+    "conclusion": "\u2200x L(j,x)"
+  },
+  {
+    "case_id": "forallx:36F:1",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x \u2200y (\u2200z (L(x,z) \u2192 L(y,z)) \u2192 L(x,y))"
+    ],
+    "conclusion": "\u2203x L(x,x)"
+  },
+  {
+    "case_id": "forallx:36H:1",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x \u2200y D(x,y)"
+    ],
+    "conclusion": "\u2200y \u2200x D(x,y)"
+  },
+  {
+    "case_id": "forallx:36H:2",
+    "logic": "FOL",
+    "premises": [
+      "\u2200y \u2200x D(x,y)"
+    ],
+    "conclusion": "\u2200x \u2200y D(x,y)"
+  },
+  {
+    "case_id": "forallx:36I:1",
+    "logic": "FOL",
+    "premises": [
+      "\u2203y \u2200x R(x,y)"
+    ],
+    "conclusion": "\u2200x \u2203y R(x,y)"
+  },
+  {
+    "case_id": "forallx:36I:2",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (S(x) \u2192 T(a))",
+      "S(d)"
+    ],
+    "conclusion": "T(a)"
+  },
+  {
+    "case_id": "forallx:36I:3",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (A(x) \u2192 B(x))",
+      "\u2200x (B(x) \u2192 C(x))"
+    ],
+    "conclusion": "\u2200x (A(x) \u2192 C(x))"
+  },
+  {
+    "case_id": "forallx:36I:4",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x \u2200y (R(x,y) \u2228 R(y,x))"
+    ],
+    "conclusion": "R(j,j)"
+  },
+  {
+    "case_id": "forallx:36I:5",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x M(x) \u2192 \u2203x N(x)",
+      "\u00ac\u2203x N(x)"
+    ],
+    "conclusion": "\u2200x \u00acM(x)"
+  },
+  {
+    "case_id": "forallx:38A:1",
+    "logic": "FOL",
+    "premises": [
+      "S(a) \u2192 T(m)",
+      "T(m) \u2192 S(a)",
+      "T(m) \u2227 \u00acS(a)"
+    ],
+    "conclusion": "\u22a5"
+  },
+  {
+    "case_id": "forallx:38A:2",
+    "logic": "FOL",
+    "premises": [
+      "\u00ac\u2203x R(x,a)",
+      "\u2200x \u2200y R(y,x)"
+    ],
+    "conclusion": "\u22a5"
+  },
+  {
+    "case_id": "forallx:38A:3",
+    "logic": "FOL",
+    "premises": [
+      "\u00ac\u2203x \u2203y L(x,y)",
+      "L(a,a)"
+    ],
+    "conclusion": "\u22a5"
+  },
+  {
+    "case_id": "forallx:38A:4",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (P(x) \u2192 Q(x))",
+      "\u2200z (P(z) \u2192 R(z))",
+      "\u2200y P(y)",
+      "\u00acQ(a) \u2227 \u00acR(b)"
+    ],
+    "conclusion": "\u22a5"
+  },
+  {
+    "case_id": "forallx:38B:1",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (A(x) \u2192 \u00acB(x))"
+    ],
+    "conclusion": "\u00ac\u2203x (A(x) \u2227 B(x))"
+  },
+  {
+    "case_id": "forallx:38B:2",
+    "logic": "FOL",
+    "premises": [
+      "\u00ac\u2203x (A(x) \u2227 B(x))"
+    ],
+    "conclusion": "\u2200x (A(x) \u2192 \u00acB(x))"
+  },
+  {
+    "case_id": "forallx:38B:4",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x A(x) \u2228 B(d)"
+    ],
+    "conclusion": "\u2200x (\u00acA(x) \u2192 B(d))"
+  },
+  {
+    "case_id": "forallx:38C:2",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x F(x) \u2227 G(a)"
+    ],
+    "conclusion": "\u2200x (F(x) \u2227 G(a))"
+  },
+  {
+    "case_id": "forallx:38C:3",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x (F(x) \u2228 G(a))"
+    ],
+    "conclusion": "\u2203x F(x) \u2228 G(a)"
+  },
+  {
+    "case_id": "forallx:38C:4",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x F(x) \u2228 G(a)"
+    ],
+    "conclusion": "\u2203x (F(x) \u2228 G(a))"
+  },
+  {
+    "case_id": "forallx:38C:5",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (G(a) \u2192 F(x))"
+    ],
+    "conclusion": "G(a) \u2192 \u2200x F(x)"
+  },
+  {
+    "case_id": "forallx:38C:6",
+    "logic": "FOL",
+    "premises": [
+      "G(a) \u2192 \u2200x F(x)"
+    ],
+    "conclusion": "\u2200x (G(a) \u2192 F(x))"
+  },
+  {
+    "case_id": "forallx:38C:7",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (F(x) \u2192 G(a))"
+    ],
+    "conclusion": "\u2203x F(x) \u2192 G(a)"
+  },
+  {
+    "case_id": "forallx:38C:8",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x F(x) \u2192 G(a)"
+    ],
+    "conclusion": "\u2200x (F(x) \u2192 G(a))"
+  },
+  {
+    "case_id": "forallx:38C:9",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x (G(a) \u2192 F(x))"
+    ],
+    "conclusion": "G(a) \u2192 \u2203x F(x)"
+  },
+  {
+    "case_id": "forallx:38C:11",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x (F(x) \u2192 G(a))"
+    ],
+    "conclusion": "\u2200x F(x) \u2192 G(a)"
+  },
+  {
+    "case_id": "forallx:38C:12",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x F(x) \u2192 G(a)"
+    ],
+    "conclusion": "\u2203x (F(x) \u2192 G(a))"
+  },
+  {
+    "case_id": "forallx:40A:1",
+    "logic": "FOL",
+    "premises": [
+      "\u00ac\u2203x A(x)"
+    ],
+    "conclusion": "\u2200x \u00acA(x)"
+  },
+  {
+    "case_id": "forallx:40A:2",
+    "logic": "FOL",
+    "premises": [
+      "\u00ac\u2200x A(x)"
+    ],
+    "conclusion": "\u2203x \u00acA(x)"
+  },
+  {
+    "case_id": "forallx:43A:1",
+    "logic": "K",
+    "premises": [
+      "\u2610(A \u2227 B)"
+    ],
+    "conclusion": "\u2610A \u2227 \u2610B"
+  },
+  {
+    "case_id": "forallx:43A:2",
+    "logic": "K",
+    "premises": [
+      "\u2610A \u2227 \u2610B"
+    ],
+    "conclusion": "\u2610(A \u2227 B)"
+  },
+  {
+    "case_id": "forallx:43A:3",
+    "logic": "K",
+    "premises": [
+      "\u2610A \u2228 \u2610B"
+    ],
+    "conclusion": "\u2610(A \u2228 B)"
+  },
+  {
+    "case_id": "forallx:43A:4",
+    "logic": "K",
+    "premises": [
+      "\u2610(A \u2194 B)"
+    ],
+    "conclusion": "\u2610A \u2194 \u2610B"
+  },
+  {
+    "case_id": "forallx:43B:1",
+    "logic": "K",
+    "premises": [
+      "\u00ac\u2610A"
+    ],
+    "conclusion": "\u25c7\u00acA"
+  },
+  {
+    "case_id": "forallx:43B:2",
+    "logic": "K",
+    "premises": [
+      "\u25c7\u00acA"
+    ],
+    "conclusion": "\u00ac\u2610A"
+  },
+  {
+    "case_id": "forallx:43B:3",
+    "logic": "K",
+    "premises": [
+      "\u00ac\u25c7A"
+    ],
+    "conclusion": "\u2610\u00acA"
+  },
+  {
+    "case_id": "forallx:43B:4",
+    "logic": "K",
+    "premises": [
+      "\u2610\u00acA"
+    ],
+    "conclusion": "\u00ac\u25c7A"
+  },
+  {
+    "case_id": "forallx:43C:2",
+    "logic": "K",
+    "premises": [
+      "\u2610A"
+    ],
+    "conclusion": "\u00ac\u25c7\u00acA"
+  },
+  {
+    "case_id": "forallx:43C:3",
+    "logic": "K",
+    "premises": [
+      "\u00ac\u25c7\u00acA"
+    ],
+    "conclusion": "\u2610A"
+  },
+  {
+    "case_id": "forallx:43D:1",
+    "logic": "T",
+    "premises": [
+      "P"
+    ],
+    "conclusion": "\u25c7P"
+  },
+  {
+    "case_id": "forallx:43D:2",
+    "logic": "T",
+    "premises": [],
+    "conclusion": "(A \u2227 B) \u2228 (\u00ac\u2610A \u2228 \u00ac\u2610B)"
+  },
+  {
+    "case_id": "forallx:43E:1",
+    "logic": "S4",
+    "premises": [
+      "\u2610(\u2610A \u2192 B)",
+      "\u2610(\u2610B \u2192 C)",
+      "\u2610A"
+    ],
+    "conclusion": "\u2610\u2610C"
+  },
+  {
+    "case_id": "forallx:43E:2",
+    "logic": "S4",
+    "premises": [
+      "\u2610A"
+    ],
+    "conclusion": "\u2610(\u2610A \u2228 B)"
+  },
+  {
+    "case_id": "forallx:43E:3",
+    "logic": "S4",
+    "premises": [
+      "\u25c7\u25c7A"
+    ],
+    "conclusion": "\u25c7A"
+  },
+  {
+    "case_id": "forallx:43F:1",
+    "logic": "S5",
+    "premises": [
+      "\u00ac\u2610\u00acA",
+      "\u25c7B"
+    ],
+    "conclusion": "\u2610(\u25c7A \u2227 \u25c7B)"
+  },
+  {
+    "case_id": "forallx:43F:3",
+    "logic": "S5",
+    "premises": [
+      "\u25c7\u25c7A"
+    ],
+    "conclusion": "\u25c7A"
+  },
+  {
+    "case_id": "forallx:36C:3",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (G(x) \u2192 \u00acF(x))",
+      "\u2200x (H(x) \u2192 G(x))"
+    ],
+    "conclusion": "\u2200x (H(x) \u2192 \u00acF(x))"
+  },
+  {
+    "case_id": "forallx:36C:4",
+    "logic": "FOL",
+    "premises": [
+      "\u2200x (G(x) \u2192 F(x))",
+      "\u2203x (H(x) \u2227 G(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 F(x))"
+  },
+  {
+    "case_id": "forallx:36D:8",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x H(x)",
+      "\u2200x (G(x) \u2192 \u00acF(x))",
+      "\u2200x (H(x) \u2192 G(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 \u00acF(x))"
+  },
+  {
+    "case_id": "forallx:36D:9",
+    "logic": "FOL",
+    "premises": [
+      "\u2203x G(x)",
+      "\u2200x (G(x) \u2192 F(x))",
+      "\u2200x (G(x) \u2192 H(x))"
+    ],
+    "conclusion": "\u2203x (H(x) \u2227 F(x))"
+  }
+]

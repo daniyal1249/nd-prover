@@ -1,0 +1,29 @@
+{
+  "repository": "https://github.com/rzach/forallx-yyc.git",
+  "commit": "bb86fe926ec3cd5d64255070c8f92ace8bf5cb7d",
+  "edition": "Fall 2025 with official corrections through 2026-10-22",
+  "license": "CC BY 4.0",
+  "corrections_commit": "bdd076cb13ebac1aaa3a5e9ac14c90f6e1b02d0c",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "hash_format": "SHA-256 of UTF-8 source with LF line endings",
+  "files": {
+    "LICENSE.md": "bb5e0179a1e9bdb55634a4303784cf73c297a1dcee27b92cd546bf398075531c",
+    "fitch.sty": "4fd30445c897c927b4db193335783e92f75274c5d679617c8d6a503ee2726d44",
+    "forallxyyc.sty": "8c9ca3d83d9e78f06881da04cbf5d8e7ced50ed9786b4a3d6e2300f7c72f219b",
+    "solutions/forallx-sol-fol.tex": "67eb1e0b50eb021d5f5b43370968bee4082ab6b01d4bf8f56011fcaa23f46a2f",
+    "solutions/forallx-sol-frontmatter.tex": "f1a13bfadfd413bb5913c77a2878d7a756c2ce0a351dc7f2bc97389a0066ae2c",
+    "solutions/forallx-sol-interpretations.tex": "132b0e359b45c46afa9c5c32e7028bd979273f957bbcc3dc48882c4c33deb738",
+    "solutions/forallx-sol-metatheory.tex": "b10484468f3393fdf3c466e3ec6f49f35e68cc0985e047b75a1c09512dfd5f38",
+    "solutions/forallx-sol-ml.tex": "67ecd20b703ecdf4e0333750fbd8347c9f854b030dba3268b93aacf2947a9aa7",
+    "solutions/forallx-sol-prooffol.tex": "99bdec8399f5f948ada891cf32be91f802db0f3352317f6b2d9ecdfb7af703cb",
+    "solutions/forallx-sol-prooftfl.tex": "c7203e3c1490b6a916feb907ba69f6b4e9f0f6c9acb3d4191764b379c7874136",
+    "solutions/forallx-sol-tfl.tex": "93e295e42f1618bd7590ea51fb5ce9571bdfc8dbb6f413858a507d5afcf844eb",
+    "solutions/forallx-sol-truthtables.tex": "6caa2badcf1e71785ecd6ed85de3bc8496c4c18286a639541b88a3da4595717b",
+    "solutions/forallx-sol-what.tex": "e17cba624b9cf2064364a85298bd903d09692c3a203e8e0b187d75830e2ad8fd",
+    "solutions/forallxyyc-solutions.tex": "5fd603e0a78832c17dec091a3ef0690e877a224b14a93fb4a5c318c4f4055091"
+  },
+  "artifacts": {
+    "problems.json": "bf7dbbea60b991231084d1d11708ea1d27cb13f2369b31451cd0944027e01776",
+    "coverage.json": "4a6da1587e48d9b03a783ab1e5546e66f3035640dd65d0c1c6d76a3207421e86"
+  }
+}
