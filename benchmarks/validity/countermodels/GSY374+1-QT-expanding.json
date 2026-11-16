@@ -1,0 +1,85 @@
+{
+  "case_id": "QMLTP:GSY374+1:QT:cumulative",
+  "source": "benchmarks/validity/tests/fixtures/GSY374+1.p",
+  "source_sha256": "0a0609334ad6ec8a98ab956e5edb6ab02833c3f432db1a709f2f0c1240c6dff8",
+  "logic": "QT",
+  "domain_semantics": "expanding",
+  "worlds": [
+    "w0",
+    "w1",
+    "w2"
+  ],
+  "root_world": "w0",
+  "accessibility": [
+    [
+      "w0",
+      "w0"
+    ],
+    [
+      "w1",
+      "w1"
+    ],
+    [
+      "w2",
+      "w2"
+    ],
+    [
+      "w0",
+      "w1"
+    ],
+    [
+      "w1",
+      "w2"
+    ]
+  ],
+  "individuals": [
+    "d0"
+  ],
+  "domains": {
+    "w0": [
+      "d0"
+    ],
+    "w1": [
+      "d0"
+    ],
+    "w2": [
+      "d0"
+    ]
+  },
+  "predicates": {
+    "big_p": [
+      [
+        "w0",
+        "d0"
+      ],
+      [
+        "w1",
+        "d0"
+      ]
+    ]
+  },
+  "minimality": {
+    "scope": "reflexive models with one individual",
+    "worlds": 3,
+    "accessibility_edges": 5,
+    "positive_predicate_instances": 2
+  },
+  "published_result": {
+    "paper": "https://arxiv.org/html/2212.09570",
+    "dataset": "https://doi.org/10.5281/zenodo.10802221",
+    "archive": "QMLTP-primary-evaluation-results-QMLTP.zip",
+    "member": "QMLTPResults/TH0_N.txt",
+    "member_sha256": "179d8ad9f85540e9c86fa91220b03a5796bf0887a380696c4c3c4bc877eb904b",
+    "problem": "GSY374_1.014_t_cumulative_rigid.p",
+    "solver": "Nitpick 2016",
+    "status": "CounterSatisfiable",
+    "lines": {
+      "first": 152610,
+      "last": 152714
+    },
+    "excerpt": [
+      "RESULT: GSY374_1.014_t_cumulative_rigid.p - Nitpick---2016 says CounterSatisfiable - CPU = 28.61 WC = 10.17 ",
+      "OUTPUT: GSY374_1.014_t_cumulative_rigid.p - Nitpick---2016 says FiniteModel - CPU = 28.61 WC = 10.17 "
+    ]
+  }
+}

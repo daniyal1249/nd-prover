@@ -1,0 +1,51 @@
+{
+  "files": [
+    {
+      "name": "ILTP-v1.1.2-firstorder.tar.gz",
+      "url": "https://www.iltp.de/download/ILTP-v1.1.2-firstorder.tar.gz",
+      "sha256": "e53e2ac64a84f076692ce13d85df60369c343dda08d073f8ee7eea3ac08145ec"
+    },
+    {
+      "name": "ILTP-v1.1.2-fof-statistics.txt",
+      "url": "https://www.iltp.de/download/ILTP-v1.1.2-fof-statistics.txt",
+      "sha256": "300e39ce6b18a28935b03053cd7793f6a64d961a9108eb2274ec9200a050513d"
+    },
+    {
+      "name": "ILTP-v1.1.2-prop-statistics.txt",
+      "url": "https://www.iltp.de/download/ILTP-v1.1.2-prop-statistics.txt",
+      "sha256": "ddecf0d8931c437a48e43a70892bfa1213044d0efe1ddc63c3f08b4555cca06e"
+    },
+    {
+      "name": "ILTP-v1.1.2-propositional.tar.gz",
+      "url": "https://www.iltp.de/download/ILTP-v1.1.2-propositional.tar.gz",
+      "sha256": "4931b81fcaacb96f3c5a118069658cd345903a3e3c834b08bf67f5d279673ee3"
+    },
+    {
+      "name": "QMLTP-v1.1-statistics.txt",
+      "url": "https://www.iltp.de/qmltp/download/QMLTP-v1.1-statistics.txt",
+      "sha256": "b772d1c5b8f8c0e0880d34b4234bfb04a48641390e2e369262aeeb437ae0bc26"
+    },
+    {
+      "name": "QMLTP-v1.1.tar.gz",
+      "url": "https://www.iltp.de/qmltp/download/QMLTP-v1.1.tar.gz",
+      "sha256": "b95c2d02cd630f6592fac10af0acb5040d125ca3ce665a689e183890810648fb"
+    }
+  ],
+  "libraries": [
+    {
+      "name": "ILTP-v1.1.2-firstorder",
+      "file_count": 2724,
+      "sha256": "3a5842ccc3b1dabf59831075ff0d4643941409bc293f76fbb7df9cc6dc96824e"
+    },
+    {
+      "name": "ILTP-v1.1.2-propositional",
+      "file_count": 274,
+      "sha256": "a134676fcdb0532b370a5c36c8881acb7a8343dcad9def49b5a2857617349088"
+    },
+    {
+      "name": "QMLTP-v1.1",
+      "file_count": 612,
+      "sha256": "8c58973eb12a744cb6a5972417f90ea137b90be7eeb2a6a9714b657f3da03a9f"
+    }
+  ]
+}
