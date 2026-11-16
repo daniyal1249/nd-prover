@@ -1,0 +1,4 @@
+benchmarks/*/results/* -text
+benchmarks/validity/tests/fixtures/*.p -text
+benchmarks/crotts_tate/problems.txt -text
+benchmarks/forallx/*.json -text
